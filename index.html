@@ -423,18 +423,17 @@ function sendToExcel(){
 
   fetch("https://script.google.com/macros/s/AKfycbyltqAHAbJ6oXAdvb1ChfWF1bVBJNcVi_y0kDzgj29MvIReaAO4GPsOcUp-oo6oXPM-/exec", {
   method: "POST",
+  mode: "no-cors",
   headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "text/plain"
   },
   body: JSON.stringify({rows: rows})
 })
-.then(res => res.text())
-.then(res => {
-  console.log(res);
-  alert("✅ تم إرسال التقرير بنجاح (مؤكد)");
+.then(() => {
+  alert("✅ تم إرسال التقرير بنجاح");
 })
 .catch(err => {
-  alert("❌ فشل الإرسال فعلياً");
+  alert("❌ فشل الإرسال: " + err.message);
   console.error(err);
 });
 
