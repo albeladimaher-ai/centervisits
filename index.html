@@ -419,6 +419,12 @@ function sendToExcel(){
 
   });
 
+  // إظهار رسالة فورية
+  const sendBtn = document.querySelector('.btn-send');
+  const origText = sendBtn.innerHTML;
+  sendBtn.disabled = true;
+  sendBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> جارٍ الإرسال...';
+
   fetch("https://script.google.com/macros/s/AKfycbyltqAHAbJ6oXAdvb1ChfWF1bVBJNcVi_y0kDzgj29MvIReaAO4GPsOcUp-oo6oXPM-/exec", {
   method: "POST",
   mode: "no-cors",
@@ -428,9 +434,17 @@ function sendToExcel(){
   body: JSON.stringify({rows: rows})
 })
 .then(() => {
-  alert("✅ تم إرسال التقرير بنجاح");
+  sendBtn.innerHTML = '✅ تم الإرسال بنجاح';
+  sendBtn.style.background = 'var(--green)';
+  setTimeout(() => {
+    sendBtn.disabled = false;
+    sendBtn.innerHTML = origText;
+    sendBtn.style.background = '';
+  }, 3000);
 })
 .catch(err => {
+  sendBtn.disabled = false;
+  sendBtn.innerHTML = origText;
   alert("❌ فشل الإرسال: " + err.message);
   console.error(err);
 });
