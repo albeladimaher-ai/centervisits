@@ -117,6 +117,9 @@ tr:last-child td{border-bottom:none}
 .bulk-work:hover{background:rgba(110,231,183,0.15);border-color:var(--accent2)!important;color:var(--accent2)!important}
 .bulk-nowork:hover{background:rgba(234,179,8,0.15);border-color:var(--yellow)!important;color:var(--yellow)!important}
 .bulk-reset:hover{background:rgba(148,163,184,0.1);border-color:var(--text2)!important}
+.count-label{color:#fff!important;font-size:12px;font-weight:500}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
 </style>
 
 <div class="wrap">
@@ -255,7 +258,7 @@ function buildSections(){
         <td><input class="notes-input" type="text" placeholder="ملاحظات..."></td></tr>`;
     });
     let countHtml='';
-    if(sec.countField){countHtml=`<div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--bg4);border-top:1px solid var(--border)"><span style="font-size:12px;color:var(--text2)">${sec.countField.label}:</span><input class="count-input" type="number" min="0" id="${sec.countField.id}" placeholder="0"></div>`;}
+    if(sec.countField){countHtml=`<div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--bg4);border-top:1px solid var(--border)"><span class="count-label">${sec.countField.label}:</span><input class="count-input" type="number" min="0" id="${sec.countField.id}" placeholder="0"></div>`;}
     const bulkBar=`<div class="bulk-bar">
       <span style="font-size:11px;color:var(--text3)">تحديد الكل:</span>
       <div class="bulk-group">
@@ -423,7 +426,7 @@ function sendToExcel(){
   const sendBtn = document.querySelector('.btn-send');
   const origText = sendBtn.innerHTML;
   sendBtn.disabled = true;
-  sendBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> جارٍ الإرسال...';
+  sendBtn.innerHTML = '<div class="spinner"></div> جارٍ الإرسال...';
 
   fetch("https://script.google.com/macros/s/AKfycbyltqAHAbJ6oXAdvb1ChfWF1bVBJNcVi_y0kDzgj29MvIReaAO4GPsOcUp-oo6oXPM-/exec", {
   method: "POST",
