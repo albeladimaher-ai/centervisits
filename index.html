@@ -390,14 +390,13 @@ function sendToExcel(){
       noteIndex++;
 
       rows.push({
-        center: center,
-        date: date,
-        writer: writer,
-        section: sec.title,
-        item: item,
-        available: s.avail === 'yes' ? 'متوفر' : s.avail === 'no' ? 'غير متوفر' : '',
-        working: s.works === 'yes' ? 'تعمل' : s.works === 'no' ? 'لا تعمل' : '',
-        notes: note
+        'اسم المركز': center,
+        'التاريخ': date,
+        'الكاتب': writer,
+        'اسم العنصر': item,
+        'متوفر': s.avail === 'yes' ? 'متوفر' : s.avail === 'no' ? 'غير متوفر' : '',
+        'التشغيل': s.works === 'yes' ? 'تعمل' : s.works === 'no' ? 'لا تعمل' : '',
+        'ملاحظات': note
       });
 
     });
@@ -407,14 +406,13 @@ function sendToExcel(){
       const val = document.getElementById(sec.countField.id)?.value || '';
       if(val){
         rows.push({
-          center: center,
-          date: date,
-          writer: writer,
-          section: sec.title,
-          item: sec.countField.label,
-          available: val,
-          working: '',
-          notes: 'عدد'
+          'اسم المركز': center,
+          'التاريخ': date,
+          'الكاتب': writer,
+          'اسم العنصر': sec.countField.label,
+          'متوفر': val,
+          'التشغيل': '',
+          'ملاحظات': 'عدد'
         });
       }
     }
