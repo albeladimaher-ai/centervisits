@@ -811,7 +811,6 @@ function sendToExcel() {
         'اسم المركز': center,
         'التاريخ': date,
         'الكاتب': writer,
-        'القسم': sec.title,
         'اسم العنصر': item,
         'متوفر': s.avail === 'yes' ? 'متوفر' : s.avail === 'no' ? 'غير متوفر' : '',
         'التشغيل': s.works === 'yes' ? 'تعمل' : s.works === 'no' ? 'لا تعمل' : '',
@@ -823,7 +822,7 @@ function sendToExcel() {
       if (val) {
         rows.push({
           'اسم المركز': center, 'التاريخ': date, 'الكاتب': writer,
-          'القسم': sec.title, 'اسم العنصر': sec.countField.label,
+          'اسم العنصر': sec.countField.label,
           'متوفر': val, 'التشغيل': '', 'ملاحظات': 'عدد'
         });
       }
