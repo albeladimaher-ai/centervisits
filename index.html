@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -13,57 +13,97 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;direction:rtl}
   --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
   --green:#22c55e;--red:#ef4444;--yellow:#eab308;
 }
-#loginScreen{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#0a0d14 0%,#0f1117 40%,#1a1d27 100%);display:flex;align-items:center;justify-content:center;padding:20px;}
-.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:40px 36px;width:100%;max-width:400px;box-shadow:0 24px 80px rgba(0,0,0,0.6);position:relative;overflow:hidden;}
+
+/* ===== LOGIN SCREEN ===== */
+#loginScreen{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,#0a0d14 0%,#0f1117 40%,#1a1d27 100%);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.login-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:16px;
+  padding:40px 36px;width:100%;max-width:400px;
+  box-shadow:0 24px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(79,142,247,0.08);
+  position:relative;overflow:hidden;
+}
+.login-card::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(79,142,247,0.12) 0%,transparent 70%);
+  pointer-events:none;
+}
 .login-logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px}
-.login-logo-circle{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
-.login-org{text-align:center}.login-org strong{display:block;font-size:14px;color:var(--text);line-height:1.4}.login-org span{font-size:11px;color:var(--text3)}
-.login-title{text-align:center;margin-bottom:28px}.login-title h2{font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px}.login-title p{font-size:12px;color:var(--text3)}
-.login-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}.login-field label{font-size:12px;color:var(--text2);font-weight:500}
+.login-logo-circle{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
+}
+.login-org{text-align:center}
+.login-org strong{display:block;font-size:14px;color:var(--text);line-height:1.4}
+.login-org span{font-size:11px;color:var(--text3)}
+.login-title{text-align:center;margin-bottom:28px}
+.login-title h2{font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px}
+.login-title p{font-size:12px;color:var(--text3)}
+.login-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.login-field label{font-size:12px;color:var(--text2);font-weight:500}
 .login-field-wrap{position:relative}
-.login-field input{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px 14px 10px 40px;border-radius:8px;font-size:13px;outline:none;transition:border-color 0.2s;font-family:'Segoe UI',Tahoma,sans-serif;direction:ltr;text-align:right;}
-.login-field input:focus{border-color:var(--accent)}.login-field input.error{border-color:var(--red)!important}
-.login-field-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none;}
-.login-error{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:6px;padding:9px 12px;font-size:12px;color:var(--red);margin-bottom:16px;display:none;text-align:center;}
+.login-field input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:10px 14px 10px 40px;border-radius:8px;
+  font-size:13px;outline:none;transition:border-color 0.2s;
+  font-family:'Segoe UI',Tahoma,sans-serif;direction:ltr;text-align:right;
+}
+.login-field input:focus{border-color:var(--accent)}
+.login-field input.error{border-color:var(--red)!important}
+.login-field-icon{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  color:var(--text3);font-size:14px;pointer-events:none;
+}
+.login-error{
+  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);
+  border-radius:6px;padding:9px 12px;font-size:12px;color:var(--red);
+  margin-bottom:16px;display:none;text-align:center;
+}
 .login-error.show{display:block}
-.btn-login{width:100%;background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 0.2s;font-family:'Segoe UI',Tahoma,sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;}
+.btn-login{
+  width:100%;background:var(--accent);color:#fff;border:none;
+  padding:11px 20px;border-radius:8px;font-size:14px;font-weight:600;
+  cursor:pointer;transition:opacity 0.2s;font-family:'Segoe UI',Tahoma,sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;
+}
 .btn-login:hover{opacity:0.88}
+.btn-login:disabled{opacity:0.5;cursor:not-allowed}
 .login-hint{text-align:center;margin-top:18px;font-size:11px;color:var(--text3)}
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 .shake{animation:shake 0.4s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .login-card{animation:fadeIn 0.4s ease}
 
-/* ===== TABS ===== */
+/* ===== MAIN APP ===== */
 #appScreen{display:none}
-.app-tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;gap:0;position:sticky;top:0;z-index:100;}
-.app-tab{padding:14px 20px;font-size:13px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap;}
-.app-tab:hover{color:var(--text2)}
-.app-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
-.tab-panel{display:none}
-.tab-panel.active{display:block}
-
-/* ===== MAIN FORM ===== */
 .wrap{background:var(--bg);min-height:100vh;padding:0 0 40px;color:var(--text)}
 .header{background:linear-gradient(135deg,#1e2a4a 0%,#0f1117 100%);padding:24px 24px 20px;border-bottom:1px solid var(--border)}
 .header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
 .logo-area{display:flex;align-items:center;gap:12px}
-.logo-circle{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
-.org-name{font-size:13px;color:var(--text2);line-height:1.4}.org-name strong{display:block;font-size:15px;color:var(--text)}
+.logo-circle{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));flex-shrink:0}
+.org-name{font-size:13px;color:var(--text2);line-height:1.4}
+.org-name strong{display:block;font-size:15px;color:var(--text)}
 .title-block{text-align:center;flex:1}
 h1{font-size:18px;font-weight:600;color:var(--text);letter-spacing:0.3px}
 .subtitle{font-size:12px;color:var(--text3);margin-top:4px}
 .meta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:16px 0 0;padding-top:16px;border-top:1px solid var(--border)}
-.meta-field{display:flex;flex-direction:column;gap:4px}.meta-field label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px}
-.meta-field input,.meta-field select{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:6px;font-size:13px;outline:none;width:100%;font-family:'Segoe UI',Tahoma,sans-serif;}
-.meta-field input:focus,.meta-field select:focus{border-color:var(--accent)}
-.meta-field select option{background:var(--bg3);color:var(--text);}
+.meta-field{display:flex;flex-direction:column;gap:4px}
+.meta-field label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px}
+.meta-field input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:6px;font-size:13px;outline:none;width:100%}
+.meta-field input:focus{border-color:var(--accent)}
 .logout-btn{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:var(--red);padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;white-space:nowrap;transition:all 0.2s}
 .logout-btn:hover{background:rgba(239,68,68,0.2)}
 .stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;padding:16px 24px;background:var(--bg2);border-bottom:1px solid var(--border)}
 .stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center}
-.stat-card .sv{font-size:26px;font-weight:700;line-height:1}.stat-card .sl{font-size:11px;color:var(--text2);margin-top:4px}
-.sv-total{color:var(--accent)}.sv-yes{color:var(--green)}.sv-no{color:var(--red)}.sv-work{color:var(--accent2)}.sv-nowork{color:var(--yellow)}.sv-fill{color:var(--accent3)}
+.stat-card .sv{font-size:26px;font-weight:700;line-height:1}
+.stat-card .sl{font-size:11px;color:var(--text2);margin-top:4px}
+.sv-total{color:var(--accent)}.sv-yes{color:var(--green)}.sv-no{color:var(--red)}
+.sv-work{color:var(--accent2)}.sv-nowork{color:var(--yellow)}.sv-fill{color:var(--accent3)}
 .sv-pct{font-size:13px;color:var(--text3);display:block;margin-top:2px}
 .sections{padding:16px 24px;display:flex;flex-direction:column;gap:16px}
 .section{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
@@ -75,7 +115,8 @@ h1{font-size:18px;font-weight:600;color:var(--text);letter-spacing:0.3px}
 .sec-badge .filled{color:var(--green);font-weight:600}
 .sec-toggle{color:var(--text3);font-size:14px;transition:transform 0.2s}
 .sec-toggle.open{transform:rotate(180deg)}
-.sec-body{display:none;border-top:1px solid var(--border)}.sec-body.open{display:block}
+.sec-body{display:none;border-top:1px solid var(--border)}
+.sec-body.open{display:block}
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:12.5px}
 thead tr{background:var(--bg4)}
@@ -96,7 +137,7 @@ tr:last-child td{border-bottom:none}
 .rb:has(input:checked).noworks{background:rgba(234,179,8,0.15);border-color:var(--yellow);color:var(--yellow)}
 .rb:not(:has(input:checked)){color:var(--text3)}
 .rb:hover{border-color:var(--text2)}
-.notes-input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:11px;width:140px;outline:none;font-family:'Segoe UI',Tahoma,sans-serif;}
+.notes-input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:11px;width:120px;outline:none}
 .notes-input:focus{border-color:var(--accent)}
 .count-input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:12px;width:70px;text-align:center;outline:none}
 .count-input:focus{border-color:var(--accent)}
@@ -109,98 +150,10 @@ tr:last-child td{border-bottom:none}
 .btn-print:hover{border-color:var(--text2)}
 .btn-send{background:var(--accent);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px}
 .btn-send:hover{opacity:0.9}
+.btn-send svg{width:16px;height:16px}
 .progress-wrap{background:var(--bg3);height:4px}
 .progress-bar{height:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 0.3s}
-.bulk-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--bg4);border-bottom:1px solid var(--border);flex-wrap:wrap}
-.bulk-group{display:flex;gap:4px}
-.bulk-sep{width:1px;height:20px;background:var(--border);margin:0 4px}
-.bulk-btn{padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);transition:all 0.15s}
-.bulk-btn:hover{border-color:var(--text2);color:var(--text)}
-.bulk-yes:hover{background:rgba(34,197,94,0.15);border-color:var(--green)!important;color:var(--green)!important}
-.bulk-no:hover{background:rgba(239,68,68,0.15);border-color:var(--red)!important;color:var(--red)!important}
-.bulk-work:hover{background:rgba(110,231,183,0.15);border-color:var(--accent2)!important;color:var(--accent2)!important}
-.bulk-nowork:hover{background:rgba(234,179,8,0.15);border-color:var(--yellow)!important;color:var(--yellow)!important}
-.bulk-reset:hover{background:rgba(148,163,184,0.1);border-color:var(--text2)!important}
-.count-label{color:#fff!important;font-size:12px;font-weight:500}
-@keyframes spin{to{transform:rotate(360deg)}}
-.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
-
-/* ===== DASHBOARD ===== */
-.dash-wrap{background:var(--bg);min-height:100vh;padding:0 0 40px;color:var(--text)}
-.dash-header{background:linear-gradient(135deg,#1e2a4a 0%,#0f1117 100%);padding:20px 24px;border-bottom:1px solid var(--border)}
-.dash-header-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.dash-title{font-size:16px;font-weight:700;color:var(--text)}
-.dash-sub{font-size:12px;color:var(--text3);margin-top:2px}
-.dash-filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);align-items:flex-end;}
-.filter-group{display:flex;flex-direction:column;gap:4px}
-.filter-group label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px}
-.filter-group select,.filter-group input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:12px;outline:none;min-width:160px;font-family:'Segoe UI',Tahoma,sans-serif;}
-.filter-group select:focus,.filter-group input:focus{border-color:var(--accent)}
-.filter-group select option{background:var(--bg3)}
-.btn-filter{background:var(--accent);color:#fff;border:none;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;height:31px;margin-top:auto;}
-.btn-filter:hover{opacity:0.88}
-.btn-filter-reset{background:var(--bg3);color:var(--text2);border:1px solid var(--border);padding:7px 14px;border-radius:6px;font-size:12px;cursor:pointer;height:31px;margin-top:auto;}
-.btn-filter-reset:hover{border-color:var(--text2)}
-.dash-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;padding:16px 24px;background:var(--bg2);border-bottom:1px solid var(--border)}
-.kpi-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
-.kpi-val{font-size:28px;font-weight:700;line-height:1}
-.kpi-label{font-size:11px;color:var(--text2);margin-top:4px}
-.kpi-pct{font-size:12px;color:var(--text3);margin-top:2px}
-.dash-body{padding:16px 24px;display:flex;flex-direction:column;gap:20px}
-.dash-section-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
-.dsc-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border)}
-.dsc-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
-.dsc-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.dsc-summary{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.dsc-pill{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.pill-yes{background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3)}
-.pill-no{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
-.pill-pct{background:rgba(79,142,247,0.15);color:var(--accent);border:1px solid rgba(79,142,247,0.3)}
-.dsc-body{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
-.dsc-item{display:flex;align-items:center;gap:10px}
-.dsc-item-name{flex:1;font-size:12px;color:var(--text2);line-height:1.3}
-.dsc-bar-wrap{width:200px;background:var(--bg4);border-radius:4px;height:8px;overflow:hidden;flex-shrink:0}
-.dsc-bar{height:100%;border-radius:4px;transition:width 0.6s ease}
-.dsc-bar.green{background:var(--green)}
-.dsc-bar.red{background:var(--red)}
-.dsc-bar.gray{background:var(--text3)}
-.dsc-stats{display:flex;gap:6px;align-items:center;flex-shrink:0;min-width:120px;justify-content:flex-end}
-.dsc-stat-yes{font-size:11px;color:var(--green);font-weight:600}
-.dsc-stat-no{font-size:11px;color:var(--red);font-weight:600}
-.dsc-stat-none{font-size:11px;color:var(--text3)}
-.dsc-notes-section{padding:10px 16px 14px;border-top:1px solid var(--border);background:rgba(79,142,247,0.03)}
-.dsc-notes-title{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
-.dsc-note-item{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:7px 10px;margin-bottom:6px;font-size:12px;color:var(--text2)}
-.dsc-note-item .note-text{color:var(--text)}
-.dsc-note-item .note-meta{font-size:10px;color:var(--text3);margin-top:3px}
-.no-data{text-align:center;padding:40px;color:var(--text3);font-size:14px}
-.dash-center-badge{background:rgba(79,142,247,0.12);border:1px solid rgba(79,142,247,0.25);color:var(--accent);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
-.legend-row{display:flex;gap:14px;font-size:11px;color:var(--text3);padding:8px 16px;background:var(--bg4);border-bottom:1px solid var(--border)}
-.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block;margin-left:4px}
-.dash-center-tbl{width:100%;border-collapse:collapse;font-size:12px}
-.dash-center-tbl th{padding:7px 12px;color:var(--text3);font-weight:500;text-align:right;border-bottom:1px solid var(--border);background:var(--bg4);white-space:nowrap}
-.dash-center-tbl td{padding:7px 12px;border-bottom:1px solid var(--border);text-align:right;color:var(--text2)}
-.dash-center-tbl tr:last-child td{border-bottom:none}
-.dash-center-tbl tr:hover td{background:rgba(79,142,247,0.04)}
-.tbl-pct-bar{display:flex;align-items:center;gap:8px}
-.tbl-pct-num{min-width:38px;font-weight:600;font-size:12px}
-.tbl-mini-bar{flex:1;background:var(--bg4);border-radius:3px;height:6px;overflow:hidden;min-width:80px}
-.tbl-mini-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
-
-/* ===== CENTERS BAR ===== */
-.centers-bar{background:var(--bg2);border-bottom:2px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:0;overflow-x:auto;min-height:44px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
-.centers-bar::-webkit-scrollbar{height:4px}.centers-bar::-webkit-scrollbar-track{background:transparent}.centers-bar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.centers-bar-label{font-size:11px;color:var(--text3);white-space:nowrap;margin-left:12px;flex-shrink:0;text-transform:uppercase;letter-spacing:0.5px}
-.center-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--text3);white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.18s;font-family:'Segoe UI',Tahoma,sans-serif;flex-shrink:0}
-.center-chip:hover{color:var(--text2);background:rgba(255,255,255,0.04)}
-.center-chip.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(79,142,247,0.07)}
-.center-chip .chip-dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:0.7;flex-shrink:0}
-.center-chip-all{color:var(--text2)!important}
-.centers-bar-empty{font-size:12px;color:var(--text3);padding:0 8px;font-style:italic}
-.centers-bar-sep{width:1px;height:20px;background:var(--border);margin:0 6px;flex-shrink:0}
-
-/* modal */
-.modal-overlay{display:none;min-height:500px;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:20px;position:fixed;inset:0;z-index:999}
+.modal-overlay{display:none;min-height:500px;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:20px}
 .modal-overlay.show{display:flex}
 .modal{background:var(--bg2);border:1px solid var(--border);border-radius:12px;width:100%;max-width:520px;overflow:hidden}
 .modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
@@ -221,6 +174,7 @@ tr:last-child td{border-bottom:none}
 .btn-cancel:hover{border-color:var(--text2)}
 .btn-confirm{background:var(--accent);color:#fff;border:none;padding:8px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
 .btn-confirm:hover{opacity:0.9}
+.btn-confirm:disabled{opacity:0.5;cursor:not-allowed}
 .success-box{display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;gap:14px}
 .success-box.show{display:flex}
 .success-icon{width:60px;height:60px;border-radius:50%;background:rgba(34,197,94,0.15);border:2px solid var(--green);display:flex;align-items:center;justify-content:center}
@@ -228,11 +182,24 @@ tr:last-child td{border-bottom:none}
 .success-title{font-size:16px;font-weight:600;color:var(--green)}
 .success-sub{font-size:13px;color:var(--text2)}
 .success-ref{font-size:11px;color:var(--text3);background:var(--bg3);padding:4px 12px;border-radius:5px;font-family:monospace}
+.bulk-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--bg4);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.bulk-group{display:flex;gap:4px}
+.bulk-sep{width:1px;height:20px;background:var(--border);margin:0 4px}
+.bulk-btn{padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);transition:all 0.15s}
+.bulk-btn:hover{border-color:var(--text2);color:var(--text)}
+.bulk-yes:hover{background:rgba(34,197,94,0.15);border-color:var(--green)!important;color:var(--green)!important}
+.bulk-no:hover{background:rgba(239,68,68,0.15);border-color:var(--red)!important;color:var(--red)!important}
+.bulk-work:hover{background:rgba(110,231,183,0.15);border-color:var(--accent2)!important;color:var(--accent2)!important}
+.bulk-nowork:hover{background:rgba(234,179,8,0.15);border-color:var(--yellow)!important;color:var(--yellow)!important}
+.bulk-reset:hover{background:rgba(148,163,184,0.1);border-color:var(--text2)!important}
+.count-label{color:#fff!important;font-size:12px;font-weight:500}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ===== LOGIN SCREEN ===== -->
 <div id="loginScreen">
   <div class="login-card">
     <div class="login-logo">
@@ -262,131 +229,61 @@ tr:last-child td{border-bottom:none}
     </div>
     <div class="login-error" id="loginError">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
     <button class="btn-login" id="btnLogin" onclick="doLogin()">
-      <span>دخول</span><span>←</span>
+      <span>دخول</span>
+      <span>←</span>
     </button>
     <div class="login-hint">نظام تقارير الجولات الميدانية — وزارة الصحة</div>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ===== MAIN APP ===== -->
 <div id="appScreen">
-  <div class="app-tabs">
-    <div class="app-tab active" id="tab-form" onclick="switchTab('form')">📋 تقرير الجولة</div>
-    <div class="app-tab" id="tab-dash" onclick="switchTab('dash')">📊 لوحة الإحصاءات</div>
-    <div style="flex:1"></div>
-    <button class="logout-btn" style="margin:8px 0;align-self:center" onclick="doLogout()">🔓 خروج</button>
-  </div>
-
-  <!-- FORM TAB -->
-  <div class="tab-panel active" id="panel-form">
-  <div class="wrap">
-  <div class="header">
-    <div class="header-top">
-      <div class="logo-area">
-        <div class="logo-circle">🏥</div>
-        <div class="org-name"><strong>إدارة الخدمات الصحية المساندة</strong>تجمع المدينة المنورة الصحي</div>
-      </div>
-      <div class="title-block">
-        <h1>تقرير الجولة الميدانية للخدمات الصحية المساندة</h1>
-        <div class="subtitle">Field Tour Report — Supporting Health Services</div>
-      </div>
+<div class="wrap">
+<div class="header">
+  <div class="header-top">
+    <div class="logo-area">
+      <div class="logo-circle"></div>
+      <div class="org-name"><strong>إدارة الخدمات الصحية المساندة</strong>تجمع المدينة المنورة الصحي</div>
     </div>
-    <div class="meta-row">
-      <div class="meta-field">
-        <label>اسم المركز</label>
-        <select id="centerName" onchange="updateFormMeta()">
-          <option value="">— اختر المركز —</option>
-          <option>مركز صحي الصالحية</option>
-          <option>مركز صحي العوالي</option>
-          <option>مركز صحي الرانوناء</option>
-          <option>مركز صحي النخيل</option>
-          <option>مركز صحي العنبرية</option>
-          <option>مركز صحي الحرة الغربية</option>
-          <option>مركز صحي بئر علي</option>
-          <option>مركز صحي الجماوات</option>
-          <option>مركز صحي الإسكان</option>
-          <option>مركز صحي السيح</option>
-          <option>مركز صحي العاقول</option>
-          <option>مركز صحي النزهة</option>
-          <option>مركز صحي المناخة</option>
-          <option>مركز صحي العزيزية</option>
-          <option>مركز صحي أبو نصيبة</option>
-          <option>مركز صحي السكة</option>
-          <option>مركز صحي الشيخان</option>
-          <option>مركز صحي الزاهرة</option>
-          <option>مركز صحي الحفيرة</option>
-          <option>مركز صحي وادي الجماء</option>
-        </select>
-      </div>
-      <div class="meta-field"><label>تاريخ الزيارة</label><input type="date" id="visitDate" onchange="updateFormMeta()"></div>
-      <div class="meta-field"><label>كاتب التقرير</label><input type="text" id="writer" placeholder="الاسم" onchange="updateFormMeta()"></div>
+    <div class="title-block">
+      <h1>تقرير الجولة الميدانية للخدمات الصحية المساندة</h1>
+      <div class="subtitle">Field Tour Report — Supporting Health Services</div>
     </div>
+    <button class="logout-btn" onclick="doLogout()">🔓 خروج</button>
   </div>
-  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
-  <div class="stats-bar">
-    <div class="stat-card"><div class="sv sv-total" id="st-total">0</div><div class="sl">إجمالي العناصر</div></div>
-    <div class="stat-card"><div class="sv sv-fill" id="st-fill">0</div><div class="sl">تم تعبئته<span class="sv-pct" id="st-fill-pct">0%</span></div></div>
-    <div class="stat-card"><div class="sv sv-yes" id="st-yes">0</div><div class="sl">متوفر</div></div>
-    <div class="stat-card"><div class="sv sv-no" id="st-no">0</div><div class="sl">غير متوفر</div></div>
-    <div class="stat-card"><div class="sv sv-work" id="st-work">0</div><div class="sl">تعمل</div></div>
-    <div class="stat-card"><div class="sv sv-nowork" id="st-nowork">0</div><div class="sl">لا تعمل</div></div>
-  </div>
-  <div class="sections" id="sections"></div>
-  <div class="footer">
-    <div class="sig-block"><label>كاتب التقرير</label><div class="sig-line"></div></div>
-    <div class="btn-row">
-      <button class="btn-print" onclick="window.print()">طباعة / حفظ PDF</button>
-      <button class="btn-send" onclick="sendToExcel()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        إرسال التقرير
-      </button>
-    </div>
-    <div class="sig-block"><label>توقيع مدير المركز</label><div class="sig-line"></div></div>
-  </div>
-  </div>
-  </div>
-
-  <!-- DASHBOARD TAB -->
-  <div class="tab-panel" id="panel-dash">
-  <div class="dash-wrap">
-  <div class="dash-header">
-    <div class="dash-header-top">
-      <div>
-        <div class="dash-title">📊 لوحة إحصاءات الجولات الميدانية</div>
-        <div class="dash-sub">نظرة شاملة على نتائج جميع الجولات المسجّلة</div>
-      </div>
-      <button class="btn-filter" onclick="refreshDash()" style="font-size:13px;padding:8px 18px">🔄 تحديث</button>
-    </div>
-    <div class="dash-filters">
-      <div class="filter-group">
-        <label>المركز الصحي</label>
-        <select id="dash-filter-center">
-          <option value="">جميع المراكز</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>من تاريخ</label>
-        <input type="date" id="dash-filter-from">
-      </div>
-      <div class="filter-group">
-        <label>إلى تاريخ</label>
-        <input type="date" id="dash-filter-to">
-      </div>
-      <button class="btn-filter" onclick="applyDashFilter()">🔍 تطبيق الفلتر</button>
-      <button class="btn-filter-reset" onclick="resetDashFilter()">↺ إعادة ضبط</button>
-    </div>
-  </div>
-  <div class="centers-bar" id="centersBar">
-    <span class="centers-bar-label">المراكز:</span>
-    <span class="centers-bar-empty" id="centersBarEmpty">لا توجد تقارير مسجّلة بعد</span>
-  </div>
-  <div class="dash-kpi" id="dash-kpi"></div>
-  <div class="dash-body" id="dash-body"></div>
-  </div>
+  <div class="meta-row">
+    <div class="meta-field"><label>اسم المركز</label><input type="text" id="centerName" placeholder="أدخل اسم المركز"></div>
+    <div class="meta-field"><label>تاريخ الزيارة</label><input type="date" id="visitDate"></div>
+    <div class="meta-field"><label>كاتب التقرير</label><input type="text" id="writer" placeholder="الاسم"></div>
   </div>
 </div>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
 
-<!-- MODAL -->
+<div class="stats-bar">
+  <div class="stat-card"><div class="sv sv-total" id="st-total">0</div><div class="sl">إجمالي العناصر</div></div>
+  <div class="stat-card"><div class="sv sv-fill" id="st-fill">0</div><div class="sl">تم تعبئته<span class="sv-pct" id="st-fill-pct">0%</span></div></div>
+  <div class="stat-card"><div class="sv sv-yes" id="st-yes">0</div><div class="sl">متوفر</div></div>
+  <div class="stat-card"><div class="sv sv-no" id="st-no">0</div><div class="sl">غير متوفر</div></div>
+  <div class="stat-card"><div class="sv sv-work" id="st-work">0</div><div class="sl">تعمل</div></div>
+  <div class="stat-card"><div class="sv sv-nowork" id="st-nowork">0</div><div class="sl">لا تعمل</div></div>
+</div>
+
+<div class="sections" id="sections"></div>
+
+<div class="footer">
+  <div class="sig-block"><label>كاتب التقرير</label><div class="sig-line"></div></div>
+  <div class="btn-row">
+    <button class="btn-print" onclick="window.print()">طباعة / حفظ PDF</button>
+    <button class="btn-send" onclick="sendToExcel()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      إرسال التقرير
+    </button>
+  </div>
+  <div class="sig-block"><label>توقيع مدير المركز</label><div class="sig-line"></div></div>
+</div>
+</div>
+</div>
+
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-head">
@@ -440,47 +337,47 @@ tr:last-child td{border-bottom:none}
 
 <script>
 // ===== AUTH =====
-const CREDENTIALS={username:'123',password:'123'};
+const CREDENTIALS = { username: '123', password: '123' };
+
 function doLogin(){
-  const user=document.getElementById('loginUser').value.trim();
-  const pass=document.getElementById('loginPass').value;
-  const errEl=document.getElementById('loginError');
-  const card=document.querySelector('.login-card');
-  if(user===CREDENTIALS.username&&pass===CREDENTIALS.password){
-    document.getElementById('loginScreen').style.display='none';
-    document.getElementById('appScreen').style.display='block';
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  const card = document.querySelector('.login-card');
+
+  if(user === CREDENTIALS.username && pass === CREDENTIALS.password){
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appScreen').style.display = 'block';
     errEl.classList.remove('show');
-  }else{
+  } else {
     errEl.classList.add('show');
-    card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');
+    card.classList.remove('shake');
+    void card.offsetWidth; // reflow to restart animation
+    card.classList.add('shake');
     document.getElementById('loginUser').classList.add('error');
     document.getElementById('loginPass').classList.add('error');
-    document.getElementById('loginPass').value='';
-    setTimeout(()=>{document.getElementById('loginUser').classList.remove('error');document.getElementById('loginPass').classList.remove('error');},2000);
+    document.getElementById('loginPass').value = '';
+    setTimeout(()=>{
+      document.getElementById('loginUser').classList.remove('error');
+      document.getElementById('loginPass').classList.remove('error');
+    }, 2000);
   }
 }
+
 function doLogout(){
-  document.getElementById('appScreen').style.display='none';
-  document.getElementById('loginScreen').style.display='flex';
-  document.getElementById('loginUser').value='';
-  document.getElementById('loginPass').value='';
+  document.getElementById('appScreen').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
   document.getElementById('loginError').classList.remove('show');
 }
 
-function switchTab(t){
-  document.getElementById('tab-form').classList.toggle('active',t==='form');
-  document.getElementById('tab-dash').classList.toggle('active',t==='dash');
-  document.getElementById('panel-form').classList.toggle('active',t==='form');
-  document.getElementById('panel-dash').classList.toggle('active',t==='dash');
-  if(t==='dash')fetchSheetData();
-}
-
-// ===== SECTIONS DATA =====
+// ===== MAIN APP =====
 const sections=[
-  {id:'lab_premarital',title:'خدمات المختبر — فحص ما قبل الزواج',icon:'🔬',color:'#4f8ef7',
+  {id:'lab_premarital',title:'خدمات المختبر (فحص ما قبل الزواج)',icon:'🔬',color:'#4f8ef7',
    items:['يتوفر موعد على نظام صحتي','توفر مسار خاص لفحص ما قبل الزواج','تتوفر الخدمة بالمركز من الأحد إلى الخميس خلال ساعات العمل','يتم الاستقبال بدون موعد','يتم طلب إثبات الهوية بالاستقبال','يتم طلب الهوية في نقطة سحب الدم','تتوفر الأنابيب البنفسجية بكميات كافية','تتوفر الأنابيب الصفراء أو الحمراء بكميات كافية','تتوفر تجهيزات حفظ العينات (ثلاجة أو حافظة)','يتم الالتزام بوضع الباركود على العينات','هل تم الاطلاع على التعميم من مقدمي الخدمة','مدير المركز على اطلاع بوجود الخدمة','المدير الطبي على اطلاع بوجود الخدمة','الاستقبال على اطلاع بوجود الخدمة','موظف السحب على اطلاع بوجود الخدمة','توفر QR-Code في منطقة السحب + التثقيف + الاستقبال'],
    countField:{label:'عدد موظفين المختبر',id:'cnt_lab_staff'}},
-  {id:'lab_care',title:'خدمات المختبر — مستهدفات نموذج الرعاية',icon:'🧪',color:'#6ee7b7',
+  {id:'lab_care',title:'خدمات المختبر (مستهدفات نموذج الرعاية)',icon:'🧪',color:'#6ee7b7',
    items:['تتوفر الأنابيب الصفراء أو الحمراء بكميات كافية','تتوفر الأنابيب الرمادية بكميات كافية','تتوفر الأنابيب البنفسجية بكميات كافية','توفر فحص OGTT','يوجد عبوات لجمع عينة البول لفحص Albumin to Creatinine Ratio','توفر Sampler بالمختبر لأخذ عينة البراز لفحص سرطان القولون'],
    countField:{label:'عدد فنيين المختبر',id:'cnt_lab_tech'}},
   {id:'radiology',title:'خدمات الأشعة',icon:'🩻',color:'#a78bfa',
@@ -495,11 +392,7 @@ const sections=[
    items:['يوجد مدرب صحي','يوجد جدولة للمواعيد','يوجد يوزر في منصة رقيم للمدرب الصحي','(مستهدف الرعاية) عكس المعادلة','تتم تعبئة نموذج الاستبيان عن طريق الرابط'],
    countField:null},
 ];
-
 const state={};let totalItems=0;
-const savedReports=[];
-let currentFormMeta={center:'',date:'',writer:''};
-
 function buildSections(){
   const cont=document.getElementById('sections');
   sections.forEach(sec=>{
@@ -548,7 +441,7 @@ function buildSections(){
       <div class="sec-body open" id="body_${sec.id}">
         ${bulkBar}
         <div class="tbl-wrap"><table>
-          <thead><tr><th style="width:36px">م</th><th class="col-item">العنصر</th><th style="width:160px">التوفر</th><th style="width:160px">حالة التشغيل</th><th style="width:150px">ملاحظات</th></tr></thead>
+          <thead><tr><th style="width:36px">م</th><th class="col-item">العنصر</th><th style="width:160px">التوفر</th><th style="width:160px">حالة التشغيل</th><th style="width:130px">ملاحظات</th></tr></thead>
           <tbody>${rows}</tbody>
         </table></div>${countHtml}
       </div>`;
@@ -556,25 +449,29 @@ function buildSections(){
   });
   document.getElementById('st-total').textContent=totalItems;updateStats();
 }
-
 function toggleSec(id){document.getElementById('body_'+id).classList.toggle('open');document.getElementById('toggle_'+id).classList.toggle('open');}
 function upd(secId,idx,field,val){state[secId][idx][field]=val;updateStats();}
 function bulkSet(secId,field,val){
-  const sec=sections.find(s=>s.id===secId);if(!sec)return;
+  const sec=sections.find(s=>s.id===secId);
+  if(!sec)return;
   sec.items.forEach((_,i)=>{
     state[secId][i][field]=val;
-    const nm=secId+'_'+i;const radioName=field==='avail'?nm+'_av':nm+'_wk';
-    document.querySelectorAll(`input[name="${radioName}"]`).forEach(r=>{if(r.value===val)r.checked=true;});
+    const nm=secId+'_'+i;
+    const radioName=field==='avail'?nm+'_av':nm+'_wk';
+    const radios=document.querySelectorAll(`input[name="${radioName}"]`);
+    radios.forEach(r=>{if(r.value===val)r.checked=true;});
   });
   updateStats();
 }
 function bulkReset(secId){
-  const sec=sections.find(s=>s.id===secId);if(!sec)return;
+  const sec=sections.find(s=>s.id===secId);
+  if(!sec)return;
   sec.items.forEach((_,i)=>{
     state[secId][i]={avail:'',works:''};
     const nm=secId+'_'+i;
     document.querySelectorAll(`input[name="${nm}_av"], input[name="${nm}_wk"]`).forEach(r=>r.checked=false);
-  });updateStats();
+  });
+  updateStats();
 }
 function updateStats(){
   let filled=0,yes=0,no=0,work=0,nowork=0;
@@ -588,13 +485,24 @@ function updateStats(){
   const pct=totalItems>0?Math.round(filled/totalItems*100):0;
   document.getElementById('st-fill-pct').textContent=pct+'%';document.getElementById('progressBar').style.width=pct+'%';
 }
-
-function updateFormMeta(){
-  currentFormMeta.center=document.getElementById('centerName').value;
-  currentFormMeta.date=document.getElementById('visitDate').value;
-  currentFormMeta.writer=document.getElementById('writer').value;
+function openSendModal(){
+  const center=document.getElementById('centerName').value||'—';
+  const date=document.getElementById('visitDate').value||'—';
+  const filled=document.getElementById('st-fill').textContent;
+  const pct=document.getElementById('st-fill-pct').textContent;
+  const yes=document.getElementById('st-yes').textContent;
+  const no=document.getElementById('st-no').textContent;
+  document.getElementById('sendSummary').innerHTML=`
+    <div class="ss-item">المركز: <span>${center}</span></div>
+    <div class="ss-item">التاريخ: <span>${date}</span></div>
+    <div class="ss-item">نسبة التعبئة: <span>${pct}</span></div>
+    <div class="ss-item">العناصر المعبأة: <span>${filled}/${totalItems}</span></div>
+    <div class="ss-item">متوفر: <span style="color:var(--green)">${yes}</span></div>
+    <div class="ss-item">غير متوفر: <span style="color:var(--red)">${no}</span></div>`;
+  document.getElementById('modalForm').style.display='block';
+  document.getElementById('successBox').classList.remove('show');
+  document.getElementById('modalOverlay').classList.add('show');
 }
-
 function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
 function confirmSend(){
   const to=document.getElementById('sendTo').value;
@@ -615,328 +523,42 @@ function confirmSend(){
     btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> تأكيد الإرسال';
   },1500);
 }
-
-// ===== SEND TO EXCEL + SAVE REPORT =====
-function buildReportSnapshot(){
-  const center=document.getElementById('centerName').value;
-  const date=document.getElementById('visitDate').value;
-  const writer=document.getElementById('writer').value;
-  const noteInputs=document.querySelectorAll('.notes-input');
-  let noteIndex=0;
-  const snapshot={center,date,writer,ts:Date.now(),sections:{}};
-  sections.forEach(sec=>{
-    snapshot.sections[sec.id]={items:[]};
-    sec.items.forEach((item,i)=>{
-      const s=state[sec.id][i]||{};
-      const note=noteInputs[noteIndex]?.value||'';noteIndex++;
-      snapshot.sections[sec.id].items.push({name:item,avail:s.avail,works:s.works,note});
-    });
-    if(sec.countField){
-      snapshot.sections[sec.id].count=document.getElementById(sec.countField.id)?.value||'';
-    }
-  });
-  return snapshot;
-}
+buildSections();
+document.getElementById('visitDate').valueAsDate=new Date();
 
 function sendToExcel(){
-  const center=document.getElementById('centerName').value;
-  const date=document.getElementById('visitDate').value;
-  const writer=document.getElementById('writer').value;
-  if(!center||!date||!writer){alert('⚠️ الرجاء تعبئة بيانات الرأس');return;}
-  const snap=buildReportSnapshot();
-  savedReports.push(snap);
-  let rows=[];
-  const noteInputs=document.querySelectorAll('.notes-input');
-  let noteIndex=0;
+  const center = document.getElementById('centerName').value;
+  const date   = document.getElementById('visitDate').value;
+  const writer = document.getElementById('writer').value;
+  if(!center || !date || !writer){alert("⚠️ الرجاء تعبئة بيانات الرأس");return;}
+  let rows = [];
+  let noteInputs = document.querySelectorAll('.notes-input');
+  let noteIndex = 0;
   sections.forEach(sec=>{
     sec.items.forEach((item,i)=>{
-      const s=state[sec.id][i]||{};
-      const note=noteInputs[noteIndex]?.value||'';noteIndex++;
-      rows.push({'اسم المركز':center,'التاريخ':date,'الكاتب':writer,'القسم':sec.title,'اسم العنصر':item,
+      const s = state[sec.id][i] || {};
+      const note = noteInputs[noteIndex]?.value || '';
+      noteIndex++;
+      rows.push({'اسم المركز':center,'التاريخ':date,'الكاتب':writer,'اسم العنصر':item,
         'متوفر':s.avail==='yes'?'متوفر':s.avail==='no'?'غير متوفر':'',
         'التشغيل':s.works==='yes'?'تعمل':s.works==='no'?'لا تعمل':'','ملاحظات':note});
     });
     if(sec.countField){
-      const val=document.getElementById(sec.countField.id)?.value||'';
-      if(val)rows.push({'اسم المركز':center,'التاريخ':date,'الكاتب':writer,'القسم':sec.title,'اسم العنصر':sec.countField.label,'متوفر':val,'التشغيل':'','ملاحظات':'عدد'});
+      const val = document.getElementById(sec.countField.id)?.value || '';
+      if(val){rows.push({'اسم المركز':center,'التاريخ':date,'الكاتب':writer,'اسم العنصر':sec.countField.label,'متوفر':val,'التشغيل':'','ملاحظات':'عدد'});}
     }
   });
-  const sendBtn=document.querySelector('.btn-send');
-  const origText=sendBtn.innerHTML;
-  sendBtn.disabled=true;
-  sendBtn.innerHTML='<div class="spinner"></div> جارٍ الإرسال...';
+  const sendBtn = document.querySelector('.btn-send');
+  const origText = sendBtn.innerHTML;
+  sendBtn.disabled = true;
+  sendBtn.innerHTML = '<div class="spinner"></div> جارٍ الإرسال...';
   fetch("https://script.google.com/macros/s/AKfycbyltqAHAbJ6oXAdvb1ChfWF1bVBJNcVi_y0kDzgj29MvIReaAO4GPsOcUp-oo6oXPM-/exec",{
-    method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify({rows})
+    method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify({rows:rows})
   }).then(()=>{
     sendBtn.innerHTML='✅ تم الإرسال بنجاح';sendBtn.style.background='var(--green)';
     setTimeout(()=>{sendBtn.disabled=false;sendBtn.innerHTML=origText;sendBtn.style.background='';},3000);
   }).catch(err=>{sendBtn.disabled=false;sendBtn.innerHTML=origText;alert("❌ فشل الإرسال: "+err.message);});
 }
-
-// ===== DASHBOARD =====
-const GAS_URL="https://script.google.com/macros/s/AKfycbyltqAHAbJ6oXAdvb1ChfWF1bVBJNcVi_y0kDzgj29MvIReaAO4GPsOcUp-oo6oXPM-/exec";
-const CHIP_COLORS=['#4f8ef7','#6ee7b7','#f59e0b','#a78bfa','#f87171','#34d399','#fb923c','#38bdf8','#e879f9','#4ade80'];
-
-let dashFilter={center:'',from:'',to:''};
-let allSheetRows=[];   // raw rows from Sheets: [{اسم المركز, التاريخ, القسم, اسم العنصر, متوفر, التشغيل, ملاحظات}, ...]
-let dashLoaded=false;
-
-// ---- fetch from Google Sheets ----
-function setDashLoading(msg){
-  document.getElementById('dash-kpi').innerHTML=`<div style="grid-column:1/-1;text-align:center;color:var(--text3);font-size:13px;padding:24px;display:flex;align-items:center;justify-content:center;gap:10px"><div class="spinner"></div>${msg}</div>`;
-  document.getElementById('dash-body').innerHTML='';
-  document.getElementById('centersBarEmpty').textContent=msg;
-  document.getElementById('centersBarEmpty').style.display='';
-  document.getElementById('centersBar').querySelectorAll('.center-chip,.centers-bar-sep').forEach(el=>el.remove());
-}
-
-async function fetchSheetData(){
-  setDashLoading('جارٍ تحميل البيانات من قاعدة البيانات...');
-  try{
-    const res=await fetch(GAS_URL+'?action=getRows',{method:'GET'});
-    const json=await res.json();
-    if(json&&json.rows&&Array.isArray(json.rows)){
-      allSheetRows=json.rows;
-    }else{
-      allSheetRows=[];
-    }
-  }catch(e){
-    // fallback: try JSONP-style via script tag approach won't work, show error
-    allSheetRows=[];
-    document.getElementById('dash-kpi').innerHTML=`<div style="grid-column:1/-1;text-align:center;color:var(--red);font-size:13px;padding:24px">⚠️ تعذّر الاتصال بقاعدة البيانات. تأكد من إعداد Google Apps Script لدعم GET.</div>`;
-    document.getElementById('dash-body').innerHTML='';
-    populateCentersAndDates([]);
-    renderCentersBar([]);
-    return;
-  }
-  populateCentersAndDates(allSheetRows);
-  renderCentersBar(allSheetRows);
-  renderDash();
-}
-
-function getFilteredRows(){
-  return allSheetRows.filter(r=>{
-    const rCenter=(r['اسم المركز']||'').trim();
-    const rDate=(r['التاريخ']||'').trim();
-    if(dashFilter.center&&rCenter!==dashFilter.center)return false;
-    if(dashFilter.from&&rDate<dashFilter.from)return false;
-    if(dashFilter.to&&rDate>dashFilter.to)return false;
-    return true;
-  });
-}
-
-function applyDashFilter(){
-  dashFilter.center=document.getElementById('dash-filter-center').value;
-  dashFilter.from=document.getElementById('dash-filter-from').value;
-  dashFilter.to=document.getElementById('dash-filter-to').value;
-  renderCentersBar(allSheetRows);
-  renderDash();
-}
-function resetDashFilter(){
-  dashFilter={center:'',from:'',to:''};
-  document.getElementById('dash-filter-center').value='';
-  document.getElementById('dash-filter-from').value='';
-  document.getElementById('dash-filter-to').value='';
-  renderCentersBar(allSheetRows);
-  renderDash();
-}
-function refreshDash(){
-  fetchSheetData();
-}
-
-function selectCenterChip(center){
-  dashFilter.center=center;
-  document.getElementById('dash-filter-center').value=center;
-  renderCentersBar(allSheetRows);
-  renderDash();
-}
-
-function populateCentersAndDates(rows){
-  // Centers dropdown
-  const sel=document.getElementById('dash-filter-center');
-  const current=sel.value;
-  const centers=[...new Set(rows.map(r=>(r['اسم المركز']||'').trim()).filter(Boolean))].sort();
-  sel.innerHTML='<option value="">جميع المراكز</option>';
-  centers.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;sel.appendChild(o);});
-  if(centers.includes(current))sel.value=current;
-
-  // Date range: auto-fill min/max if empty
-  const dates=rows.map(r=>(r['التاريخ']||'').trim()).filter(d=>/^\d{4}-\d{2}-\d{2}$/.test(d)).sort();
-  if(dates.length){
-    const fromEl=document.getElementById('dash-filter-from');
-    const toEl=document.getElementById('dash-filter-to');
-    if(!fromEl.value)fromEl.value=dates[0];
-    if(!toEl.value)toEl.value=dates[dates.length-1];
-    if(!dashFilter.from)dashFilter.from=dates[0];
-    if(!dashFilter.to)dashFilter.to=dates[dates.length-1];
-  }
-}
-
-function renderCentersBar(rows){
-  const bar=document.getElementById('centersBar');
-  const emptyEl=document.getElementById('centersBarEmpty');
-  const allCenters=[...new Set((rows||[]).map(r=>(r['اسم المركز']||'').trim()).filter(Boolean))].sort();
-  if(allCenters.length===0){
-    emptyEl.textContent='لا توجد بيانات في قاعدة البيانات بعد';
-    emptyEl.style.display='';
-    bar.querySelectorAll('.center-chip,.centers-bar-sep').forEach(el=>el.remove());
-    return;
-  }
-  emptyEl.style.display='none';
-  bar.querySelectorAll('.center-chip,.centers-bar-sep').forEach(el=>el.remove());
-  const totalCount=rows.length;
-  const allChip=document.createElement('button');
-  allChip.className='center-chip center-chip-all'+(dashFilter.center===''?' active':'');
-  allChip.innerHTML=`<span class="chip-dot"></span>الكل <span style="font-size:10px;opacity:0.7">(${totalCount})</span>`;
-  allChip.onclick=()=>selectCenterChip('');
-  bar.appendChild(allChip);
-  const sep=document.createElement('div');sep.className='centers-bar-sep';bar.appendChild(sep);
-  allCenters.forEach((c,idx)=>{
-    const color=CHIP_COLORS[idx%CHIP_COLORS.length];
-    const count=rows.filter(r=>(r['اسم المركز']||'').trim()===c).length;
-    const chip=document.createElement('button');
-    chip.className='center-chip'+(dashFilter.center===c?' active':'');
-    chip.innerHTML=`<span class="chip-dot" style="background:${color}"></span>${c} <span style="font-size:10px;opacity:0.6">(${count})</span>`;
-    if(dashFilter.center===c){chip.style.color=color;chip.style.borderBottomColor=color;chip.style.background=color+'14';}
-    chip.onclick=()=>selectCenterChip(c);
-    bar.appendChild(chip);
-  });
-}
-
-function renderDash(){
-  const rows=getFilteredRows();
-  renderKPI(rows);
-  renderDashSections(rows);
-}
-
-function renderKPI(rows){
-  const kpiEl=document.getElementById('dash-kpi');
-  if(rows.length===0){
-    kpiEl.innerHTML=`<div style="grid-column:1/-1;text-align:center;color:var(--text3);font-size:13px;padding:20px">لا توجد بيانات مطابقة للفلتر المحدد</div>`;
-    return;
-  }
-  // only data rows (not count rows)
-  const dataRows=rows.filter(r=>(r['ملاحظات']||'')==='عدد'?false:true);
-  const total=dataRows.length;
-  const filled=dataRows.filter(r=>r['متوفر']&&r['متوفر']!=='').length;
-  const yes=dataRows.filter(r=>r['متوفر']==='متوفر').length;
-  const no=dataRows.filter(r=>r['متوفر']==='غير متوفر').length;
-  const work=dataRows.filter(r=>r['التشغيل']==='تعمل').length;
-  const nowork=dataRows.filter(r=>r['التشغيل']==='لا تعمل').length;
-  const fillPct=total>0?Math.round(filled/total*100):0;
-  const yesPct=filled>0?Math.round(yes/filled*100):0;
-  const centers=[...new Set(rows.map(r=>(r['اسم المركز']||'').trim()).filter(Boolean))];
-  const dates=[...new Set(rows.map(r=>(r['التاريخ']||'').trim()).filter(Boolean))];
-  kpiEl.innerHTML=`
-    <div class="kpi-card"><div class="kpi-val" style="color:var(--accent)">${centers.length}</div><div class="kpi-label">مركز صحي</div><div class="kpi-pct">${dates.length} يوم زيارة</div></div>
-    <div class="kpi-card"><div class="kpi-val" style="color:var(--accent3)">${fillPct}%</div><div class="kpi-label">نسبة التعبئة</div><div class="kpi-pct">${filled}/${total}</div></div>
-    <div class="kpi-card"><div class="kpi-val" style="color:var(--green)">${yes}</div><div class="kpi-label">متوفر</div><div class="kpi-pct">${yesPct}% من المعبّأ</div></div>
-    <div class="kpi-card"><div class="kpi-val" style="color:var(--red)">${no}</div><div class="kpi-label">غير متوفر</div></div>
-    <div class="kpi-card"><div class="kpi-val" style="color:var(--accent2)">${work}</div><div class="kpi-label">تعمل</div></div>
-    <div class="kpi-card"><div class="kpi-val" style="color:var(--yellow)">${nowork}</div><div class="kpi-label">لا تعمل</div></div>`;
-}
-
-function renderDashSections(rows){
-  const bodyEl=document.getElementById('dash-body');
-  const dataRows=rows.filter(r=>(r['ملاحظات']||'')!=='عدد');
-  if(dataRows.length===0){
-    bodyEl.innerHTML=`<div class="no-data">📭 لا توجد بيانات مطابقة للفلتر.<br><span style="font-size:12px;margin-top:8px;display:block">جرّب تغيير الفلتر أو اضغط "تحديث" لجلب أحدث البيانات.</span></div>`;
-    return;
-  }
-  bodyEl.innerHTML='';
-
-  // Centers summary table (when >1 center)
-  const centersSet=[...new Set(dataRows.map(r=>(r['اسم المركز']||'').trim()).filter(Boolean))];
-  if(centersSet.length>1){
-    const tblDiv=document.createElement('div');tblDiv.className='dash-section-card';
-    let tblRows='';
-    centersSet.forEach(c=>{
-      const cRows=dataRows.filter(r=>(r['اسم المركز']||'').trim()===c);
-      const cy=cRows.filter(r=>r['متوفر']==='متوفر').length;
-      const cn=cRows.filter(r=>r['متوفر']==='غير متوفر').length;
-      const ct=cRows.filter(r=>r['متوفر']&&r['متوفر']!=='').length;
-      const dates=[...new Set(cRows.map(r=>(r['التاريخ']||'').trim()).filter(Boolean))];
-      const pct=ct>0?Math.round(cy/ct*100):0;
-      tblRows+=`<tr>
-        <td style="font-weight:600;color:var(--text)">${c}</td>
-        <td style="text-align:center;color:var(--text3)">${dates.join('، ')||'—'}</td>
-        <td><div class="tbl-pct-bar"><span class="tbl-pct-num" style="color:var(--green)">${pct}%</span><div class="tbl-mini-bar"><div class="tbl-mini-fill" style="width:${pct}%"></div></div></div></td>
-        <td style="color:var(--green);text-align:center">${cy}</td>
-        <td style="color:var(--red);text-align:center">${cn}</td>
-      </tr>`;
-    });
-    tblDiv.innerHTML=`<div class="dsc-header"><div class="dsc-title"><div class="dsc-icon" style="background:#4f8ef722;color:#4f8ef7">🏥</div>ملخص المراكز الصحية</div></div>
-      <div class="tbl-wrap"><table class="dash-center-tbl">
-        <thead><tr><th>المركز</th><th>تواريخ الزيارة</th><th style="min-width:200px">نسبة التوفر</th><th>متوفر</th><th>غير متوفر</th></tr></thead>
-        <tbody>${tblRows}</tbody>
-      </table></div>`;
-    bodyEl.appendChild(tblDiv);
-  }
-
-  // Per section
-  sections.forEach(sec=>{
-    const secRows=dataRows.filter(r=>(r['القسم']||'').trim()===sec.title.trim());
-    const card=document.createElement('div');card.className='dash-section-card';
-    let totalYes=0,totalNo=0,totalFilled=0;
-
-    const itemStats=sec.items.map(itemName=>{
-      const iRows=secRows.filter(r=>(r['اسم العنصر']||'').trim()===itemName.trim());
-      const iy=iRows.filter(r=>r['متوفر']==='متوفر').length;
-      const in_=iRows.filter(r=>r['متوفر']==='غير متوفر').length;
-      totalYes+=iy;totalNo+=in_;totalFilled+=iy+in_;
-      return{name:itemName,yes:iy,no:in_};
-    });
-    const overallYesPct=totalFilled>0?Math.round(totalYes/totalFilled*100):0;
-    const overallNoPct=totalFilled>0?Math.round(totalNo/totalFilled*100):0;
-
-    // Notes for this section
-    const notesList=secRows.filter(r=>(r['ملاحظات']||'').trim()!=='').map(r=>({
-      text:r['ملاحظات'],item:r['اسم العنصر']||'',center:(r['اسم المركز']||'').trim(),date:(r['التاريخ']||'').trim()
-    }));
-    const notesHtml=notesList.length>0?`<div class="dsc-notes-section">
-      <div class="dsc-notes-title">💬 الملاحظات المسجّلة (${notesList.length})</div>
-      ${notesList.map(n=>`<div class="dsc-note-item">
-        <div class="note-text">${n.text}</div>
-        <div class="note-meta">📌 ${n.item} &nbsp;|&nbsp; 🏥 ${n.center||'—'} &nbsp;|&nbsp; 📅 ${n.date||'—'}</div>
-      </div>`).join('')}
-    </div>`:'';
-
-    let itemRows='';
-    itemStats.forEach(s=>{
-      const filled=s.yes+s.no;
-      const yesPct=filled>0?Math.round(s.yes/filled*100):0;
-      const noPct=filled>0?Math.round(s.no/filled*100):0;
-      itemRows+=`<div class="dsc-item">
-        <div class="dsc-item-name">${s.name}</div>
-        <div class="dsc-bar-wrap"><div class="dsc-bar green" style="width:${yesPct}%"></div></div>
-        <div class="dsc-stats">
-          ${filled>0?`<span class="dsc-stat-yes">✓ ${s.yes} (${yesPct}%)</span><span style="color:var(--text3);font-size:11px">/</span><span class="dsc-stat-no">✗ ${s.no} (${noPct}%)</span>`:'<span class="dsc-stat-none">لم يُعبأ</span>'}
-        </div>
-      </div>`;
-    });
-
-    card.innerHTML=`<div class="dsc-header">
-      <div class="dsc-title"><div class="dsc-icon" style="background:${sec.color}22;color:${sec.color}">${sec.icon}</div>${sec.title}</div>
-      <div class="dsc-summary">
-        <span class="dsc-pill pill-yes">✓ متوفر ${overallYesPct}%</span>
-        <span class="dsc-pill pill-no">✗ غير متوفر ${overallNoPct}%</span>
-        <span class="dsc-pill pill-pct">${totalYes}/${totalFilled} إجمالي</span>
-      </div>
-    </div>
-    <div class="legend-row">
-      <span><span class="legend-dot" style="background:var(--green)"></span> الشريط = نسبة التوفر من المعبّأ</span>
-      <span style="color:var(--text3)">|</span>
-      <span>البيانات من Google Sheets</span>
-    </div>
-    <div class="dsc-body">${itemRows}</div>${notesHtml}`;
-    bodyEl.appendChild(card);
-  });
-}
-
-buildSections();
-document.getElementById('visitDate').valueAsDate=new Date();
-renderCentersBar([]);
-renderDash();
 </script>
 </body>
 </html>
