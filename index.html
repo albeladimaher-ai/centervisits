@@ -247,10 +247,24 @@ tr:last-child td{border-bottom:none}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(79,142,247,0.12)}
 .field textarea{resize:vertical;min-height:70px}
 .field select option{background:var(--bg3)}
-.send-summary{
-  background:var(--bg3);border:1px solid var(--border);border-radius:8px;
-  padding:12px 14px;margin-bottom:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px;
+.confirm-card{
+  background:var(--bg3);border:1px solid var(--border);border-radius:12px;
+  padding:20px;margin-bottom:0;
 }
+.confirm-card-title{
+  font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;
+  margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);
+}
+.confirm-meta{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.confirm-meta-row{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.confirm-meta-row .lbl{color:var(--text3)}
+.confirm-meta-row .val{color:var(--text);font-weight:600}
+.confirm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding-top:14px;border-top:1px solid var(--border)}
+.cs-item{background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px 8px;text-align:center}
+.cs-num{font-size:22px;font-weight:700;line-height:1}
+.cs-lbl{font-size:10px;color:var(--text3);margin-top:3px}
+.cs-yes{color:var(--green)}.cs-no{color:var(--red)}.cs-work{color:var(--accent2)}.cs-nowork{color:var(--yellow)}
+.send-summary{display:none}
 .ss-item{font-size:12px;color:var(--text2)}.ss-item span{color:var(--text);font-weight:600}
 .modal-foot{display:flex;gap:10px;justify-content:flex-end;padding:14px 20px;border-top:1px solid var(--border)}
 .btn-cancel{background:none;border:1px solid var(--border);color:var(--text2);padding:8px 18px;border-radius:6px;font-size:13px;cursor:pointer;transition:all 0.2s}
@@ -396,33 +410,20 @@ tr:last-child td{border-bottom:none}
     </div>
     <div id="modalForm">
       <div class="modal-body">
-        <div class="send-summary" id="sendSummary"></div>
-        <div class="field">
-          <label for="sendTo">جهة الإرسال</label>
-          <select id="sendTo">
-            <option value="">— اختر جهة الإرسال —</option>
-            <option>إدارة الخدمات الصحية المساندة</option>
-            <option>مدير الشبكة الصحية</option>
-            <option>المدير الطبي</option>
-            <option>إدارة الجودة</option>
-            <option>أخرى</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="sendEmail">البريد الإلكتروني للمستلم</label>
-          <input type="email" id="sendEmail" placeholder="example@moh.gov.sa" style="direction:ltr">
-        </div>
-        <div class="field">
-          <label for="sendMethod">طريقة الإرسال</label>
-          <select id="sendMethod">
-            <option value="email">بريد إلكتروني</option>
-            <option value="system">نظام صحتي</option>
-            <option value="whatsapp">واتساب</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="sendNotes">ملاحظات إضافية</label>
-          <textarea id="sendNotes" placeholder="أي ملاحظات تريد إضافتها عند الإرسال..."></textarea>
+        <div class="confirm-card">
+          <div class="confirm-card-title">📋 ملخص التقرير</div>
+          <div class="confirm-meta">
+            <div class="confirm-meta-row"><span class="lbl">🏥 اسم المركز</span><span class="val" id="cm-center">—</span></div>
+            <div class="confirm-meta-row"><span class="lbl">📅 تاريخ الزيارة</span><span class="val" id="cm-date">—</span></div>
+            <div class="confirm-meta-row"><span class="lbl">👤 مرسل البيانات</span><span class="val" id="cm-writer">—</span></div>
+            <div class="confirm-meta-row"><span class="lbl">📊 نسبة التعبئة</span><span class="val" id="cm-pct">—</span></div>
+          </div>
+          <div class="confirm-stats">
+            <div class="cs-item"><div class="cs-num cs-yes" id="cm-yes">0</div><div class="cs-lbl">متوفر</div></div>
+            <div class="cs-item"><div class="cs-num cs-no" id="cm-no">0</div><div class="cs-lbl">غير متوفر</div></div>
+            <div class="cs-item"><div class="cs-num cs-work" id="cm-work">0</div><div class="cs-lbl">تعمل</div></div>
+            <div class="cs-item"><div class="cs-num cs-nowork" id="cm-nowork">0</div><div class="cs-lbl">لا تعمل</div></div>
+          </div>
         </div>
       </div>
       <div class="modal-foot">
@@ -435,7 +436,7 @@ tr:last-child td{border-bottom:none}
     </div>
     <div class="success-box" id="successBox" role="status">
       <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="success-title">تم إرسال التقرير بنجاح</div>
+      <div class="success-title">✅ تم إرسال التقرير بنجاح</div>
       <div class="success-sub" id="successMsg"></div>
       <div class="success-ref" id="successRef"></div>
       <button class="btn-confirm" id="btnSuccessClose" style="margin-top:8px">إغلاق</button>
@@ -737,25 +738,28 @@ function updateStats() {
 
 // ===== MODAL =====
 function openModal() {
-  const center = getEl('centerName').value || '—';
+  const center = getEl('centerName').value.trim() || '—';
   const date   = getEl('visitDate').value || '—';
-  const filled = getEl('st-fill').textContent;
+  const writer = getEl('writer').value.trim() || '—';
   const pct    = getEl('st-fill-pct').textContent;
   const yes    = getEl('st-yes').textContent;
   const no     = getEl('st-no').textContent;
+  const work   = getEl('st-work').textContent;
+  const nowork = getEl('st-nowork').textContent;
 
-  getEl('sendSummary').innerHTML = `
-    <div class="ss-item">المركز: <span>${escapeHtml(center)}</span></div>
-    <div class="ss-item">التاريخ: <span>${escapeHtml(date)}</span></div>
-    <div class="ss-item">نسبة التعبئة: <span>${pct}</span></div>
-    <div class="ss-item">العناصر المعبأة: <span>${filled}/${totalItems}</span></div>
-    <div class="ss-item">متوفر: <span style="color:var(--green)">${yes}</span></div>
-    <div class="ss-item">غير متوفر: <span style="color:var(--red)">${no}</span></div>`;
+  getEl('cm-center').textContent = center;
+  getEl('cm-date').textContent   = date;
+  getEl('cm-writer').textContent = writer;
+  getEl('cm-pct').textContent    = pct;
+  getEl('cm-yes').textContent    = yes;
+  getEl('cm-no').textContent     = no;
+  getEl('cm-work').textContent   = work;
+  getEl('cm-nowork').textContent = nowork;
 
   getEl('modalForm').style.display = 'block';
   getEl('successBox').classList.remove('show');
   getEl('modalOverlay').classList.add('show');
-  getEl('sendTo').focus();
+  getEl('btnConfirm').focus();
 }
 
 function closeModal() {
@@ -763,54 +767,22 @@ function closeModal() {
 }
 
 function confirmSend() {
-  const to     = getEl('sendTo').value;
-  const email  = getEl('sendEmail').value.trim();
-  const method = getEl('sendMethod').value;
-  const btn    = getEl('btnConfirm');
-
-  if (!to) { showToast('⚠️ يرجى اختيار جهة الإرسال'); return; }
-  if (!email) { showToast('⚠️ يرجى إدخال البريد الإلكتروني'); return; }
-
-  btn.disabled = true;
-  btn.innerHTML = '<div class="spinner"></div> جارٍ الإرسال...';
-
-  setTimeout(() => {
-    const ref = 'RPT-' + Date.now().toString(36).toUpperCase();
-    const center = getEl('centerName').value || 'غير محدد';
-    const methodLabels = { email: 'بريد إلكتروني', system: 'نظام صحتي', whatsapp: 'واتساب' };
-    getEl('successMsg').textContent = `تم إرسال تقرير "${center}" إلى ${to} عبر ${methodLabels[method] || method}`;
-    getEl('successRef').textContent = 'رقم المرجع: ' + ref;
-    getEl('modalForm').style.display = 'none';
-    getEl('successBox').classList.add('show');
-    btn.disabled = false;
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> تأكيد الإرسال';
-  }, 1500);
-}
-
-// ===== SEND TO SHEETS =====
-function sendToExcel() {
+  const btn = getEl('btnConfirm');
   const center = getEl('centerName').value.trim();
   const date   = getEl('visitDate').value;
   const writer = getEl('writer').value.trim();
 
-  if (!center || !date || !writer) {
-    showToast('⚠️ الرجاء تعبئة بيانات الرأس (المركز، التاريخ، الكاتب)');
-    return;
-  }
-
+  // Build rows
   const rows = [];
   const noteInputs = document.querySelectorAll('.notes-input');
   let noteIndex = 0;
-
   SECTIONS.forEach(sec => {
     sec.items.forEach((item, i) => {
       const s = state[sec.id][i] || {};
       const note = noteInputs[noteIndex]?.value || '';
       noteIndex++;
       rows.push({
-        'اسم المركز': center,
-        'التاريخ': date,
-        'الكاتب': writer,
+        'اسم المركز': center, 'التاريخ': date, 'الكاتب': writer,
         'اسم العنصر': item,
         'متوفر': s.avail === 'yes' ? 'متوفر' : s.avail === 'no' ? 'غير متوفر' : '',
         'التشغيل': s.works === 'yes' ? 'تعمل' : s.works === 'no' ? 'لا تعمل' : '',
@@ -819,18 +791,14 @@ function sendToExcel() {
     });
     if (sec.countField) {
       const val = getEl(sec.countField.id)?.value || '';
-      if (val) {
-        rows.push({
-          'اسم المركز': center, 'التاريخ': date, 'الكاتب': writer,
-          'اسم العنصر': sec.countField.label,
-          'متوفر': val, 'التشغيل': '', 'ملاحظات': 'عدد'
-        });
-      }
+      if (val) rows.push({
+        'اسم المركز': center, 'التاريخ': date, 'الكاتب': writer,
+        'اسم العنصر': sec.countField.label,
+        'متوفر': val, 'التشغيل': '', 'ملاحظات': 'عدد'
+      });
     }
   });
 
-  const btn = getEl('btnSend');
-  const origHTML = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = '<div class="spinner"></div> جارٍ الإرسال...';
 
@@ -841,21 +809,22 @@ function sendToExcel() {
     body: JSON.stringify({ rows })
   })
   .then(() => {
-    btn.innerHTML = '✅ تم الإرسال بنجاح';
-    btn.style.background = 'var(--green)';
-    showToast('✅ تم إرسال التقرير بنجاح');
-    setTimeout(() => {
-      btn.disabled = false;
-      btn.innerHTML = origHTML;
-      btn.style.background = '';
-    }, 3000);
+    const ref = 'RPT-' + Date.now().toString(36).toUpperCase();
+    getEl('successMsg').textContent = `تم إرسال تقرير "${center}" بنجاح إلى Google Sheets`;
+    getEl('successRef').textContent = 'رقم المرجع: ' + ref;
+    getEl('modalForm').style.display = 'none';
+    getEl('successBox').classList.add('show');
+    btn.disabled = false;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> تأكيد الإرسال';
   })
   .catch(err => {
     btn.disabled = false;
-    btn.innerHTML = origHTML;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> تأكيد الإرسال';
     showToast('❌ فشل الإرسال: ' + err.message);
   });
 }
+
+// sendToExcel merged into confirmSend
 
 // ===== INIT =====
 function init() {
@@ -873,7 +842,7 @@ function init() {
     const date   = getEl('visitDate').value;
     const writer = getEl('writer').value.trim();
     if (!center || !date || !writer) {
-      showToast('⚠️ الرجاء تعبئة بيانات الرأس أولاً');
+      showToast('⚠️ الرجاء تعبئة: اسم المركز، التاريخ، واسم الكاتب');
       return;
     }
     openModal();
