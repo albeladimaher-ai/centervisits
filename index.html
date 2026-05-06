@@ -802,15 +802,17 @@ function confirmSend() {
   btn.disabled = true;
   btn.innerHTML = '<div class="spinner"></div> جارٍ الإرسال...';
 
+  const payload = JSON.stringify({ rows: rows });
+
   fetch(SHEETS_URL, {
     method: 'POST',
     mode: 'no-cors',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify({ rows })
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: payload
   })
   .then(() => {
     const ref = 'RPT-' + Date.now().toString(36).toUpperCase();
-    getEl('successMsg').textContent = `تم إرسال تقرير "${center}" بنجاح إلى Google Sheets`;
+    getEl('successMsg').textContent = 'تم إرسال تقرير "' + center + '" بنجاح إلى Google Sheets';
     getEl('successRef').textContent = 'رقم المرجع: ' + ref;
     getEl('modalForm').style.display = 'none';
     getEl('successBox').classList.add('show');
