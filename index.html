@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تقرير الجولة الميدانية</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Tahoma,sans-serif;direction:rtl}
@@ -7,6 +13,74 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;direction:rtl}
   --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
   --green:#22c55e;--red:#ef4444;--yellow:#eab308;
 }
+
+/* ===== LOGIN SCREEN ===== */
+#loginScreen{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,#0a0d14 0%,#0f1117 40%,#1a1d27 100%);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.login-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:16px;
+  padding:40px 36px;width:100%;max-width:400px;
+  box-shadow:0 24px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(79,142,247,0.08);
+  position:relative;overflow:hidden;
+}
+.login-card::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(79,142,247,0.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+.login-logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px}
+.login-logo-circle{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
+}
+.login-org{text-align:center}
+.login-org strong{display:block;font-size:14px;color:var(--text);line-height:1.4}
+.login-org span{font-size:11px;color:var(--text3)}
+.login-title{text-align:center;margin-bottom:28px}
+.login-title h2{font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px}
+.login-title p{font-size:12px;color:var(--text3)}
+.login-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.login-field label{font-size:12px;color:var(--text2);font-weight:500}
+.login-field-wrap{position:relative}
+.login-field input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:10px 14px 10px 40px;border-radius:8px;
+  font-size:13px;outline:none;transition:border-color 0.2s;
+  font-family:'Segoe UI',Tahoma,sans-serif;direction:ltr;text-align:right;
+}
+.login-field input:focus{border-color:var(--accent)}
+.login-field input.error{border-color:var(--red)!important}
+.login-field-icon{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  color:var(--text3);font-size:14px;pointer-events:none;
+}
+.login-error{
+  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);
+  border-radius:6px;padding:9px 12px;font-size:12px;color:var(--red);
+  margin-bottom:16px;display:none;text-align:center;
+}
+.login-error.show{display:block}
+.btn-login{
+  width:100%;background:var(--accent);color:#fff;border:none;
+  padding:11px 20px;border-radius:8px;font-size:14px;font-weight:600;
+  cursor:pointer;transition:opacity 0.2s;font-family:'Segoe UI',Tahoma,sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;
+}
+.btn-login:hover{opacity:0.88}
+.btn-login:disabled{opacity:0.5;cursor:not-allowed}
+.login-hint{text-align:center;margin-top:18px;font-size:11px;color:var(--text3)}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.shake{animation:shake 0.4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.login-card{animation:fadeIn 0.4s ease}
+
+/* ===== MAIN APP ===== */
+#appScreen{display:none}
 .wrap{background:var(--bg);min-height:100vh;padding:0 0 40px;color:var(--text)}
 .header{background:linear-gradient(135deg,#1e2a4a 0%,#0f1117 100%);padding:24px 24px 20px;border-bottom:1px solid var(--border)}
 .header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
@@ -22,6 +96,8 @@ h1{font-size:18px;font-weight:600;color:var(--text);letter-spacing:0.3px}
 .meta-field label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px}
 .meta-field input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:6px;font-size:13px;outline:none;width:100%}
 .meta-field input:focus{border-color:var(--accent)}
+.logout-btn{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:var(--red);padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;white-space:nowrap;transition:all 0.2s}
+.logout-btn:hover{background:rgba(239,68,68,0.2)}
 .stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;padding:16px 24px;background:var(--bg2);border-bottom:1px solid var(--border)}
 .stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center}
 .stat-card .sv{font-size:26px;font-weight:700;line-height:1}
@@ -106,7 +182,6 @@ tr:last-child td{border-bottom:none}
 .success-title{font-size:16px;font-weight:600;color:var(--green)}
 .success-sub{font-size:13px;color:var(--text2)}
 .success-ref{font-size:11px;color:var(--text3);background:var(--bg3);padding:4px 12px;border-radius:5px;font-family:monospace}
-
 .bulk-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--bg4);border-bottom:1px solid var(--border);flex-wrap:wrap}
 .bulk-group{display:flex;gap:4px}
 .bulk-sep{width:1px;height:20px;background:var(--border);margin:0 4px}
@@ -121,7 +196,48 @@ tr:last-child td{border-bottom:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
 </style>
+</head>
+<body>
 
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-circle">🏥</div>
+      <div class="login-org">
+        <strong>إدارة الخدمات الصحية المساندة</strong>
+        <span>تجمع المدينة المنورة الصحي</span>
+      </div>
+    </div>
+    <div class="login-title">
+      <h2>تسجيل الدخول</h2>
+      <p>أدخل بيانات الدخول للمتابعة</p>
+    </div>
+    <div class="login-field">
+      <label>اسم المستخدم</label>
+      <div class="login-field-wrap">
+        <span class="login-field-icon">👤</span>
+        <input type="text" id="loginUser" placeholder="اسم المستخدم" autocomplete="username">
+      </div>
+    </div>
+    <div class="login-field">
+      <label>كلمة المرور</label>
+      <div class="login-field-wrap">
+        <span class="login-field-icon">🔒</span>
+        <input type="password" id="loginPass" placeholder="كلمة المرور" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+    </div>
+    <div class="login-error" id="loginError">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
+    <button class="btn-login" id="btnLogin" onclick="doLogin()">
+      <span>دخول</span>
+      <span>←</span>
+    </button>
+    <div class="login-hint">نظام تقارير الجولات الميدانية — وزارة الصحة</div>
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div id="appScreen">
 <div class="wrap">
 <div class="header">
   <div class="header-top">
@@ -133,6 +249,7 @@ tr:last-child td{border-bottom:none}
       <h1>تقرير الجولة الميدانية للخدمات الصحية المساندة</h1>
       <div class="subtitle">Field Tour Report — Supporting Health Services</div>
     </div>
+    <button class="logout-btn" onclick="doLogout()">🔓 خروج</button>
   </div>
   <div class="meta-row">
     <div class="meta-field"><label>اسم المركز</label><input type="text" id="centerName" placeholder="أدخل اسم المركز"></div>
@@ -163,6 +280,7 @@ tr:last-child td{border-bottom:none}
     </button>
   </div>
   <div class="sig-block"><label>توقيع مدير المركز</label><div class="sig-line"></div></div>
+</div>
 </div>
 </div>
 
@@ -218,6 +336,43 @@ tr:last-child td{border-bottom:none}
 </div>
 
 <script>
+// ===== AUTH =====
+const CREDENTIALS = { username: '123', password: '123' };
+
+function doLogin(){
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  const card = document.querySelector('.login-card');
+
+  if(user === CREDENTIALS.username && pass === CREDENTIALS.password){
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appScreen').style.display = 'block';
+    errEl.classList.remove('show');
+  } else {
+    errEl.classList.add('show');
+    card.classList.remove('shake');
+    void card.offsetWidth; // reflow to restart animation
+    card.classList.add('shake');
+    document.getElementById('loginUser').classList.add('error');
+    document.getElementById('loginPass').classList.add('error');
+    document.getElementById('loginPass').value = '';
+    setTimeout(()=>{
+      document.getElementById('loginUser').classList.remove('error');
+      document.getElementById('loginPass').classList.remove('error');
+    }, 2000);
+  }
+}
+
+function doLogout(){
+  document.getElementById('appScreen').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginError').classList.remove('show');
+}
+
+// ===== MAIN APP =====
 const sections=[
   {id:'lab_premarital',title:'خدمات المختبر (فحص ما قبل الزواج)',icon:'🔬',color:'#4f8ef7',
    items:['يتوفر موعد على نظام صحتي','توفر مسار خاص لفحص ما قبل الزواج','تتوفر الخدمة بالمركز من الأحد إلى الخميس خلال ساعات العمل','يتم الاستقبال بدون موعد','يتم طلب إثبات الهوية بالاستقبال','يتم طلب الهوية في نقطة سحب الدم','تتوفر الأنابيب البنفسجية بكميات كافية','تتوفر الأنابيب الصفراء أو الحمراء بكميات كافية','تتوفر تجهيزات حفظ العينات (ثلاجة أو حافظة)','يتم الالتزام بوضع الباركود على العينات','هل تم الاطلاع على التعميم من مقدمي الخدمة','مدير المركز على اطلاع بوجود الخدمة','المدير الطبي على اطلاع بوجود الخدمة','الاستقبال على اطلاع بوجود الخدمة','موظف السحب على اطلاع بوجود الخدمة','توفر QR-Code في منطقة السحب + التثقيف + الاستقبال'],
@@ -370,88 +525,40 @@ function confirmSend(){
 }
 buildSections();
 document.getElementById('visitDate').valueAsDate=new Date();
-function sendToExcel(){
 
+function sendToExcel(){
   const center = document.getElementById('centerName').value;
   const date   = document.getElementById('visitDate').value;
   const writer = document.getElementById('writer').value;
-
-  if(!center || !date || !writer){
-    alert("⚠️ الرجاء تعبئة بيانات الرأس");
-    return;
-  }
-
+  if(!center || !date || !writer){alert("⚠️ الرجاء تعبئة بيانات الرأس");return;}
   let rows = [];
   let noteInputs = document.querySelectorAll('.notes-input');
   let noteIndex = 0;
-
   sections.forEach(sec=>{
     sec.items.forEach((item,i)=>{
-
       const s = state[sec.id][i] || {};
       const note = noteInputs[noteIndex]?.value || '';
       noteIndex++;
-
-      rows.push({
-        'اسم المركز': center,
-        'التاريخ': date,
-        'الكاتب': writer,
-        'اسم العنصر': item,
-        'متوفر': s.avail === 'yes' ? 'متوفر' : s.avail === 'no' ? 'غير متوفر' : '',
-        'التشغيل': s.works === 'yes' ? 'تعمل' : s.works === 'no' ? 'لا تعمل' : '',
-        'ملاحظات': note
-      });
-
+      rows.push({'اسم المركز':center,'التاريخ':date,'الكاتب':writer,'اسم العنصر':item,
+        'متوفر':s.avail==='yes'?'متوفر':s.avail==='no'?'غير متوفر':'',
+        'التشغيل':s.works==='yes'?'تعمل':s.works==='no'?'لا تعمل':'','ملاحظات':note});
     });
-
-    // إضافة العدادات
     if(sec.countField){
       const val = document.getElementById(sec.countField.id)?.value || '';
-      if(val){
-        rows.push({
-          'اسم المركز': center,
-          'التاريخ': date,
-          'الكاتب': writer,
-          'اسم العنصر': sec.countField.label,
-          'متوفر': val,
-          'التشغيل': '',
-          'ملاحظات': 'عدد'
-        });
-      }
+      if(val){rows.push({'اسم المركز':center,'التاريخ':date,'الكاتب':writer,'اسم العنصر':sec.countField.label,'متوفر':val,'التشغيل':'','ملاحظات':'عدد'});}
     }
-
   });
-
-  // إظهار رسالة فورية
   const sendBtn = document.querySelector('.btn-send');
   const origText = sendBtn.innerHTML;
   sendBtn.disabled = true;
   sendBtn.innerHTML = '<div class="spinner"></div> جارٍ الإرسال...';
-
-  fetch("https://script.google.com/macros/s/AKfycbyltqAHAbJ6oXAdvb1ChfWF1bVBJNcVi_y0kDzgj29MvIReaAO4GPsOcUp-oo6oXPM-/exec", {
-  method: "POST",
-  mode: "no-cors",
-  headers: {
-    "Content-Type": "text/plain"
-  },
-  body: JSON.stringify({rows: rows})
-})
-.then(() => {
-  sendBtn.innerHTML = '✅ تم الإرسال بنجاح';
-  sendBtn.style.background = 'var(--green)';
-  setTimeout(() => {
-    sendBtn.disabled = false;
-    sendBtn.innerHTML = origText;
-    sendBtn.style.background = '';
-  }, 3000);
-})
-.catch(err => {
-  sendBtn.disabled = false;
-  sendBtn.innerHTML = origText;
-  alert("❌ فشل الإرسال: " + err.message);
-  console.error(err);
-});
-
-} // ✅ إغلاق الدالة
-
+  fetch("https://script.google.com/macros/s/AKfycbyltqAHAbJ6oXAdvb1ChfWF1bVBJNcVi_y0kDzgj29MvIReaAO4GPsOcUp-oo6oXPM-/exec",{
+    method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify({rows:rows})
+  }).then(()=>{
+    sendBtn.innerHTML='✅ تم الإرسال بنجاح';sendBtn.style.background='var(--green)';
+    setTimeout(()=>{sendBtn.disabled=false;sendBtn.innerHTML=origText;sendBtn.style.background='';},3000);
+  }).catch(err=>{sendBtn.disabled=false;sendBtn.innerHTML=origText;alert("❌ فشل الإرسال: "+err.message);});
+}
 </script>
+</body>
+</html>
