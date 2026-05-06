@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -14,7 +14,7 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;direction:rtl}
   --green:#22c55e;--red:#ef4444;--yellow:#eab308;
 }
 
-/* ===== LOGIN SCREEN ===== */
+/* ===== LOGIN ===== */
 #loginScreen{
   position:fixed;inset:0;z-index:9999;
   background:linear-gradient(135deg,#0a0d14 0%,#0f1117 40%,#1a1d27 100%);
@@ -25,6 +25,7 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;direction:rtl}
   padding:40px 36px;width:100%;max-width:400px;
   box-shadow:0 24px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(79,142,247,0.08);
   position:relative;overflow:hidden;
+  animation:fadeInUp 0.4s ease;
 }
 .login-card::before{
   content:'';position:absolute;top:-60px;right:-60px;
@@ -50,10 +51,10 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;direction:rtl}
 .login-field input{
   width:100%;background:var(--bg3);border:1px solid var(--border);
   color:var(--text);padding:10px 14px 10px 40px;border-radius:8px;
-  font-size:13px;outline:none;transition:border-color 0.2s;
+  font-size:13px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;
   font-family:'Segoe UI',Tahoma,sans-serif;direction:ltr;text-align:right;
 }
-.login-field input:focus{border-color:var(--accent)}
+.login-field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,142,247,0.15)}
 .login-field input.error{border-color:var(--red)!important}
 .login-field-icon{
   position:absolute;left:12px;top:50%;transform:translateY(-50%);
@@ -68,24 +69,28 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;direction:rtl}
 .btn-login{
   width:100%;background:var(--accent);color:#fff;border:none;
   padding:11px 20px;border-radius:8px;font-size:14px;font-weight:600;
-  cursor:pointer;transition:opacity 0.2s;font-family:'Segoe UI',Tahoma,sans-serif;
+  cursor:pointer;transition:opacity 0.2s,transform 0.1s;
+  font-family:'Segoe UI',Tahoma,sans-serif;
   display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;
 }
 .btn-login:hover{opacity:0.88}
+.btn-login:active{transform:scale(0.98)}
 .btn-login:disabled{opacity:0.5;cursor:not-allowed}
 .login-hint{text-align:center;margin-top:18px;font-size:11px;color:var(--text3)}
+
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 .shake{animation:shake 0.4s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.login-card{animation:fadeIn 0.4s ease}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-/* ===== MAIN APP ===== */
+/* ===== APP ===== */
 #appScreen{display:none}
 .wrap{background:var(--bg);min-height:100vh;padding:0 0 40px;color:var(--text)}
+
+/* Header */
 .header{background:linear-gradient(135deg,#1e2a4a 0%,#0f1117 100%);padding:24px 24px 20px;border-bottom:1px solid var(--border)}
 .header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
 .logo-area{display:flex;align-items:center;gap:12px}
-.logo-circle{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));flex-shrink:0}
+.logo-circle{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
 .org-name{font-size:13px;color:var(--text2);line-height:1.4}
 .org-name strong{display:block;font-size:15px;color:var(--text)}
 .title-block{text-align:center;flex:1}
@@ -94,29 +99,48 @@ h1{font-size:18px;font-weight:600;color:var(--text);letter-spacing:0.3px}
 .meta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:16px 0 0;padding-top:16px;border-top:1px solid var(--border)}
 .meta-field{display:flex;flex-direction:column;gap:4px}
 .meta-field label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px}
-.meta-field input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:6px;font-size:13px;outline:none;width:100%}
-.meta-field input:focus{border-color:var(--accent)}
-.logout-btn{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:var(--red);padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;white-space:nowrap;transition:all 0.2s}
+.meta-field input{
+  background:var(--bg3);border:1px solid var(--border);color:var(--text);
+  padding:7px 10px;border-radius:6px;font-size:13px;outline:none;width:100%;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.meta-field input:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(79,142,247,0.12)}
+.logout-btn{
+  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);
+  color:var(--red);padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;
+  white-space:nowrap;transition:all 0.2s;
+}
 .logout-btn:hover{background:rgba(239,68,68,0.2)}
+
+/* Progress & Stats */
+.progress-wrap{background:var(--bg3);height:4px}
+.progress-bar{height:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 0.4s ease}
+
 .stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;padding:16px 24px;background:var(--bg2);border-bottom:1px solid var(--border)}
-.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center}
-.stat-card .sv{font-size:26px;font-weight:700;line-height:1}
+.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;transition:transform 0.15s}
+.stat-card:hover{transform:translateY(-1px)}
+.stat-card .sv{font-size:26px;font-weight:700;line-height:1;transition:color 0.3s}
 .stat-card .sl{font-size:11px;color:var(--text2);margin-top:4px}
 .sv-total{color:var(--accent)}.sv-yes{color:var(--green)}.sv-no{color:var(--red)}
 .sv-work{color:var(--accent2)}.sv-nowork{color:var(--yellow)}.sv-fill{color:var(--accent3)}
 .sv-pct{font-size:13px;color:var(--text3);display:block;margin-top:2px}
+
+/* Sections */
 .sections{padding:16px 24px;display:flex;flex-direction:column;gap:16px}
-.section{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
-.sec-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none}
+.section{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:box-shadow 0.2s}
+.section:hover{box-shadow:0 2px 12px rgba(0,0,0,0.25)}
+.sec-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none;transition:background 0.15s}
 .sec-header:hover{background:var(--bg3)}
 .sec-title{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600}
 .sec-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .sec-badge{background:var(--bg4);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--text2);display:flex;align-items:center;gap:6px}
 .sec-badge .filled{color:var(--green);font-weight:600}
-.sec-toggle{color:var(--text3);font-size:14px;transition:transform 0.2s}
+.sec-toggle{color:var(--text3);font-size:12px;transition:transform 0.25s;display:inline-block}
 .sec-toggle.open{transform:rotate(180deg)}
 .sec-body{display:none;border-top:1px solid var(--border)}
 .sec-body.open{display:block}
+
+/* Table */
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:12.5px}
 thead tr{background:var(--bg4)}
@@ -125,9 +149,11 @@ th:first-child{text-align:right;padding-right:14px;width:40px}
 th.col-item{text-align:right;min-width:200px}
 td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:middle;text-align:center}
 td.item-num{color:var(--text3);font-size:11px;text-align:right;padding-right:14px}
-td.item-text{text-align:right;color:var(--text);line-height:1.4}
+td.item-text{text-align:right;color:var(--text);line-height:1.5}
 tr:hover td{background:rgba(79,142,247,0.04)}
 tr:last-child td{border-bottom:none}
+
+/* Radio buttons */
 .radio-group{display:flex;gap:4px;justify-content:center;align-items:center}
 .rb{display:inline-flex;align-items:center;gap:3px;cursor:pointer;padding:3px 7px;border-radius:5px;border:1px solid var(--border);font-size:11px;transition:all 0.15s;white-space:nowrap}
 .rb input{display:none}
@@ -136,56 +162,34 @@ tr:last-child td{border-bottom:none}
 .rb:has(input:checked).works{background:rgba(110,231,183,0.15);border-color:var(--accent2);color:var(--accent2)}
 .rb:has(input:checked).noworks{background:rgba(234,179,8,0.15);border-color:var(--yellow);color:var(--yellow)}
 .rb:not(:has(input:checked)){color:var(--text3)}
-.rb:hover{border-color:var(--text2)}
-.notes-input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:11px;width:120px;outline:none}
+.rb:hover:not(:has(input:checked)){border-color:var(--text2);color:var(--text2)}
+
+/* Inputs */
+.notes-input{
+  background:var(--bg3);border:1px solid var(--border);color:var(--text);
+  padding:5px 8px;border-radius:5px;font-size:11px;width:120px;outline:none;
+  transition:border-color 0.2s;
+}
 .notes-input:focus{border-color:var(--accent)}
-.count-input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:12px;width:70px;text-align:center;outline:none}
+.count-input{
+  background:var(--bg3);border:1px solid var(--border);color:var(--text);
+  padding:5px 8px;border-radius:5px;font-size:12px;width:70px;text-align:center;outline:none;
+  transition:border-color 0.2s;
+}
 .count-input:focus{border-color:var(--accent)}
-.footer{padding:16px 24px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.sig-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 20px;text-align:center;min-width:180px}
-.sig-block label{font-size:12px;color:var(--text2);display:block;margin-bottom:8px}
-.sig-line{border-top:1px dashed var(--border);width:140px;margin:0 auto}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.btn-print{background:var(--bg3);color:var(--text2);border:1px solid var(--border);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
-.btn-print:hover{border-color:var(--text2)}
-.btn-send{background:var(--accent);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px}
-.btn-send:hover{opacity:0.9}
-.btn-send svg{width:16px;height:16px}
-.progress-wrap{background:var(--bg3);height:4px}
-.progress-bar{height:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 0.3s}
-.modal-overlay{display:none;min-height:500px;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:20px}
-.modal-overlay.show{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border);border-radius:12px;width:100%;max-width:520px;overflow:hidden}
-.modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
-.modal-head h2{font-size:15px;font-weight:600;color:var(--text)}
-.modal-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;line-height:1;padding:4px 8px}
-.modal-close:hover{color:var(--text)}
-.modal-body{padding:20px}
-.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-.field label{font-size:12px;color:var(--text3)}
-.field input,.field select,.field textarea{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:6px;font-size:13px;outline:none;width:100%;font-family:inherit;direction:rtl}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
-.field textarea{resize:vertical;min-height:70px}
-.field select option{background:var(--bg3)}
-.send-summary{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ss-item{font-size:12px;color:var(--text2)}.ss-item span{color:var(--text);font-weight:600}
-.modal-foot{display:flex;gap:10px;justify-content:flex-end;padding:14px 20px;border-top:1px solid var(--border)}
-.btn-cancel{background:none;border:1px solid var(--border);color:var(--text2);padding:8px 18px;border-radius:6px;font-size:13px;cursor:pointer}
-.btn-cancel:hover{border-color:var(--text2)}
-.btn-confirm{background:var(--accent);color:#fff;border:none;padding:8px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
-.btn-confirm:hover{opacity:0.9}
-.btn-confirm:disabled{opacity:0.5;cursor:not-allowed}
-.success-box{display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;gap:14px}
-.success-box.show{display:flex}
-.success-icon{width:60px;height:60px;border-radius:50%;background:rgba(34,197,94,0.15);border:2px solid var(--green);display:flex;align-items:center;justify-content:center}
-.success-icon svg{width:28px;height:28px;stroke:var(--green);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.success-title{font-size:16px;font-weight:600;color:var(--green)}
-.success-sub{font-size:13px;color:var(--text2)}
-.success-ref{font-size:11px;color:var(--text3);background:var(--bg3);padding:4px 12px;border-radius:5px;font-family:monospace}
-.bulk-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--bg4);border-bottom:1px solid var(--border);flex-wrap:wrap}
+
+/* Bulk bar */
+.bulk-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 16px;background:var(--bg4);border-bottom:1px solid var(--border);flex-wrap:wrap;
+}
 .bulk-group{display:flex;gap:4px}
 .bulk-sep{width:1px;height:20px;background:var(--border);margin:0 4px}
-.bulk-btn{padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);transition:all 0.15s}
+.bulk-btn{
+  padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;
+  cursor:pointer;border:1px solid var(--border);background:var(--bg3);
+  color:var(--text2);transition:all 0.15s;
+}
 .bulk-btn:hover{border-color:var(--text2);color:var(--text)}
 .bulk-yes:hover{background:rgba(34,197,94,0.15);border-color:var(--green)!important;color:var(--green)!important}
 .bulk-no:hover{background:rgba(239,68,68,0.15);border-color:var(--red)!important;color:var(--red)!important}
@@ -193,13 +197,109 @@ tr:last-child td{border-bottom:none}
 .bulk-nowork:hover{background:rgba(234,179,8,0.15);border-color:var(--yellow)!important;color:var(--yellow)!important}
 .bulk-reset:hover{background:rgba(148,163,184,0.1);border-color:var(--text2)!important}
 .count-label{color:#fff!important;font-size:12px;font-weight:500}
+
+/* Count row */
+.count-row{
+  display:flex;align-items:center;gap:10px;padding:10px 16px;
+  background:var(--bg4);border-top:1px solid var(--border);
+}
+
+/* Footer */
+.footer{padding:16px 24px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.sig-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 20px;text-align:center;min-width:180px}
+.sig-block label{font-size:12px;color:var(--text2);display:block;margin-bottom:8px}
+.sig-line{border-top:1px dashed var(--border);width:140px;margin:0 auto}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn-print{
+  background:var(--bg3);color:var(--text2);border:1px solid var(--border);
+  padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;
+  transition:all 0.2s;
+}
+.btn-print:hover{border-color:var(--text2);color:var(--text)}
+.btn-send{
+  background:var(--accent);color:#fff;border:none;
+  padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity 0.2s,transform 0.1s;
+}
+.btn-send:hover{opacity:0.9}
+.btn-send:active{transform:scale(0.98)}
+.btn-send:disabled{opacity:0.5;cursor:not-allowed}
+
+/* Modal */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);
+  align-items:center;justify-content:center;padding:20px;z-index:1000;
+}
+.modal-overlay.show{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:12px;width:100%;max-width:520px;overflow:hidden;animation:fadeInUp 0.25s ease}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.modal-head h2{font-size:15px;font-weight:600;color:var(--text)}
+.modal-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;line-height:1;padding:4px 8px;transition:color 0.15s}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:20px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:12px;color:var(--text3)}
+.field input,.field select,.field textarea{
+  background:var(--bg3);border:1px solid var(--border);color:var(--text);
+  padding:9px 12px;border-radius:6px;font-size:13px;outline:none;width:100%;
+  font-family:inherit;direction:rtl;transition:border-color 0.2s,box-shadow 0.2s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(79,142,247,0.12)}
+.field textarea{resize:vertical;min-height:70px}
+.field select option{background:var(--bg3)}
+.send-summary{
+  background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+  padding:12px 14px;margin-bottom:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px;
+}
+.ss-item{font-size:12px;color:var(--text2)}.ss-item span{color:var(--text);font-weight:600}
+.modal-foot{display:flex;gap:10px;justify-content:flex-end;padding:14px 20px;border-top:1px solid var(--border)}
+.btn-cancel{background:none;border:1px solid var(--border);color:var(--text2);padding:8px 18px;border-radius:6px;font-size:13px;cursor:pointer;transition:all 0.2s}
+.btn-cancel:hover{border-color:var(--text2);color:var(--text)}
+.btn-confirm{
+  background:var(--accent);color:#fff;border:none;padding:8px 20px;
+  border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;gap:6px;transition:opacity 0.2s;
+}
+.btn-confirm:hover{opacity:0.9}
+.btn-confirm:disabled{opacity:0.5;cursor:not-allowed}
+
+/* Success */
+.success-box{display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;gap:14px}
+.success-box.show{display:flex;animation:fadeInUp 0.3s ease}
+.success-icon{width:60px;height:60px;border-radius:50%;background:rgba(34,197,94,0.15);border:2px solid var(--green);display:flex;align-items:center;justify-content:center}
+.success-icon svg{width:28px;height:28px;stroke:var(--green);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.success-title{font-size:16px;font-weight:600;color:var(--green)}
+.success-sub{font-size:13px;color:var(--text2)}
+.success-ref{font-size:11px;color:var(--text3);background:var(--bg3);padding:4px 12px;border-radius:5px;font-family:monospace}
+
+/* Spinner */
 @keyframes spin{to{transform:rotate(360deg)}}
 .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--bg2);border:1px solid var(--border);color:var(--text);
+  padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;
+  box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:9000;
+  transition:transform 0.35s ease,opacity 0.35s ease;opacity:0;pointer-events:none;
+  display:flex;align-items:center;gap:8px;
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* Print */
+@media print{
+  #loginScreen,.logout-btn,.btn-row,.bulk-bar,.stats-bar,.progress-wrap,
+  .btn-print,.btn-send,.modal-overlay,.toast{display:none!important}
+  .section{break-inside:avoid}
+  .wrap{background:#fff;color:#000}
+  :root{--bg:#fff;--bg2:#f5f5f5;--bg3:#eee;--bg4:#e0e0e0;--border:#ccc;--text:#000;--text2:#555;--text3:#888}
+}
 </style>
 </head>
 <body>
 
-<!-- ===== LOGIN SCREEN ===== -->
+<!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-card">
     <div class="login-logo">
@@ -214,21 +314,21 @@ tr:last-child td{border-bottom:none}
       <p>أدخل بيانات الدخول للمتابعة</p>
     </div>
     <div class="login-field">
-      <label>اسم المستخدم</label>
+      <label for="loginUser">اسم المستخدم</label>
       <div class="login-field-wrap">
         <span class="login-field-icon">👤</span>
         <input type="text" id="loginUser" placeholder="اسم المستخدم" autocomplete="username">
       </div>
     </div>
     <div class="login-field">
-      <label>كلمة المرور</label>
+      <label for="loginPass">كلمة المرور</label>
       <div class="login-field-wrap">
         <span class="login-field-icon">🔒</span>
-        <input type="password" id="loginPass" placeholder="كلمة المرور" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+        <input type="password" id="loginPass" placeholder="كلمة المرور" autocomplete="current-password">
       </div>
     </div>
-    <div class="login-error" id="loginError">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
-    <button class="btn-login" id="btnLogin" onclick="doLogin()">
+    <div class="login-error" id="loginError" role="alert">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
+    <button class="btn-login" id="btnLogin">
       <span>دخول</span>
       <span>←</span>
     </button>
@@ -236,27 +336,29 @@ tr:last-child td{border-bottom:none}
   </div>
 </div>
 
-<!-- ===== MAIN APP ===== -->
+<!-- APP -->
 <div id="appScreen">
 <div class="wrap">
+
 <div class="header">
   <div class="header-top">
     <div class="logo-area">
-      <div class="logo-circle"></div>
+      <div class="logo-circle">🏥</div>
       <div class="org-name"><strong>إدارة الخدمات الصحية المساندة</strong>تجمع المدينة المنورة الصحي</div>
     </div>
     <div class="title-block">
       <h1>تقرير الجولة الميدانية للخدمات الصحية المساندة</h1>
       <div class="subtitle">Field Tour Report — Supporting Health Services</div>
     </div>
-    <button class="logout-btn" onclick="doLogout()">🔓 خروج</button>
+    <button class="logout-btn" id="btnLogout">🔓 خروج</button>
   </div>
   <div class="meta-row">
-    <div class="meta-field"><label>اسم المركز</label><input type="text" id="centerName" placeholder="أدخل اسم المركز"></div>
-    <div class="meta-field"><label>تاريخ الزيارة</label><input type="date" id="visitDate"></div>
-    <div class="meta-field"><label>كاتب التقرير</label><input type="text" id="writer" placeholder="الاسم"></div>
+    <div class="meta-field"><label for="centerName">اسم المركز</label><input type="text" id="centerName" placeholder="أدخل اسم المركز"></div>
+    <div class="meta-field"><label for="visitDate">تاريخ الزيارة</label><input type="date" id="visitDate"></div>
+    <div class="meta-field"><label for="writer">كاتب التقرير</label><input type="text" id="writer" placeholder="الاسم"></div>
   </div>
 </div>
+
 <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
 
 <div class="stats-bar">
@@ -273,27 +375,30 @@ tr:last-child td{border-bottom:none}
 <div class="footer">
   <div class="sig-block"><label>كاتب التقرير</label><div class="sig-line"></div></div>
   <div class="btn-row">
-    <button class="btn-print" onclick="window.print()">طباعة / حفظ PDF</button>
-    <button class="btn-send" onclick="sendToExcel()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    <button class="btn-print" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+    <button class="btn-send" id="btnSend">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       إرسال التقرير
     </button>
   </div>
   <div class="sig-block"><label>توقيع مدير المركز</label><div class="sig-line"></div></div>
 </div>
+
 </div>
 </div>
 
-<div class="modal-overlay" id="modalOverlay">
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal">
     <div class="modal-head">
-      <h2>إرسال التقرير</h2>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2 id="modalTitle">إرسال التقرير</h2>
+      <button class="modal-close" id="btnModalClose" aria-label="إغلاق">✕</button>
     </div>
     <div id="modalForm">
       <div class="modal-body">
         <div class="send-summary" id="sendSummary"></div>
-        <div class="field"><label>جهة الإرسال</label>
+        <div class="field">
+          <label for="sendTo">جهة الإرسال</label>
           <select id="sendTo">
             <option value="">— اختر جهة الإرسال —</option>
             <option>إدارة الخدمات الصحية المساندة</option>
@@ -303,262 +408,499 @@ tr:last-child td{border-bottom:none}
             <option>أخرى</option>
           </select>
         </div>
-        <div class="field"><label>البريد الإلكتروني للمستلم</label>
+        <div class="field">
+          <label for="sendEmail">البريد الإلكتروني للمستلم</label>
           <input type="email" id="sendEmail" placeholder="example@moh.gov.sa" style="direction:ltr">
         </div>
-        <div class="field"><label>طريقة الإرسال</label>
+        <div class="field">
+          <label for="sendMethod">طريقة الإرسال</label>
           <select id="sendMethod">
             <option value="email">بريد إلكتروني</option>
             <option value="system">نظام صحتي</option>
             <option value="whatsapp">واتساب</option>
           </select>
         </div>
-        <div class="field"><label>ملاحظات إضافية</label>
+        <div class="field">
+          <label for="sendNotes">ملاحظات إضافية</label>
           <textarea id="sendNotes" placeholder="أي ملاحظات تريد إضافتها عند الإرسال..."></textarea>
         </div>
       </div>
       <div class="modal-foot">
-        <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
-        <button class="btn-confirm" id="btnConfirm" onclick="confirmSend()">
+        <button class="btn-cancel" id="btnCancel">إلغاء</button>
+        <button class="btn-confirm" id="btnConfirm">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           تأكيد الإرسال
         </button>
       </div>
     </div>
-    <div class="success-box" id="successBox">
+    <div class="success-box" id="successBox" role="status">
       <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       <div class="success-title">تم إرسال التقرير بنجاح</div>
       <div class="success-sub" id="successMsg"></div>
       <div class="success-ref" id="successRef"></div>
-      <button class="btn-confirm" style="margin-top:8px" onclick="closeModal()">إغلاق</button>
+      <button class="btn-confirm" id="btnSuccessClose" style="margin-top:8px">إغلاق</button>
     </div>
   </div>
 </div>
 
+<!-- Toast -->
+<div class="toast" id="toast" role="alert"></div>
+
 <script>
-// ===== AUTH =====
+// ===== CONFIG =====
 const CREDENTIALS = { username: '123', password: '123' };
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyltqAHAbJ6oXAdvb1ChfWF1bVBJNcVi_y0kDzgj29MvIReaAO4GPsOcUp-oo6oXPM-/exec';
 
-function doLogin(){
-  const user = document.getElementById('loginUser').value.trim();
-  const pass = document.getElementById('loginPass').value;
-  const errEl = document.getElementById('loginError');
+const SECTIONS = [
+  {
+    id: 'lab_premarital', title: 'خدمات المختبر (فحص ما قبل الزواج)', icon: '🔬', color: '#4f8ef7',
+    items: ['يتوفر موعد على نظام صحتي','توفر مسار خاص لفحص ما قبل الزواج','تتوفر الخدمة بالمركز من الأحد إلى الخميس خلال ساعات العمل','يتم الاستقبال بدون موعد','يتم طلب إثبات الهوية بالاستقبال','يتم طلب الهوية في نقطة سحب الدم','تتوفر الأنابيب البنفسجية بكميات كافية','تتوفر الأنابيب الصفراء أو الحمراء بكميات كافية','تتوفر تجهيزات حفظ العينات (ثلاجة أو حافظة)','يتم الالتزام بوضع الباركود على العينات','هل تم الاطلاع على التعميم من مقدمي الخدمة','مدير المركز على اطلاع بوجود الخدمة','المدير الطبي على اطلاع بوجود الخدمة','الاستقبال على اطلاع بوجود الخدمة','موظف السحب على اطلاع بوجود الخدمة','توفر QR-Code في منطقة السحب + التثقيف + الاستقبال'],
+    countField: { label: 'عدد موظفين المختبر', id: 'cnt_lab_staff' }
+  },
+  {
+    id: 'lab_care', title: 'خدمات المختبر (مستهدفات نموذج الرعاية)', icon: '🧪', color: '#6ee7b7',
+    items: ['تتوفر الأنابيب الصفراء أو الحمراء بكميات كافية','تتوفر الأنابيب الرمادية بكميات كافية','تتوفر الأنابيب البنفسجية بكميات كافية','توفر فحص OGTT','يوجد عبوات لجمع عينة البول لفحص Albumin to Creatinine Ratio','توفر Sampler بالمختبر لأخذ عينة البراز لفحص سرطان القولون'],
+    countField: { label: 'عدد فنيين المختبر', id: 'cnt_lab_tech' }
+  },
+  {
+    id: 'radiology', title: 'خدمات الأشعة', icon: '🩻', color: '#a78bfa',
+    items: ['توفر جهاز أشعة X-Ray','توفر جهاز أشعة سونار','يوجد جهاز ماموجرام','توفر تقني أشعة X-Ray','توفر تقني أشعة للسونار','(مستهدف الرعاية) توفر تقني أشعة ماموجرام','هل جهاز الأشعة مرتبط في نظام Agfa الباكس'],
+    countField: { label: 'عدد تقنيي الأشعة', id: 'cnt_rad_tech' }
+  },
+  {
+    id: 'sterilization', title: 'خدمات التعقيم', icon: '🏥', color: '#f59e0b',
+    items: ['توفر غرفة للتعقيم','غسالة حرارية','التراسونيك','حوضين مغسلة','مسدس هواء Air gun','مسدس ماء Water gun','طاولات فرز','سلات للغسيل Basket','خزان ماء مركزي (مقطر أو RO)','جهاز بخار سنترال أتوكليف /2','كابينة تجفيف /1','Sealer/2','مكبر بإضاءة للفحص','طاولات فرز وتجميع','حضانة Incubation','أتوكليف محمول للمراكز ذات الضغط المنخفض'],
+    countField: { label: 'عدد موظفين التعقيم', id: 'cnt_ster_staff' }
+  },
+  {
+    id: 'physiotherapy', title: 'خدمات العلاج الطبيعي', icon: '💪', color: '#34d399',
+    items: ['تتوفر عيادة','يتوفر كادر'],
+    countField: null
+  },
+  {
+    id: 'health_edu', title: 'خدمات التثقيف الصحي', icon: '📋', color: '#f87171',
+    items: ['يوجد مدرب صحي','يوجد جدولة للمواعيد','يوجد يوزر في منصة رقيم للمدرب الصحي','(مستهدف الرعاية) عكس المعادلة','تتم تعبئة نموذج الاستبيان عن طريق الرابط'],
+    countField: null
+  }
+];
+
+// ===== STATE =====
+const state = {};
+let totalItems = 0;
+
+// ===== HELPERS =====
+function showToast(msg, duration = 3000) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), duration);
+}
+
+function getEl(id) { return document.getElementById(id); }
+
+// ===== AUTH =====
+function doLogin() {
+  const user = getEl('loginUser').value.trim();
+  const pass = getEl('loginPass').value;
+  const errEl = getEl('loginError');
   const card = document.querySelector('.login-card');
+  const btn = getEl('btnLogin');
 
-  if(user === CREDENTIALS.username && pass === CREDENTIALS.password){
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('appScreen').style.display = 'block';
-    errEl.classList.remove('show');
+  if (user === CREDENTIALS.username && pass === CREDENTIALS.password) {
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner"></div> جارٍ الدخول...';
+    setTimeout(() => {
+      getEl('loginScreen').style.display = 'none';
+      getEl('appScreen').style.display = 'block';
+      errEl.classList.remove('show');
+      btn.disabled = false;
+      btn.innerHTML = '<span>دخول</span><span>←</span>';
+    }, 400);
   } else {
     errEl.classList.add('show');
     card.classList.remove('shake');
-    void card.offsetWidth; // reflow to restart animation
+    void card.offsetWidth;
     card.classList.add('shake');
-    document.getElementById('loginUser').classList.add('error');
-    document.getElementById('loginPass').classList.add('error');
-    document.getElementById('loginPass').value = '';
-    setTimeout(()=>{
-      document.getElementById('loginUser').classList.remove('error');
-      document.getElementById('loginPass').classList.remove('error');
-    }, 2000);
+    ['loginUser', 'loginPass'].forEach(id => {
+      const el = getEl(id);
+      el.classList.add('error');
+      setTimeout(() => el.classList.remove('error'), 2000);
+    });
+    getEl('loginPass').value = '';
+    getEl('loginPass').focus();
   }
 }
 
-function doLogout(){
-  document.getElementById('appScreen').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('loginUser').value = '';
-  document.getElementById('loginPass').value = '';
-  document.getElementById('loginError').classList.remove('show');
+function doLogout() {
+  getEl('appScreen').style.display = 'none';
+  getEl('loginScreen').style.display = 'flex';
+  getEl('loginUser').value = '';
+  getEl('loginPass').value = '';
+  getEl('loginError').classList.remove('show');
 }
 
-// ===== MAIN APP =====
-const sections=[
-  {id:'lab_premarital',title:'خدمات المختبر (فحص ما قبل الزواج)',icon:'🔬',color:'#4f8ef7',
-   items:['يتوفر موعد على نظام صحتي','توفر مسار خاص لفحص ما قبل الزواج','تتوفر الخدمة بالمركز من الأحد إلى الخميس خلال ساعات العمل','يتم الاستقبال بدون موعد','يتم طلب إثبات الهوية بالاستقبال','يتم طلب الهوية في نقطة سحب الدم','تتوفر الأنابيب البنفسجية بكميات كافية','تتوفر الأنابيب الصفراء أو الحمراء بكميات كافية','تتوفر تجهيزات حفظ العينات (ثلاجة أو حافظة)','يتم الالتزام بوضع الباركود على العينات','هل تم الاطلاع على التعميم من مقدمي الخدمة','مدير المركز على اطلاع بوجود الخدمة','المدير الطبي على اطلاع بوجود الخدمة','الاستقبال على اطلاع بوجود الخدمة','موظف السحب على اطلاع بوجود الخدمة','توفر QR-Code في منطقة السحب + التثقيف + الاستقبال'],
-   countField:{label:'عدد موظفين المختبر',id:'cnt_lab_staff'}},
-  {id:'lab_care',title:'خدمات المختبر (مستهدفات نموذج الرعاية)',icon:'🧪',color:'#6ee7b7',
-   items:['تتوفر الأنابيب الصفراء أو الحمراء بكميات كافية','تتوفر الأنابيب الرمادية بكميات كافية','تتوفر الأنابيب البنفسجية بكميات كافية','توفر فحص OGTT','يوجد عبوات لجمع عينة البول لفحص Albumin to Creatinine Ratio','توفر Sampler بالمختبر لأخذ عينة البراز لفحص سرطان القولون'],
-   countField:{label:'عدد فنيين المختبر',id:'cnt_lab_tech'}},
-  {id:'radiology',title:'خدمات الأشعة',icon:'🩻',color:'#a78bfa',
-   items:['توفر جهاز أشعة X-Ray','توفر جهاز أشعة سونار','يوجد جهاز ماموجرام','توفر تقني أشعة X-Ray','توفر تقني أشعة للسونار','(مستهدف الرعاية) توفر تقني أشعة ماموجرام','هل جهاز الأشعة مرتبط في نظام Agfa الباكس'],
-   countField:{label:'عدد تقنيي الأشعة',id:'cnt_rad_tech'}},
-  {id:'sterilization',title:'خدمات التعقيم',icon:'🏥',color:'#f59e0b',
-   items:['توفر غرفة للتعقيم','غسالة حرارية','التراسونيك','حوضين مغسلة','مسدس هواء Air gun','مسدس ماء Water gun','طاولات فرز','سلات للغسيل Basket','خزان ماء مركزي (مقطر أو RO)','جهاز بخار سنترال أتوكليف /2','كابينة تجفيف /1','Sealer/2','مكبر بإضاءة للفحص','طاولات فرز وتجميع','حضانة Incubation','أتوكليف محمول للمراكز ذات الضغط المنخفض'],
-   countField:{label:'عدد موظفين التعقيم',id:'cnt_ster_staff'}},
-  {id:'physiotherapy',title:'خدمات العلاج الطبيعي',icon:'💪',color:'#34d399',
-   items:['تتوفر عيادة','يتوفر كادر'],countField:null},
-  {id:'health_edu',title:'خدمات التثقيف الصحي',icon:'📋',color:'#f87171',
-   items:['يوجد مدرب صحي','يوجد جدولة للمواعيد','يوجد يوزر في منصة رقيم للمدرب الصحي','(مستهدف الرعاية) عكس المعادلة','تتم تعبئة نموذج الاستبيان عن طريق الرابط'],
-   countField:null},
-];
-const state={};let totalItems=0;
-function buildSections(){
-  const cont=document.getElementById('sections');
-  sections.forEach(sec=>{
-    totalItems+=sec.items.length;state[sec.id]={};
-    const div=document.createElement('div');div.className='section';
-    let rows='';
-    sec.items.forEach((item,i)=>{
-      const nm=sec.id+'_'+i;state[sec.id][i]={avail:'',works:''};
-      rows+=`<tr><td class="item-num">${i+1}</td><td class="item-text">${item}</td>
-        <td><div class="radio-group">
-          <label class="rb yes"><input type="radio" name="${nm}_av" value="yes" onchange="upd('${sec.id}',${i},'avail','yes')"> متوفر</label>
-          <label class="rb no"><input type="radio" name="${nm}_av" value="no" onchange="upd('${sec.id}',${i},'avail','no')"> غير متوفر</label>
-        </div></td>
-        <td><div class="radio-group">
-          <label class="rb works"><input type="radio" name="${nm}_wk" value="yes" onchange="upd('${sec.id}',${i},'works','yes')"> تعمل</label>
-          <label class="rb noworks"><input type="radio" name="${nm}_wk" value="no" onchange="upd('${sec.id}',${i},'works','no')"> لا تعمل</label>
-        </div></td>
-        <td><input class="notes-input" type="text" placeholder="ملاحظات..."></td></tr>`;
+// ===== BUILD SECTIONS =====
+function buildSections() {
+  const cont = getEl('sections');
+  const frag = document.createDocumentFragment();
+
+  SECTIONS.forEach(sec => {
+    totalItems += sec.items.length;
+    state[sec.id] = {};
+
+    let rows = '';
+    sec.items.forEach((item, i) => {
+      const nm = `${sec.id}_${i}`;
+      state[sec.id][i] = { avail: '', works: '' };
+      rows += `
+        <tr>
+          <td class="item-num">${i + 1}</td>
+          <td class="item-text">${escapeHtml(item)}</td>
+          <td>
+            <div class="radio-group">
+              <label class="rb yes"><input type="radio" name="${nm}_av" value="yes"> متوفر</label>
+              <label class="rb no"><input type="radio" name="${nm}_av" value="no"> غير متوفر</label>
+            </div>
+          </td>
+          <td>
+            <div class="radio-group">
+              <label class="rb works"><input type="radio" name="${nm}_wk" value="yes"> تعمل</label>
+              <label class="rb noworks"><input type="radio" name="${nm}_wk" value="no"> لا تعمل</label>
+            </div>
+          </td>
+          <td><input class="notes-input" type="text" placeholder="ملاحظات..." aria-label="ملاحظات ${escapeHtml(item)}"></td>
+        </tr>`;
     });
-    let countHtml='';
-    if(sec.countField){countHtml=`<div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--bg4);border-top:1px solid var(--border)"><span class="count-label">${sec.countField.label}:</span><input class="count-input" type="number" min="0" id="${sec.countField.id}" placeholder="0"></div>`;}
-    const bulkBar=`<div class="bulk-bar">
-      <span style="font-size:11px;color:var(--text3)">تحديد الكل:</span>
-      <div class="bulk-group">
-        <button class="bulk-btn bulk-yes" onclick="bulkSet('${sec.id}','avail','yes')">✓ متوفر</button>
-        <button class="bulk-btn bulk-no" onclick="bulkSet('${sec.id}','avail','no')">✗ غير متوفر</button>
-      </div>
-      <div class="bulk-sep"></div>
-      <div class="bulk-group">
-        <button class="bulk-btn bulk-work" onclick="bulkSet('${sec.id}','works','yes')">⚙ تعمل</button>
-        <button class="bulk-btn bulk-nowork" onclick="bulkSet('${sec.id}','works','no')">✗ لا تعمل</button>
-      </div>
-      <button class="bulk-btn bulk-reset" onclick="bulkReset('${sec.id}')">↺ إعادة</button>
-    </div>`;
-    div.innerHTML=`
-      <div class="sec-header" onclick="toggleSec('${sec.id}')">
+
+    const countHtml = sec.countField
+      ? `<div class="count-row"><span class="count-label">${escapeHtml(sec.countField.label)}:</span><input class="count-input" type="number" min="0" id="${sec.countField.id}" placeholder="0" aria-label="${escapeHtml(sec.countField.label)}"></div>`
+      : '';
+
+    const div = document.createElement('div');
+    div.className = 'section';
+    div.innerHTML = `
+      <div class="sec-header" role="button" aria-expanded="true" aria-controls="body_${sec.id}" tabindex="0">
         <div class="sec-title">
-          <div class="sec-icon" style="background:${sec.color}22;color:${sec.color}">${sec.icon}</div>
-          <span>${sec.title}</span>
+          <div class="sec-icon" style="background:${sec.color}22;color:${sec.color}" aria-hidden="true">${sec.icon}</div>
+          <span>${escapeHtml(sec.title)}</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px">
           <div class="sec-badge"><span class="filled" id="badge_fill_${sec.id}">0</span>/${sec.items.length}</div>
-          <div class="sec-toggle" id="toggle_${sec.id}">▼</div>
+          <div class="sec-toggle open" id="toggle_${sec.id}" aria-hidden="true">▼</div>
         </div>
       </div>
       <div class="sec-body open" id="body_${sec.id}">
-        ${bulkBar}
-        <div class="tbl-wrap"><table>
-          <thead><tr><th style="width:36px">م</th><th class="col-item">العنصر</th><th style="width:160px">التوفر</th><th style="width:160px">حالة التشغيل</th><th style="width:130px">ملاحظات</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table></div>${countHtml}
+        <div class="bulk-bar">
+          <span style="font-size:11px;color:var(--text3)">تحديد الكل:</span>
+          <div class="bulk-group">
+            <button class="bulk-btn bulk-yes" data-sec="${sec.id}" data-field="avail" data-val="yes">✓ متوفر</button>
+            <button class="bulk-btn bulk-no"  data-sec="${sec.id}" data-field="avail" data-val="no">✗ غير متوفر</button>
+          </div>
+          <div class="bulk-sep"></div>
+          <div class="bulk-group">
+            <button class="bulk-btn bulk-work"   data-sec="${sec.id}" data-field="works" data-val="yes">⚙ تعمل</button>
+            <button class="bulk-btn bulk-nowork" data-sec="${sec.id}" data-field="works" data-val="no">✗ لا تعمل</button>
+          </div>
+          <button class="bulk-btn bulk-reset" data-sec="${sec.id}" data-reset="1">↺ إعادة</button>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:36px">م</th>
+                <th class="col-item">العنصر</th>
+                <th style="width:160px">التوفر</th>
+                <th style="width:160px">حالة التشغيل</th>
+                <th style="width:130px">ملاحظات</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        ${countHtml}
       </div>`;
-    cont.appendChild(div);
+    frag.appendChild(div);
   });
-  document.getElementById('st-total').textContent=totalItems;updateStats();
+
+  cont.appendChild(frag);
+  getEl('st-total').textContent = totalItems;
+
+  // Event delegation for radio changes
+  cont.addEventListener('change', e => {
+    if (e.target.type !== 'radio') return;
+    const name = e.target.name;
+    const val = e.target.value;
+    // name format: secId_i_av or secId_i_wk
+    const parts = name.split('_');
+    const fieldSuffix = parts.pop(); // 'av' or 'wk'
+    const idx = parseInt(parts.pop());
+    const secId = parts.join('_');
+    const field = fieldSuffix === 'av' ? 'avail' : 'works';
+    if (state[secId] && state[secId][idx] !== undefined) {
+      state[secId][idx][field] = val;
+      updateStats();
+    }
+  });
+
+  // Event delegation for bulk buttons
+  cont.addEventListener('click', e => {
+    const btn = e.target.closest('[data-sec]');
+    if (!btn) return;
+    const secId = btn.dataset.sec;
+    if (btn.dataset.reset) {
+      bulkReset(secId);
+    } else {
+      bulkSet(secId, btn.dataset.field, btn.dataset.val);
+    }
+  });
+
+  // Keyboard accessible sec headers
+  cont.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('sec-header')) {
+      e.preventDefault();
+      e.target.click();
+    }
+  });
+
+  // Toggle sections
+  cont.addEventListener('click', e => {
+    const header = e.target.closest('.sec-header');
+    if (!header || e.target.closest('[data-sec]')) return;
+    const secId = header.getAttribute('aria-controls')?.replace('body_', '');
+    if (secId) toggleSec(secId, header);
+  });
+
+  updateStats();
 }
-function toggleSec(id){document.getElementById('body_'+id).classList.toggle('open');document.getElementById('toggle_'+id).classList.toggle('open');}
-function upd(secId,idx,field,val){state[secId][idx][field]=val;updateStats();}
-function bulkSet(secId,field,val){
-  const sec=sections.find(s=>s.id===secId);
-  if(!sec)return;
-  sec.items.forEach((_,i)=>{
-    state[secId][i][field]=val;
-    const nm=secId+'_'+i;
-    const radioName=field==='avail'?nm+'_av':nm+'_wk';
-    const radios=document.querySelectorAll(`input[name="${radioName}"]`);
-    radios.forEach(r=>{if(r.value===val)r.checked=true;});
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function toggleSec(id, header) {
+  const body = getEl('body_' + id);
+  const toggle = getEl('toggle_' + id);
+  const isOpen = body.classList.toggle('open');
+  toggle.classList.toggle('open', isOpen);
+  header?.setAttribute('aria-expanded', isOpen);
+}
+
+function bulkSet(secId, field, val) {
+  const sec = SECTIONS.find(s => s.id === secId);
+  if (!sec) return;
+  sec.items.forEach((_, i) => {
+    state[secId][i][field] = val;
+    const nm = `${secId}_${i}`;
+    const radioName = field === 'avail' ? nm + '_av' : nm + '_wk';
+    document.querySelectorAll(`input[name="${radioName}"]`).forEach(r => {
+      r.checked = r.value === val;
+    });
   });
   updateStats();
 }
-function bulkReset(secId){
-  const sec=sections.find(s=>s.id===secId);
-  if(!sec)return;
-  sec.items.forEach((_,i)=>{
-    state[secId][i]={avail:'',works:''};
-    const nm=secId+'_'+i;
-    document.querySelectorAll(`input[name="${nm}_av"], input[name="${nm}_wk"]`).forEach(r=>r.checked=false);
+
+function bulkReset(secId) {
+  const sec = SECTIONS.find(s => s.id === secId);
+  if (!sec) return;
+  sec.items.forEach((_, i) => {
+    state[secId][i] = { avail: '', works: '' };
+    const nm = `${secId}_${i}`;
+    document.querySelectorAll(`input[name="${nm}_av"], input[name="${nm}_wk"]`).forEach(r => r.checked = false);
   });
   updateStats();
 }
-function updateStats(){
-  let filled=0,yes=0,no=0,work=0,nowork=0;
-  sections.forEach(sec=>{
-    let sf=0;
-    sec.items.forEach((_,i)=>{const s=state[sec.id][i];if(s.avail!==''){filled++;sf++;}if(s.avail==='yes')yes++;if(s.avail==='no')no++;if(s.works==='yes')work++;if(s.works==='no')nowork++;});
-    document.getElementById('badge_fill_'+sec.id).textContent=sf;
+
+function updateStats() {
+  let filled = 0, yes = 0, no = 0, work = 0, nowork = 0;
+  SECTIONS.forEach(sec => {
+    let sf = 0;
+    sec.items.forEach((_, i) => {
+      const s = state[sec.id][i];
+      if (s.avail !== '') { filled++; sf++; }
+      if (s.avail === 'yes') yes++;
+      if (s.avail === 'no') no++;
+      if (s.works === 'yes') work++;
+      if (s.works === 'no') nowork++;
+    });
+    getEl('badge_fill_' + sec.id).textContent = sf;
   });
-  document.getElementById('st-fill').textContent=filled;document.getElementById('st-yes').textContent=yes;
-  document.getElementById('st-no').textContent=no;document.getElementById('st-work').textContent=work;document.getElementById('st-nowork').textContent=nowork;
-  const pct=totalItems>0?Math.round(filled/totalItems*100):0;
-  document.getElementById('st-fill-pct').textContent=pct+'%';document.getElementById('progressBar').style.width=pct+'%';
+
+  const pct = totalItems > 0 ? Math.round(filled / totalItems * 100) : 0;
+  getEl('st-fill').textContent = filled;
+  getEl('st-yes').textContent = yes;
+  getEl('st-no').textContent = no;
+  getEl('st-work').textContent = work;
+  getEl('st-nowork').textContent = nowork;
+  getEl('st-fill-pct').textContent = pct + '%';
+  getEl('progressBar').style.width = pct + '%';
 }
-function openSendModal(){
-  const center=document.getElementById('centerName').value||'—';
-  const date=document.getElementById('visitDate').value||'—';
-  const filled=document.getElementById('st-fill').textContent;
-  const pct=document.getElementById('st-fill-pct').textContent;
-  const yes=document.getElementById('st-yes').textContent;
-  const no=document.getElementById('st-no').textContent;
-  document.getElementById('sendSummary').innerHTML=`
-    <div class="ss-item">المركز: <span>${center}</span></div>
-    <div class="ss-item">التاريخ: <span>${date}</span></div>
+
+// ===== MODAL =====
+function openModal() {
+  const center = getEl('centerName').value || '—';
+  const date   = getEl('visitDate').value || '—';
+  const filled = getEl('st-fill').textContent;
+  const pct    = getEl('st-fill-pct').textContent;
+  const yes    = getEl('st-yes').textContent;
+  const no     = getEl('st-no').textContent;
+
+  getEl('sendSummary').innerHTML = `
+    <div class="ss-item">المركز: <span>${escapeHtml(center)}</span></div>
+    <div class="ss-item">التاريخ: <span>${escapeHtml(date)}</span></div>
     <div class="ss-item">نسبة التعبئة: <span>${pct}</span></div>
     <div class="ss-item">العناصر المعبأة: <span>${filled}/${totalItems}</span></div>
     <div class="ss-item">متوفر: <span style="color:var(--green)">${yes}</span></div>
     <div class="ss-item">غير متوفر: <span style="color:var(--red)">${no}</span></div>`;
-  document.getElementById('modalForm').style.display='block';
-  document.getElementById('successBox').classList.remove('show');
-  document.getElementById('modalOverlay').classList.add('show');
-}
-function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
-function confirmSend(){
-  const to=document.getElementById('sendTo').value;
-  const email=document.getElementById('sendEmail').value;
-  const method=document.getElementById('sendMethod').value;
-  if(!to){alert('يرجى اختيار جهة الإرسال');return;}
-  if(!email){alert('يرجى إدخال البريد الإلكتروني');return;}
-  const btn=document.getElementById('btnConfirm');btn.disabled=true;btn.textContent='جارٍ الإرسال...';
-  setTimeout(()=>{
-    const ref='RPT-'+Date.now().toString(36).toUpperCase();
-    const center=document.getElementById('centerName').value||'غير محدد';
-    const ml={'email':'بريد إلكتروني','system':'نظام صحتي','whatsapp':'واتساب'};
-    document.getElementById('successMsg').textContent=`تم إرسال تقرير "${center}" إلى ${to} عبر ${ml[method]||method}`;
-    document.getElementById('successRef').textContent='رقم المرجع: '+ref;
-    document.getElementById('modalForm').style.display='none';
-    document.getElementById('successBox').classList.add('show');
-    btn.disabled=false;
-    btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> تأكيد الإرسال';
-  },1500);
-}
-buildSections();
-document.getElementById('visitDate').valueAsDate=new Date();
 
-function sendToExcel(){
-  const center = document.getElementById('centerName').value;
-  const date   = document.getElementById('visitDate').value;
-  const writer = document.getElementById('writer').value;
-  if(!center || !date || !writer){alert("⚠️ الرجاء تعبئة بيانات الرأس");return;}
-  let rows = [];
-  let noteInputs = document.querySelectorAll('.notes-input');
+  getEl('modalForm').style.display = 'block';
+  getEl('successBox').classList.remove('show');
+  getEl('modalOverlay').classList.add('show');
+  getEl('sendTo').focus();
+}
+
+function closeModal() {
+  getEl('modalOverlay').classList.remove('show');
+}
+
+function confirmSend() {
+  const to     = getEl('sendTo').value;
+  const email  = getEl('sendEmail').value.trim();
+  const method = getEl('sendMethod').value;
+  const btn    = getEl('btnConfirm');
+
+  if (!to) { showToast('⚠️ يرجى اختيار جهة الإرسال'); return; }
+  if (!email) { showToast('⚠️ يرجى إدخال البريد الإلكتروني'); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> جارٍ الإرسال...';
+
+  setTimeout(() => {
+    const ref = 'RPT-' + Date.now().toString(36).toUpperCase();
+    const center = getEl('centerName').value || 'غير محدد';
+    const methodLabels = { email: 'بريد إلكتروني', system: 'نظام صحتي', whatsapp: 'واتساب' };
+    getEl('successMsg').textContent = `تم إرسال تقرير "${center}" إلى ${to} عبر ${methodLabels[method] || method}`;
+    getEl('successRef').textContent = 'رقم المرجع: ' + ref;
+    getEl('modalForm').style.display = 'none';
+    getEl('successBox').classList.add('show');
+    btn.disabled = false;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> تأكيد الإرسال';
+  }, 1500);
+}
+
+// ===== SEND TO SHEETS =====
+function sendToExcel() {
+  const center = getEl('centerName').value.trim();
+  const date   = getEl('visitDate').value;
+  const writer = getEl('writer').value.trim();
+
+  if (!center || !date || !writer) {
+    showToast('⚠️ الرجاء تعبئة بيانات الرأس (المركز، التاريخ، الكاتب)');
+    return;
+  }
+
+  const rows = [];
+  const noteInputs = document.querySelectorAll('.notes-input');
   let noteIndex = 0;
-  sections.forEach(sec=>{
-    sec.items.forEach((item,i)=>{
+
+  SECTIONS.forEach(sec => {
+    sec.items.forEach((item, i) => {
       const s = state[sec.id][i] || {};
       const note = noteInputs[noteIndex]?.value || '';
       noteIndex++;
-      rows.push({'اسم المركز':center,'التاريخ':date,'الكاتب':writer,'اسم العنصر':item,
-        'متوفر':s.avail==='yes'?'متوفر':s.avail==='no'?'غير متوفر':'',
-        'التشغيل':s.works==='yes'?'تعمل':s.works==='no'?'لا تعمل':'','ملاحظات':note});
+      rows.push({
+        'اسم المركز': center,
+        'التاريخ': date,
+        'الكاتب': writer,
+        'القسم': sec.title,
+        'اسم العنصر': item,
+        'متوفر': s.avail === 'yes' ? 'متوفر' : s.avail === 'no' ? 'غير متوفر' : '',
+        'التشغيل': s.works === 'yes' ? 'تعمل' : s.works === 'no' ? 'لا تعمل' : '',
+        'ملاحظات': note
+      });
     });
-    if(sec.countField){
-      const val = document.getElementById(sec.countField.id)?.value || '';
-      if(val){rows.push({'اسم المركز':center,'التاريخ':date,'الكاتب':writer,'اسم العنصر':sec.countField.label,'متوفر':val,'التشغيل':'','ملاحظات':'عدد'});}
+    if (sec.countField) {
+      const val = getEl(sec.countField.id)?.value || '';
+      if (val) {
+        rows.push({
+          'اسم المركز': center, 'التاريخ': date, 'الكاتب': writer,
+          'القسم': sec.title, 'اسم العنصر': sec.countField.label,
+          'متوفر': val, 'التشغيل': '', 'ملاحظات': 'عدد'
+        });
+      }
     }
   });
-  const sendBtn = document.querySelector('.btn-send');
-  const origText = sendBtn.innerHTML;
-  sendBtn.disabled = true;
-  sendBtn.innerHTML = '<div class="spinner"></div> جارٍ الإرسال...';
-  fetch("https://script.google.com/macros/s/AKfycbyltqAHAbJ6oXAdvb1ChfWF1bVBJNcVi_y0kDzgj29MvIReaAO4GPsOcUp-oo6oXPM-/exec",{
-    method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify({rows:rows})
-  }).then(()=>{
-    sendBtn.innerHTML='✅ تم الإرسال بنجاح';sendBtn.style.background='var(--green)';
-    setTimeout(()=>{sendBtn.disabled=false;sendBtn.innerHTML=origText;sendBtn.style.background='';},3000);
-  }).catch(err=>{sendBtn.disabled=false;sendBtn.innerHTML=origText;alert("❌ فشل الإرسال: "+err.message);});
+
+  const btn = getEl('btnSend');
+  const origHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> جارٍ الإرسال...';
+
+  fetch(SHEETS_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({ rows })
+  })
+  .then(() => {
+    btn.innerHTML = '✅ تم الإرسال بنجاح';
+    btn.style.background = 'var(--green)';
+    showToast('✅ تم إرسال التقرير بنجاح');
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.innerHTML = origHTML;
+      btn.style.background = '';
+    }, 3000);
+  })
+  .catch(err => {
+    btn.disabled = false;
+    btn.innerHTML = origHTML;
+    showToast('❌ فشل الإرسال: ' + err.message);
+  });
 }
+
+// ===== INIT =====
+function init() {
+  // Login
+  getEl('btnLogin').addEventListener('click', doLogin);
+  getEl('loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  getEl('loginUser').addEventListener('keydown', e => { if (e.key === 'Enter') getEl('loginPass').focus(); });
+
+  // Logout
+  getEl('btnLogout').addEventListener('click', doLogout);
+
+  // Modal
+  getEl('btnSend').addEventListener('click', () => {
+    const center = getEl('centerName').value.trim();
+    const date   = getEl('visitDate').value;
+    const writer = getEl('writer').value.trim();
+    if (!center || !date || !writer) {
+      showToast('⚠️ الرجاء تعبئة بيانات الرأس أولاً');
+      return;
+    }
+    openModal();
+  });
+  getEl('btnModalClose').addEventListener('click', closeModal);
+  getEl('btnCancel').addEventListener('click', closeModal);
+  getEl('btnConfirm').addEventListener('click', confirmSend);
+  getEl('btnSuccessClose').addEventListener('click', closeModal);
+
+  // Close modal on overlay click
+  getEl('modalOverlay').addEventListener('click', e => {
+    if (e.target === getEl('modalOverlay')) closeModal();
+  });
+
+  // Close modal on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && getEl('modalOverlay').classList.contains('show')) closeModal();
+  });
+
+  // Default date
+  getEl('visitDate').valueAsDate = new Date();
+
+  buildSections();
+}
+
+init();
 </script>
 </body>
 </html>
