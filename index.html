@@ -3,15 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تقرير الجولة الميدانية</title>
+<title>نظام تقارير الجولات الميدانية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Tahoma,sans-serif;direction:rtl}
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
+body{font-family:'Tajawal',sans-serif;direction:rtl}
+/* Kepler-style numeric display: all numbers use tabular lining */
+.num-kepler,.ov-val,.sv,.cs-num,.rank-pct,.cd-stat-val,.cd-pct-display,.cd-staff-num,.staff-num,.cnv,.badge_fill{
+  font-variant-numeric:tabular-nums lining-nums;
+  font-feature-settings:"tnum","lnum";
+  font-family:'Tajawal',sans-serif;
+  letter-spacing:-0.02em;
+}
 :root{
   --bg:#0f1117;--bg2:#1a1d27;--bg3:#22263a;--bg4:#2a2f45;
   --border:#2e3350;--accent:#4f8ef7;--accent2:#6ee7b7;--accent3:#f59e0b;
   --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
-  --green:#22c55e;--red:#ef4444;--yellow:#eab308;
+  --green:#22c55e;--red:#ef4444;--yellow:#eab308;--purple:#a78bfa;
 }
 
 /* ===== LOGIN ===== */
@@ -22,71 +32,390 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;direction:rtl}
 }
 .login-card{
   background:var(--bg2);border:1px solid var(--border);border-radius:16px;
-  padding:40px 36px;width:100%;max-width:400px;
+  padding:36px 32px;width:100%;max-width:420px;
   box-shadow:0 24px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(79,142,247,0.08);
-  position:relative;overflow:hidden;
-  animation:fadeInUp 0.4s ease;
+  position:relative;overflow:hidden;animation:fadeInUp 0.4s ease;
 }
 .login-card::before{
   content:'';position:absolute;top:-60px;right:-60px;
   width:200px;height:200px;border-radius:50%;
-  background:radial-gradient(circle,rgba(79,142,247,0.12) 0%,transparent 70%);
-  pointer-events:none;
+  background:radial-gradient(circle,rgba(79,142,247,0.12) 0%,transparent 70%);pointer-events:none;
 }
-.login-logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px}
-.login-logo-circle{
-  width:52px;height:52px;border-radius:50%;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
-}
+.login-logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:24px}
+.login-logo-circle{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
 .login-org{text-align:center}
 .login-org strong{display:block;font-size:14px;color:var(--text);line-height:1.4}
 .login-org span{font-size:11px;color:var(--text3)}
-.login-title{text-align:center;margin-bottom:28px}
+.login-title{text-align:center;margin-bottom:22px}
 .login-title h2{font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px}
 .login-title p{font-size:12px;color:var(--text3)}
-.login-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+
+/* Mode toggle tabs */
+.login-mode-tabs{display:flex;gap:6px;background:var(--bg3);border-radius:10px;padding:4px;margin-bottom:22px}
+.mode-tab{flex:1;padding:8px 10px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--text3);transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.mode-tab.active{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(79,142,247,0.35)}
+.mode-tab:not(.active):hover{color:var(--text2);background:var(--bg4)}
+
+.login-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
 .login-field label{font-size:12px;color:var(--text2);font-weight:500}
 .login-field-wrap{position:relative}
 .login-field input{
   width:100%;background:var(--bg3);border:1px solid var(--border);
   color:var(--text);padding:10px 14px 10px 40px;border-radius:8px;
   font-size:13px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;
-  font-family:'Segoe UI',Tahoma,sans-serif;direction:ltr;text-align:right;
+  font-family:'Tajawal',sans-serif;direction:ltr;text-align:right;
 }
 .login-field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,142,247,0.15)}
 .login-field input.error{border-color:var(--red)!important}
-.login-field-icon{
-  position:absolute;left:12px;top:50%;transform:translateY(-50%);
-  color:var(--text3);font-size:14px;pointer-events:none;
-}
-.login-error{
-  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);
-  border-radius:6px;padding:9px 12px;font-size:12px;color:var(--red);
-  margin-bottom:16px;display:none;text-align:center;
-}
+.login-field-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none}
+.login-error{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:6px;padding:9px 12px;font-size:12px;color:var(--red);margin-bottom:14px;display:none;text-align:center}
 .login-error.show{display:block}
 .btn-login{
   width:100%;background:var(--accent);color:#fff;border:none;
   padding:11px 20px;border-radius:8px;font-size:14px;font-weight:600;
   cursor:pointer;transition:opacity 0.2s,transform 0.1s;
-  font-family:'Segoe UI',Tahoma,sans-serif;
+  font-family:'Tajawal',sans-serif;
   display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;
 }
-.btn-login:hover{opacity:0.88}
-.btn-login:active{transform:scale(0.98)}
-.btn-login:disabled{opacity:0.5;cursor:not-allowed}
-.login-hint{text-align:center;margin-top:18px;font-size:11px;color:var(--text3)}
+.btn-login.stats-mode{background:linear-gradient(135deg,#7c3aed,#a78bfa)}
+.btn-login:hover{opacity:0.88}.btn-login:active{transform:scale(0.98)}.btn-login:disabled{opacity:0.5;cursor:not-allowed}
+.login-hint{text-align:center;margin-top:16px;font-size:11px;color:var(--text3)}
 
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 .shake{animation:shake 0.4s ease}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ===== APP ===== */
+/* ===== STATS SCREEN ===== */
+#statsScreen{display:none;min-height:100vh;background:var(--bg);color:var(--text)}
+.stats-header{
+  background:linear-gradient(135deg,#1e1040 0%,#0f1117 100%);
+  padding:22px 28px 18px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+  position:sticky;top:0;z-index:100;
+}
+.stats-header-left{display:flex;align-items:center;gap:14px}
+.stats-header-icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:20px}
+.stats-header-title h1{font-size:17px;font-weight:700;color:var(--text)}
+.stats-header-title p{font-size:11px;color:var(--text3);margin-top:2px}
+.stats-back-btn{background:rgba(124,58,237,0.12);border:1px solid rgba(167,139,250,0.25);color:#a78bfa;padding:7px 16px;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+.stats-back-btn:hover{background:rgba(124,58,237,0.2)}
+
+/* Overall summary cards */
+.stats-overview{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:14px;padding:22px 28px 0;
+}
+.ov-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+  padding:16px 18px;position:relative;overflow:hidden;
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.ov-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.3)}
+.ov-card::before{content:'';position:absolute;top:-20px;left:-20px;width:80px;height:80px;border-radius:50%;opacity:0.08}
+.ov-card.c1::before{background:var(--accent)}.ov-card.c2::before{background:var(--green)}.ov-card.c3::before{background:var(--red)}.ov-card.c4::before{background:var(--accent2)}.ov-card.c5::before{background:var(--yellow)}.ov-card.c6::before{background:var(--purple)}
+.ov-val{font-size:2.2rem;font-weight:800;line-height:1;margin-bottom:4px}
+.ov-card.c1 .ov-val{color:var(--accent)}.ov-card.c2 .ov-val{color:var(--green)}.ov-card.c3 .ov-val{color:var(--red)}.ov-card.c4 .ov-val{color:var(--accent2)}.ov-card.c5 .ov-val{color:var(--yellow)}.ov-card.c6 .ov-val{color:var(--purple)}
+.ov-lbl{font-size:11px;color:#fff;opacity:0.65}
+
+/* ===== CENTER DETAIL MODAL ===== */
+.cd-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);
+  align-items:center;justify-content:center;padding:16px;z-index:2000;
+  backdrop-filter:blur(4px);
+}
+.cd-overlay.show{display:flex}
+.cd-modal{
+  background:var(--bg2);border:1px solid var(--border);border-radius:16px;
+  width:100%;max-width:760px;max-height:90vh;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:0 32px 80px rgba(0,0,0,0.6);
+  animation:fadeInUp 0.28s ease;
+}
+.cd-head{
+  padding:20px 24px 16px;border-bottom:1px solid var(--border);
+  background:linear-gradient(135deg,#1e1040 0%,#1a1d27 100%);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.cd-head-left{display:flex;align-items:center;gap:14px}
+.cd-icon{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.cd-title{font-size:18px;font-weight:800;color:#fff}
+.cd-subtitle{font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px}
+.cd-close{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0}
+.cd-close:hover{background:rgba(239,68,68,0.2);border-color:rgba(239,68,68,0.4)}
+.cd-body{overflow-y:auto;padding:22px 24px;display:flex;flex-direction:column;gap:20px}
+
+/* 4 big stat chips */
+.cd-top-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cd-stat{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center}
+.cd-stat-val{font-size:1.9rem;font-weight:800;line-height:1;margin-bottom:5px}
+.cd-stat-lbl{font-size:11px;color:#fff;font-weight:600}
+.cd-stat-sub{font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px}
+
+/* Dual ratio bars */
+.cd-ratios{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cd-ratio-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:16px}
+.cd-ratio-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.cd-ratio-track{height:22px;border-radius:11px;overflow:hidden;display:flex;margin-bottom:10px}
+.cd-ratio-seg-a{height:100%;transition:width 0.7s ease;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;white-space:nowrap}
+.cd-ratio-seg-b{flex:1;height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:rgba(255,255,255,0.7);white-space:nowrap}
+.cd-ratio-legend{display:flex;justify-content:space-between}
+.cd-leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#fff;font-weight:600}
+.cd-leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.cd-pct-display{font-size:26px;font-weight:900;margin-top:6px;color:#fff}
+
+/* Staff table inside modal */
+.cd-staff-section{background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.cd-staff-title{padding:11px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;background:var(--bg4)}
+.cd-staff-grid{display:grid;grid-template-columns:repeat(5,1fr)}
+.cd-staff-cell{padding:14px 8px;text-align:center;border-left:1px solid var(--border);position:relative}
+.cd-staff-cell:last-child{border-left:none}
+.cd-staff-num{font-size:1.9rem;font-weight:800;line-height:1;margin-bottom:5px}
+.cd-staff-cat{font-size:10px;color:rgba(255,255,255,0.65);font-weight:500;line-height:1.35}
+.cd-no-staff{padding:20px;text-align:center;color:rgba(255,255,255,0.3);font-size:12px}
+
+/* Per-section availability rows */
+.cd-secs-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.cd-secs-grid{display:flex;flex-direction:column;gap:8px}
+.cd-sec-row{background:var(--bg3);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color 0.2s}
+.cd-sec-row:hover{border-color:rgba(255,255,255,0.2)}
+.cd-sec-header{padding:12px 16px;cursor:pointer;user-select:none}
+.cd-sec-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cd-sec-name{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#fff}
+.cd-sec-chips{display:flex;gap:6px;align-items:center}
+.cd-mini-chip{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.mchip-avail{background:rgba(34,197,94,0.2);color:var(--green);border:1px solid rgba(34,197,94,0.3)}
+.mchip-navail{background:rgba(239,68,68,0.2);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
+.cd-sec-dual{height:10px;border-radius:5px;overflow:hidden;display:flex}
+.cd-sec-seg-a{height:100%;transition:width 0.5s ease}
+.cd-sec-seg-b{flex:1;height:100%}
+/* Expand arrow */
+.cd-sec-arrow{font-size:11px;color:rgba(255,255,255,0.4);transition:transform 0.25s;margin-right:4px;flex-shrink:0}
+.cd-sec-row.expanded .cd-sec-arrow{transform:rotate(180deg)}
+/* Items list inside section */
+.cd-sec-items{
+  display:none;border-top:1px solid var(--border);
+  background:var(--bg4);
+}
+.cd-sec-row.expanded .cd-sec-items{display:block}
+.cd-item-row{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 16px;border-bottom:1px solid rgba(255,255,255,0.04);
+  font-size:11.5px;transition:background 0.12s;
+}
+.cd-item-row:hover{background:rgba(255,255,255,0.03)}
+.cd-item-row:last-child{border-bottom:none}
+.cd-item-num{
+  color:rgba(255,255,255,0.25);font-size:10px;
+  min-width:20px;height:20px;border-radius:4px;
+  background:rgba(255,255,255,0.05);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-weight:700;
+}
+.cd-item-name{flex:1;color:rgba(255,255,255,0.85);line-height:1.45}
+.cd-item-badges{display:flex;gap:4px;flex-shrink:0;align-items:center}
+.cd-item-avail{padding:3px 10px;border-radius:8px;font-size:10px;font-weight:700;white-space:nowrap}
+.cd-item-avail.yes{background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3)}
+.cd-item-avail.no{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
+.cd-item-avail.na{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.08);font-size:9px}
+.cd-item-works{padding:3px 10px;border-radius:8px;font-size:10px;font-weight:700;white-space:nowrap}
+.cd-item-works.yes{background:rgba(110,231,183,0.12);color:var(--accent2);border:1px solid rgba(110,231,183,0.25)}
+.cd-item-works.no{background:rgba(234,179,8,0.12);color:var(--yellow);border:1px solid rgba(234,179,8,0.25)}
+.cd-item-works.na{display:none}
+.cd-items-hint{padding:10px 16px;font-size:10px;color:rgba(255,255,255,0.22);text-align:center;border-top:1px solid rgba(255,255,255,0.04);font-style:italic}
+/* Staff count badge inside section expand */
+.cd-sec-staff-row{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 16px;background:rgba(255,255,255,0.03);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  font-size:11px;color:rgba(255,255,255,0.6);
+}
+.cd-sec-staff-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;padding:3px 10px;font-size:11px;font-weight:700;color:#fff;
+}
+
+/* Modal executive summary */
+.cd-exec-summary{
+  background:linear-gradient(135deg,rgba(79,142,247,0.08),rgba(110,231,183,0.06));
+  border:1px solid rgba(79,142,247,0.2);border-radius:12px;padding:14px 16px;
+}
+.cd-exec-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cd-exec-title-txt{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:800;color:#fff}
+.cd-exec-badge{background:linear-gradient(135deg,#7c3aed,#4f8ef7);color:#fff;padding:2px 8px;border-radius:7px;font-size:10px;font-weight:700}
+.cd-exec-print-btn{
+  background:linear-gradient(135deg,#7c3aed,#4f8ef7);color:#fff;border:none;
+  border-radius:8px;padding:6px 13px;font-size:11px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;gap:5px;
+  font-family:'Tajawal',sans-serif;transition:opacity 0.2s;
+}
+.cd-exec-print-btn:hover{opacity:0.85}
+.cd-exec-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:10px}
+.cd-exec-stat{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 6px;text-align:center}
+.cd-exec-val{font-size:1.5rem;font-weight:900;line-height:1;margin-bottom:3px;font-variant-numeric:tabular-nums}
+.cd-exec-lbl{font-size:10px;color:rgba(255,255,255,0.5);font-weight:500}
+.cd-exec-bar-wrap{background:rgba(255,255,255,0.08);border-radius:6px;height:5px;overflow:hidden}
+.cd-exec-bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--green),var(--accent2));transition:width 0.7s ease}
+
+/* item note input */
+.cd-item-note{
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+  border-radius:5px;padding:3px 7px;font-size:10.5px;color:#fff;
+  width:90px;outline:none;font-family:'Tajawal',sans-serif;
+  transition:border-color 0.2s,width 0.2s;flex-shrink:0;
+}
+.cd-item-note:focus{border-color:var(--accent);background:rgba(79,142,247,0.08);width:120px}
+.cd-item-note::placeholder{color:rgba(255,255,255,0.18)}
+
+/* Print center detail */
+#cdPrintArea{display:none}
+@media print{
+  /* If cdPrintArea has content, print only that */
+  body.printing-gexec > *:not(#gexecPrintArea){display:none!important}
+  body.printing-gexec #gexecPrintArea{display:block!important}
+  body.printing-center #cdPrintArea{
+    display:block!important;padding:12px;
+    font-family:'Tajawal',Arial,sans-serif;color:#000;background:#fff;
+  }
+  @page{size:A4 portrait;margin:10mm}
+  .cdp-header{margin-bottom:12px;border-bottom:2px solid #000;padding-bottom:8px}
+  .cdp-title{font-size:18px;font-weight:800}
+  .cdp-sub{font-size:12px;color:#555;margin-top:4px}
+  .cdp-stats-row{display:flex;gap:10px;margin:10px 0;flex-wrap:wrap}
+  .cdp-stat{background:#f5f5f5;border:1px solid #ccc;border-radius:6px;padding:8px 14px;text-align:center}
+  .cdp-stat-val{font-size:1.4rem;font-weight:800}
+  .cdp-stat-lbl{font-size:10px;color:#666}
+  .cdp-sec{margin-bottom:12px;border:1px solid #ccc;border-radius:6px;overflow:hidden;break-inside:avoid}
+  .cdp-sec-head{background:#f0f0f0;padding:8px 12px;font-weight:700;font-size:13px;border-bottom:1px solid #ccc}
+  .cdp-item{display:flex;align-items:center;gap:8px;padding:6px 12px;border-bottom:1px solid #eee;font-size:11px}
+  .cdp-item:last-child{border-bottom:none}
+  .cdp-item-num{color:#999;min-width:20px;font-size:10px;font-weight:700}
+  .cdp-item-name{flex:1}
+  .cdp-badge{padding:2px 7px;border-radius:5px;font-size:10px;font-weight:700;white-space:nowrap}
+  .cdp-avail-yes{background:#dcfce7;color:#166534}
+  .cdp-avail-no{background:#fee2e2;color:#991b1b}
+  .cdp-avail-na{background:#f3f4f6;color:#9ca3af}
+  .cdp-works-yes{background:#d1fae5;color:#065f46}
+  .cdp-works-no{background:#fef9c3;color:#854d0e}
+  .cdp-note{color:#666;font-size:10px;font-style:italic}
+}
+
+/* Section tabs */
+.stats-tabs{display:flex;gap:8px;padding:20px 28px 0;flex-wrap:wrap}
+.stab{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:rgba(255,255,255,0.5);transition:all 0.2s}
+.stab.active{background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;border-color:transparent;box-shadow:0 2px 12px rgba(124,58,237,0.35)}
+.stab:not(.active):hover{border-color:rgba(255,255,255,0.3);color:#fff}
+
+/* Stats content panels */
+.stats-panel{display:none;padding:18px 28px 32px;animation:fadeInUp 0.3s ease}
+.stats-panel.active{display:block}
+
+/* Centers grid */
+.centers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}
+.center-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;
+  transition:transform 0.15s,box-shadow 0.15s,border-color 0.15s;
+  cursor:pointer;
+}
+.center-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.4);border-color:rgba(167,139,250,0.4)}
+.center-card:hover .cc-name::after{opacity:1}
+.cc-head{padding:14px 16px 10px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.cc-name{font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;position:relative}
+.cc-name::after{content:'تفاصيل ←';font-size:10px;color:var(--purple);opacity:0;transition:opacity 0.2s;font-weight:600;margin-right:4px}
+.cc-badge{padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;white-space:nowrap}
+.badge-hi{background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3)}
+.badge-md{background:rgba(234,179,8,0.15);color:var(--yellow);border:1px solid rgba(234,179,8,0.3)}
+.badge-lo{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
+.cc-body{padding:12px 16px}
+.cc-bars{display:flex;flex-direction:column;gap:9px;margin-bottom:12px}
+.cc-bar-row{display:flex;align-items:center;gap:8px;font-size:11px}
+.cc-bar-lbl{width:58px;color:#fff;opacity:0.65;flex-shrink:0;text-align:right;font-weight:500}
+.cc-bar-track{flex:1;height:10px;border-radius:5px;overflow:hidden;display:flex}
+.cc-bar-seg-a{height:100%;border-radius:5px 0 0 5px;transition:width 0.5s ease}
+.cc-bar-seg-b{flex:1;height:100%}
+.cc-bar-pct{min-width:40px;text-align:left;font-weight:800;font-size:11px;flex-shrink:0;color:#fff}
+.cc-bar-pct-nav{font-size:9px;color:rgba(255,255,255,0.45);display:block}
+.fill-green{background:var(--green)}
+.fill-green-bg{background:rgba(239,68,68,0.25)}
+.fill-blue{background:var(--accent2)}
+.fill-blue-bg{background:rgba(234,179,8,0.2)}
+.cc-nums{display:flex;gap:6px;flex-wrap:wrap}
+.cn-chip{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:3px 9px;font-size:10px;display:flex;align-items:center;gap:4px;color:#fff}
+.cn-chip .cnv{font-weight:800}
+.cn-avail{color:var(--green)}.cn-navail{color:var(--red)}.cn-work{color:var(--accent2)}.cn-nwork{color:var(--yellow)}
+
+/* Staff table panel */
+.staff-section-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.staff-table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
+.staff-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.staff-table thead tr{background:var(--bg4)}
+.staff-table th{
+  padding:12px 10px;color:rgba(255,255,255,0.75);font-weight:700;
+  text-align:center;border-bottom:2px solid var(--border);
+  white-space:nowrap;vertical-align:middle;
+}
+.staff-table th:first-child{text-align:right;padding-right:16px}
+.staff-table .th-inner{display:flex;flex-direction:column;align-items:center;gap:3px}
+.staff-table .th-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:50%;
+  font-size:10px;font-weight:800;color:#fff;
+}
+.th-num-lab{background:rgba(79,142,247,0.35)}
+.th-num-tech{background:rgba(110,231,183,0.35)}
+.th-num-rad{background:rgba(167,139,250,0.35)}
+.th-num-ster{background:rgba(245,158,11,0.35)}
+.th-num-total{background:rgba(34,197,94,0.35)}
+.staff-table td{padding:10px 10px;border-bottom:1px solid var(--border);vertical-align:middle;text-align:center;color:#fff}
+.staff-table td:first-child{text-align:right;padding-right:16px}
+.staff-table tr:last-child td{border-bottom:none}
+.staff-table tr:hover td{background:rgba(79,142,247,0.05)}
+.staff-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:34px;height:34px;border-radius:8px;font-weight:800;font-size:14px;padding:0 8px;
+}
+.sn-lab{background:rgba(79,142,247,0.22);color:#a8c8ff}
+.sn-tech{background:rgba(110,231,183,0.22);color:#6ee7b7}
+.sn-rad{background:rgba(167,139,250,0.22);color:#c4b5fd}
+.sn-ster{background:rgba(245,158,11,0.22);color:#fcd34d}
+.sn-total{background:rgba(34,197,94,0.22);color:#86efac}
+.staff-center-name{
+  font-weight:600;color:#fff;font-size:13px;
+  white-space:nowrap;max-width:160px;
+  overflow:hidden;text-overflow:ellipsis;
+  display:flex;align-items:center;gap:6px;
+}
+.total-row td{background:var(--bg4)!important;font-weight:700;border-top:2px solid var(--border)}
+
+/* Rankings panel */
+.rank-list{display:flex;flex-direction:column;gap:10px}
+.rank-item{
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:12px 16px;display:flex;align-items:center;gap:14px;
+  transition:transform 0.15s;
+}
+.rank-item:hover{transform:translateX(-2px)}
+.rank-num{
+  width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:13px;flex-shrink:0;
+}
+.r1{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff}
+.r2{background:linear-gradient(135deg,#94a3b8,#64748b);color:#fff}
+.r3{background:linear-gradient(135deg,#cd7c2a,#92400e);color:#fff}
+.rn{background:var(--bg4);color:#fff;opacity:0.7}
+.rank-info{flex:1}
+.rank-center{font-size:13px;font-weight:700;color:#fff}
+.rank-sub{font-size:11px;color:rgba(255,255,255,0.45);margin-top:2px}
+.rank-pct{font-size:22px;font-weight:800}
+.rank-bar-wrap{width:120px;flex-shrink:0}
+.rank-bar-bg{background:var(--bg4);border-radius:4px;height:6px;overflow:hidden;margin-bottom:3px}
+.rank-bar-fill{height:100%;border-radius:4px}
+.rank-lbl{font-size:10px;color:rgba(255,255,255,0.4);text-align:center}
+
+/* ===== APP SCREEN ===== */
 #appScreen{display:none}
 .wrap{background:var(--bg);min-height:100vh;padding:0 0 40px;color:var(--text)}
-
-/* Header */
 .header{background:linear-gradient(135deg,#1e2a4a 0%,#0f1117 100%);padding:24px 24px 20px;border-bottom:1px solid var(--border)}
 .header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
 .logo-area{display:flex;align-items:center;gap:12px}
@@ -99,23 +428,15 @@ h1{font-size:18px;font-weight:600;color:var(--text);letter-spacing:0.3px}
 .meta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:16px 0 0;padding-top:16px;border-top:1px solid var(--border)}
 .meta-field{display:flex;flex-direction:column;gap:4px}
 .meta-field label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px}
-.meta-field input{
-  background:var(--bg3);border:1px solid var(--border);color:var(--text);
-  padding:7px 10px;border-radius:6px;font-size:13px;outline:none;width:100%;
-  transition:border-color 0.2s,box-shadow 0.2s;
-}
+.meta-field input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:6px;font-size:13px;outline:none;width:100%;transition:border-color 0.2s,box-shadow 0.2s}
 .meta-field input:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(79,142,247,0.12)}
-.logout-btn{
-  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);
-  color:var(--red);padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;
-  white-space:nowrap;transition:all 0.2s;
-}
+.header-btns{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.logout-btn{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:var(--red);padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;white-space:nowrap;transition:all 0.2s}
 .logout-btn:hover{background:rgba(239,68,68,0.2)}
-
-/* Progress & Stats */
+.stats-link-btn{background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.25);color:var(--purple);padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:5px}
+.stats-link-btn:hover{background:rgba(167,139,250,0.2)}
 .progress-wrap{background:var(--bg3);height:4px}
 .progress-bar{height:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 0.4s ease}
-
 .stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;padding:16px 24px;background:var(--bg2);border-bottom:1px solid var(--border)}
 .stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;transition:transform 0.15s}
 .stat-card:hover{transform:translateY(-1px)}
@@ -124,8 +445,6 @@ h1{font-size:18px;font-weight:600;color:var(--text);letter-spacing:0.3px}
 .sv-total{color:var(--accent)}.sv-yes{color:var(--green)}.sv-no{color:var(--red)}
 .sv-work{color:var(--accent2)}.sv-nowork{color:var(--yellow)}.sv-fill{color:var(--accent3)}
 .sv-pct{font-size:13px;color:var(--text3);display:block;margin-top:2px}
-
-/* Sections */
 .sections{padding:16px 24px;display:flex;flex-direction:column;gap:16px}
 .section{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:box-shadow 0.2s}
 .section:hover{box-shadow:0 2px 12px rgba(0,0,0,0.25)}
@@ -139,8 +458,6 @@ h1{font-size:18px;font-weight:600;color:var(--text);letter-spacing:0.3px}
 .sec-toggle.open{transform:rotate(180deg)}
 .sec-body{display:none;border-top:1px solid var(--border)}
 .sec-body.open{display:block}
-
-/* Table */
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:12.5px}
 thead tr{background:var(--bg4)}
@@ -152,8 +469,6 @@ td.item-num{color:var(--text3);font-size:11px;text-align:right;padding-right:14p
 td.item-text{text-align:right;color:var(--text);line-height:1.5}
 tr:hover td{background:rgba(79,142,247,0.04)}
 tr:last-child td{border-bottom:none}
-
-/* Radio buttons */
 .radio-group{display:flex;gap:4px;justify-content:center;align-items:center}
 .rb{display:inline-flex;align-items:center;gap:3px;cursor:pointer;padding:3px 7px;border-radius:5px;border:1px solid var(--border);font-size:11px;transition:all 0.15s;white-space:nowrap}
 .rb input{display:none}
@@ -163,33 +478,14 @@ tr:last-child td{border-bottom:none}
 .rb:has(input:checked).noworks{background:rgba(234,179,8,0.15);border-color:var(--yellow);color:var(--yellow)}
 .rb:not(:has(input:checked)){color:var(--text3)}
 .rb:hover:not(:has(input:checked)){border-color:var(--text2);color:var(--text2)}
-
-/* Inputs */
-.notes-input{
-  background:var(--bg3);border:1px solid var(--border);color:var(--text);
-  padding:5px 8px;border-radius:5px;font-size:11px;width:120px;outline:none;
-  transition:border-color 0.2s;
-}
+.notes-input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:11px;width:120px;outline:none;transition:border-color 0.2s}
 .notes-input:focus{border-color:var(--accent)}
-.count-input{
-  background:var(--bg3);border:1px solid var(--border);color:var(--text);
-  padding:5px 8px;border-radius:5px;font-size:12px;width:70px;text-align:center;outline:none;
-  transition:border-color 0.2s;
-}
+.count-input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-size:12px;width:70px;text-align:center;outline:none;transition:border-color 0.2s}
 .count-input:focus{border-color:var(--accent)}
-
-/* Bulk bar */
-.bulk-bar{
-  display:flex;align-items:center;gap:8px;
-  padding:8px 16px;background:var(--bg4);border-bottom:1px solid var(--border);flex-wrap:wrap;
-}
+.bulk-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--bg4);border-bottom:1px solid var(--border);flex-wrap:wrap}
 .bulk-group{display:flex;gap:4px}
 .bulk-sep{width:1px;height:20px;background:var(--border);margin:0 4px}
-.bulk-btn{
-  padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;
-  cursor:pointer;border:1px solid var(--border);background:var(--bg3);
-  color:var(--text2);transition:all 0.15s;
-}
+.bulk-btn{padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);transition:all 0.15s}
 .bulk-btn:hover{border-color:var(--text2);color:var(--text)}
 .bulk-yes:hover{background:rgba(34,197,94,0.15);border-color:var(--green)!important;color:var(--green)!important}
 .bulk-no:hover{background:rgba(239,68,68,0.15);border-color:var(--red)!important;color:var(--red)!important}
@@ -197,39 +493,17 @@ tr:last-child td{border-bottom:none}
 .bulk-nowork:hover{background:rgba(234,179,8,0.15);border-color:var(--yellow)!important;color:var(--yellow)!important}
 .bulk-reset:hover{background:rgba(148,163,184,0.1);border-color:var(--text2)!important}
 .count-label{color:#fff!important;font-size:12px;font-weight:500}
-
-/* Count row */
-.count-row{
-  display:flex;align-items:center;gap:10px;padding:10px 16px;
-  background:var(--bg4);border-top:1px solid var(--border);
-}
-
-/* Footer */
+.count-row{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--bg4);border-top:1px solid var(--border)}
 .footer{padding:16px 24px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 .sig-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 20px;text-align:center;min-width:180px}
 .sig-block label{font-size:12px;color:var(--text2);display:block;margin-bottom:8px}
 .sig-line{border-top:1px dashed var(--border);width:140px;margin:0 auto}
 .btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.btn-print{
-  background:var(--bg3);color:var(--text2);border:1px solid var(--border);
-  padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;
-  transition:all 0.2s;
-}
+.btn-print{background:var(--bg3);color:var(--text2);border:1px solid var(--border);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s}
 .btn-print:hover{border-color:var(--text2);color:var(--text)}
-.btn-send{
-  background:var(--accent);color:#fff;border:none;
-  padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;
-  cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity 0.2s,transform 0.1s;
-}
-.btn-send:hover{opacity:0.9}
-.btn-send:active{transform:scale(0.98)}
-.btn-send:disabled{opacity:0.5;cursor:not-allowed}
-
-/* Modal */
-.modal-overlay{
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);
-  align-items:center;justify-content:center;padding:20px;z-index:1000;
-}
+.btn-send{background:var(--accent);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity 0.2s,transform 0.1s}
+.btn-send:hover{opacity:0.9}.btn-send:active{transform:scale(0.98)}.btn-send:disabled{opacity:0.5;cursor:not-allowed}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:20px;z-index:1000}
 .modal-overlay.show{display:flex}
 .modal{background:var(--bg2);border:1px solid var(--border);border-radius:12px;width:100%;max-width:520px;overflow:hidden;animation:fadeInUp 0.25s ease}
 .modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
@@ -237,47 +511,20 @@ tr:last-child td{border-bottom:none}
 .modal-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;line-height:1;padding:4px 8px;transition:color 0.15s}
 .modal-close:hover{color:var(--text)}
 .modal-body{padding:20px}
-.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-.field label{font-size:12px;color:var(--text3)}
-.field input,.field select,.field textarea{
-  background:var(--bg3);border:1px solid var(--border);color:var(--text);
-  padding:9px 12px;border-radius:6px;font-size:13px;outline:none;width:100%;
-  font-family:inherit;direction:rtl;transition:border-color 0.2s,box-shadow 0.2s;
-}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(79,142,247,0.12)}
-.field textarea{resize:vertical;min-height:70px}
-.field select option{background:var(--bg3)}
-.confirm-card{
-  background:var(--bg3);border:1px solid var(--border);border-radius:12px;
-  padding:20px;margin-bottom:0;
-}
-.confirm-card-title{
-  font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;
-  margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);
-}
+.confirm-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:0}
+.confirm-card-title{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
 .confirm-meta{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
 .confirm-meta-row{display:flex;justify-content:space-between;align-items:center;font-size:13px}
-.confirm-meta-row .lbl{color:var(--text3)}
-.confirm-meta-row .val{color:var(--text);font-weight:600}
+.confirm-meta-row .lbl{color:var(--text3)}.confirm-meta-row .val{color:var(--text);font-weight:600}
 .confirm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding-top:14px;border-top:1px solid var(--border)}
 .cs-item{background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:10px 8px;text-align:center}
-.cs-num{font-size:22px;font-weight:700;line-height:1}
-.cs-lbl{font-size:10px;color:var(--text3);margin-top:3px}
+.cs-num{font-size:22px;font-weight:700;line-height:1}.cs-lbl{font-size:10px;color:var(--text3);margin-top:3px}
 .cs-yes{color:var(--green)}.cs-no{color:var(--red)}.cs-work{color:var(--accent2)}.cs-nowork{color:var(--yellow)}
-.send-summary{display:none}
-.ss-item{font-size:12px;color:var(--text2)}.ss-item span{color:var(--text);font-weight:600}
 .modal-foot{display:flex;gap:10px;justify-content:flex-end;padding:14px 20px;border-top:1px solid var(--border)}
 .btn-cancel{background:none;border:1px solid var(--border);color:var(--text2);padding:8px 18px;border-radius:6px;font-size:13px;cursor:pointer;transition:all 0.2s}
 .btn-cancel:hover{border-color:var(--text2);color:var(--text)}
-.btn-confirm{
-  background:var(--accent);color:#fff;border:none;padding:8px 20px;
-  border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;
-  display:flex;align-items:center;gap:6px;transition:opacity 0.2s;
-}
-.btn-confirm:hover{opacity:0.9}
-.btn-confirm:disabled{opacity:0.5;cursor:not-allowed}
-
-/* Success */
+.btn-confirm{background:var(--accent);color:#fff;border:none;padding:8px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity 0.2s}
+.btn-confirm:hover{opacity:0.9}.btn-confirm:disabled{opacity:0.5;cursor:not-allowed}
 .success-box{display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;gap:14px}
 .success-box.show{display:flex;animation:fadeInUp 0.3s ease}
 .success-icon{width:60px;height:60px;border-radius:50%;background:rgba(34,197,94,0.15);border:2px solid var(--green);display:flex;align-items:center;justify-content:center}
@@ -285,35 +532,150 @@ tr:last-child td{border-bottom:none}
 .success-title{font-size:16px;font-weight:600;color:var(--green)}
 .success-sub{font-size:13px;color:var(--text2)}
 .success-ref{font-size:11px;color:var(--text3);background:var(--bg3);padding:4px 12px;border-radius:5px;font-family:monospace}
-
-/* Spinner */
-@keyframes spin{to{transform:rotate(360deg)}}
 .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
-
-/* Toast */
-.toast{
-  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
-  background:var(--bg2);border:1px solid var(--border);color:var(--text);
-  padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;
-  box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:9000;
-  transition:transform 0.35s ease,opacity 0.35s ease;opacity:0;pointer-events:none;
-  display:flex;align-items:center;gap:8px;
-}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,0.4);z-index:9000;transition:transform 0.35s ease,opacity 0.35s ease;opacity:0;pointer-events:none;display:flex;align-items:center;gap:8px}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
-/* Print */
-@media print{
-  #loginScreen,.logout-btn,.btn-row,.bulk-bar,.stats-bar,.progress-wrap,
-  .btn-print,.btn-send,.modal-overlay,.toast{display:none!important}
-  .section{break-inside:avoid}
-  .wrap{background:#fff;color:#000}
-  :root{--bg:#fff;--bg2:#f5f5f5;--bg3:#eee;--bg4:#e0e0e0;--border:#ccc;--text:#000;--text2:#555;--text3:#888}
+/* search / filter */
+.stats-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.stats-search{background:var(--bg3);border:1px solid var(--border);color:#fff;padding:8px 14px;border-radius:8px;font-size:12px;outline:none;min-width:200px;font-family:inherit;direction:rtl;transition:border-color 0.2s}
+.stats-search::placeholder{color:rgba(255,255,255,0.3)}
+.stats-search:focus{border-color:var(--purple)}
+.stats-filter{background:var(--bg3);border:1px solid var(--border);color:#fff;padding:8px 12px;border-radius:8px;font-size:12px;outline:none;font-family:inherit;direction:rtl;transition:border-color 0.2s}
+.stats-filter:focus{border-color:var(--purple)}
+.stats-filter option{background:var(--bg3);color:#fff}
+
+/* ===== EXECUTIVE SUMMARY ===== */
+#execSummaryBar{
+  background:linear-gradient(135deg,#1a1040 0%,#0d1117 100%);
+  border-bottom:1px solid var(--border);
+  padding:0;
+  overflow:hidden;
+  transition:max-height 0.4s ease, opacity 0.3s ease;
+  max-height:0;opacity:0;
 }
+#execSummaryBar.open{max-height:500px;opacity:1;padding:16px 24px 18px;}
+.exec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;cursor:pointer;user-select:none}
+.exec-title{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:800;color:#fff}
+.exec-title-badge{background:linear-gradient(135deg,#7c3aed,#4f8ef7);color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700}
+.exec-toggle-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-family:'Tajawal',sans-serif;transition:all 0.2s}
+.exec-toggle-btn:hover{background:rgba(255,255,255,0.15)}
+.exec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+.exec-stat{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 10px;text-align:center;position:relative;overflow:hidden}
+.exec-stat::before{content:'';position:absolute;inset:0;border-radius:10px;opacity:0;transition:opacity 0.2s}
+.exec-stat-val{font-size:2rem;font-weight:900;line-height:1;margin-bottom:4px;font-variant-numeric:tabular-nums lining-nums}
+.exec-stat-lbl{font-size:10px;color:rgba(255,255,255,0.6);font-weight:500}
+.exec-stat.es-fill .exec-stat-val{color:var(--accent3)}
+.exec-stat.es-avail .exec-stat-val{color:var(--green)}
+.exec-stat.es-navail .exec-stat-val{color:var(--red)}
+.exec-stat.es-work .exec-stat-val{color:var(--accent2)}
+.exec-stat.es-nowork .exec-stat-val{color:var(--yellow)}
+.exec-progress-wrap{background:rgba(255,255,255,0.08);border-radius:8px;height:8px;overflow:hidden;margin-bottom:8px}
+.exec-progress-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 0.6s ease}
+.exec-sections-row{display:flex;gap:8px;flex-wrap:wrap}
+.exec-sec-chip{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:5px 10px;font-size:11px;color:rgba(255,255,255,0.75)}
+.exec-sec-fill{font-weight:800;font-variant-numeric:tabular-nums}
+.exec-bar{height:4px;border-radius:2px;margin-top:3px;transition:width 0.5s}
+
+/* Floating PDF print button */
+#floatPrintBtn{
+  position:fixed;bottom:24px;left:24px;
+  background:linear-gradient(135deg,#7c3aed,#4f8ef7);
+  color:#fff;border:none;border-radius:14px;
+  padding:12px 20px;font-size:13px;font-weight:700;
+  cursor:pointer;z-index:500;
+  display:none;align-items:center;gap:8px;
+  box-shadow:0 8px 28px rgba(124,58,237,0.45);
+  font-family:'Tajawal',sans-serif;
+  transition:transform 0.2s,box-shadow 0.2s;
+  animation:floatIn 0.4s ease;
+}
+#floatPrintBtn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(124,58,237,0.55)}
+@keyframes floatIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#floatPrintBtn.visible{display:flex}
+
+/* ===== MOBILE ===== */
+@media(max-width:600px){
+  .centers-grid{grid-template-columns:1fr}
+  .stats-overview{grid-template-columns:repeat(2,1fr)}
+  .stats-panel{padding:14px 14px 24px}
+  .stats-header{padding:14px 16px}
+  /* App screen mobile */
+  .header{padding:16px 14px 14px}
+  .header-top{flex-direction:column;gap:10px}
+  .title-block{text-align:right}
+  h1{font-size:15px}
+  .header-btns{justify-content:flex-start}
+  .meta-row{grid-template-columns:1fr 1fr;gap:8px}
+  .stats-bar{grid-template-columns:repeat(3,1fr);padding:10px 14px;gap:7px}
+  .stat-card .sv{font-size:20px}
+  .sections{padding:10px 14px;gap:12px}
+  .sec-header{padding:10px 12px}
+  .tbl-wrap{font-size:11.5px}
+  td,th{padding:6px 7px}
+  .notes-input{width:90px}
+  .bulk-bar{padding:6px 12px;gap:6px}
+  .footer{padding:12px 14px 0;flex-direction:column;align-items:stretch}
+  .sig-block{display:none}
+  .btn-row{justify-content:stretch}
+  .btn-print,.btn-send{flex:1}
+  #rankGrids{grid-template-columns:1fr!important}
+  .cd-top-stats{grid-template-columns:repeat(2,1fr)}
+  .cd-ratios{grid-template-columns:1fr}
+  .cd-staff-grid{grid-template-columns:repeat(3,1fr)}
+  .exec-grid{grid-template-columns:repeat(3,1fr)}
+  #floatPrintBtn{bottom:16px;left:16px;padding:10px 16px;font-size:12px}
+}
+
+/* ===== PRINT / PDF ===== */
+@media print{
+  @page{size:A4;margin:15mm 12mm}
+  #loginScreen,#statsScreen,.logout-btn,.stats-link-btn,.btn-row,
+  .bulk-bar,.stats-bar,.progress-wrap,.btn-print,.btn-send,
+  .modal-overlay,.toast,#floatPrintBtn,.exec-toggle-btn,
+  .header-btns{display:none!important}
+  body{background:#fff!important;color:#000!important;font-family:'Tajawal',Arial,sans-serif!important}
+  :root{
+    --bg:#fff!important;--bg2:#f8f9fa!important;--bg3:#f1f3f5!important;
+    --bg4:#e9ecef!important;--border:#dee2e6!important;
+    --text:#000!important;--text2:#444!important;--text3:#666!important;
+  }
+  #appScreen{display:block!important}
+  .wrap{background:#fff!important;color:#000!important;min-height:auto}
+  .header{background:#fff!important;border-bottom:2px solid #000!important;padding:12px!important}
+  .header-top{flex-wrap:nowrap}
+  .org-name,.org-name strong,.subtitle{color:#000!important}
+  h1{color:#000!important;font-size:16px!important}
+  .section{break-inside:avoid;border:1px solid #ccc!important;margin-bottom:10px}
+  .sec-header{background:#f1f3f5!important}
+  .sec-body{display:block!important}
+  .sec-body.open{display:block!important}
+  table{border:1px solid #ccc!important}
+  th,td{border:1px solid #ddd!important;color:#000!important}
+  .rb{border:1px solid #999!important}
+  .rb:has(input:checked){background:#e0f5e9!important;color:#000!important}
+  /* Print executive summary */
+  #execSummaryBar{
+    display:block!important;max-height:none!important;opacity:1!important;
+    padding:12px!important;background:#f8f9fa!important;
+    border:1px solid #ccc!important;border-radius:8px!important;
+    margin-bottom:10px!important;
+  }
+  .exec-stat-val{color:#000!important;font-size:1.5rem!important}
+  .exec-stat{border:1px solid #ccc!important;background:#fff!important}
+  .exec-sec-chip{border:1px solid #ccc!important;background:#f8f9fa!important;color:#000!important}
+  .meta-field input{border:1px solid #ccc!important;color:#000!important;background:#fff!important}
+  .notes-input,.count-input{border:1px solid #ccc!important;color:#000!important;background:#fff!important}
+  .progress-wrap{display:block!important;background:#eee!important;height:6px!important}
+  .count-label{color:#000!important}
+  .count-row{background:#f5f5f5!important;border-top:1px solid #ddd!important}
+}
+
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ===== LOGIN ===== -->
 <div id="loginScreen">
   <div class="login-card">
     <div class="login-logo">
@@ -325,35 +687,121 @@ tr:last-child td{border-bottom:none}
     </div>
     <div class="login-title">
       <h2>تسجيل الدخول</h2>
-      <p>أدخل بيانات الدخول للمتابعة</p>
+      <p>اختر نوع الدخول ثم أدخل بيانات الدخول</p>
+    </div>
+    <div class="login-mode-tabs">
+      <button class="mode-tab active" id="tabReport" onclick="setMode('report')">📝 تقرير ميداني</button>
+      <button class="mode-tab" id="tabStats" onclick="setMode('stats')">📊 لوحة الإحصائيات</button>
     </div>
     <div class="login-field">
-      <label for="loginUser">اسم المستخدم</label>
+      <label>اسم المستخدم</label>
       <div class="login-field-wrap">
         <span class="login-field-icon">👤</span>
         <input type="text" id="loginUser" placeholder="اسم المستخدم" autocomplete="username">
       </div>
     </div>
     <div class="login-field">
-      <label for="loginPass">كلمة المرور</label>
+      <label>كلمة المرور</label>
       <div class="login-field-wrap">
         <span class="login-field-icon">🔒</span>
         <input type="password" id="loginPass" placeholder="كلمة المرور" autocomplete="current-password">
       </div>
     </div>
-    <div class="login-error" id="loginError" role="alert">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
+    <div class="login-error" id="loginError">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
     <button class="btn-login" id="btnLogin">
-      <span>دخول</span>
+      <span id="btnLoginLabel">📝 دخول على التقرير الميداني</span>
       <span>←</span>
     </button>
     <div class="login-hint">نظام تقارير الجولات الميدانية — وزارة الصحة</div>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ===== STATS SCREEN ===== -->
+<div id="statsScreen">
+  <div class="stats-header">
+    <div class="stats-header-left">
+      <div class="stats-header-icon">📊</div>
+      <div class="stats-header-title">
+        <h1>لوحة إحصائيات المراكز الصحية</h1>
+        <p id="statsSubtitle">بيانات الجولات الميدانية — مايو 2026 — 25 مركز صحي</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <button onclick="openGlobalExec()" title="الملخص التنفيذي الشامل" style="background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#fff;width:38px;height:38px;border-radius:10px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(245,158,11,0.35);transition:transform 0.2s" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">📋</button>
+      <button onclick="refreshStats()" title="تحديث البيانات" style="background:rgba(110,231,183,0.15);border:1px solid rgba(110,231,183,0.3);color:var(--accent2);width:38px;height:38px;border-radius:10px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s" id="refreshBtn" onmouseover="this.style.background='rgba(110,231,183,0.25)'" onmouseout="this.style.background='rgba(110,231,183,0.15)'">🔄</button>
+      <button class="stats-back-btn" onclick="goBack()">← العودة لتسجيل الدخول</button>
+    </div>
+  </div>
+
+  <!-- Overview cards -->
+  <div class="stats-overview">
+    <div class="ov-card c1"><div class="ov-val">25</div><div class="ov-lbl">🏥 عدد المراكز</div></div>
+    <div class="ov-card c2"><div class="ov-val">73.3%</div><div class="ov-lbl">📦 متوسط التوافر</div></div>
+    <div class="ov-card c4"><div class="ov-val">85.2%</div><div class="ov-lbl">⚙️ متوسط التشغيل</div></div>
+    <div class="ov-card c5"><div class="ov-val" id="ov-staff-total">—</div><div class="ov-lbl">👥 إجمالي الموظفين</div></div>
+    <div class="ov-card c3"><div class="ov-val">4</div><div class="ov-lbl">🔴 مراكز بتوافر منخفض</div></div>
+    <div class="ov-card c6"><div class="ov-val">1,375</div><div class="ov-lbl">📋 إجمالي العناصر</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="stats-tabs">
+    <button class="stab active" onclick="switchPanel('all')">🏥 جميع المراكز</button>
+    <button class="stab" onclick="switchPanel('ranking')">🏆 التصنيف</button>
+    <button class="stab" onclick="switchPanel('staff')">👥 الكوادر البشرية</button>
+  </div>
+
+  <!-- Panel: All Centers -->
+  <div class="stats-panel active" id="panel-all">
+    <div class="stats-controls">
+      <input class="stats-search" type="text" placeholder="🔍 ابحث باسم المركز..." oninput="filterCenters(this.value)" id="centerSearch">
+      <select class="stats-filter" onchange="filterByLevel(this.value)" id="levelFilter">
+        <option value="all">جميع المستويات</option>
+        <option value="high">🟢 توافر عالي (≥80%)</option>
+        <option value="mid">🟡 توافر متوسط (50-79%)</option>
+        <option value="low">🔴 توافر منخفض (&lt;50%)</option>
+      </select>
+    </div>
+    <div class="centers-grid" id="centersGrid"></div>
+  </div>
+
+  <!-- Panel: Ranking -->
+  <div class="stats-panel" id="panel-ranking">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" id="rankGrids">
+      <div>
+        <div class="staff-section-title">🏆 أعلى المراكز توافراً</div>
+        <div class="rank-list" id="rankAvailList"></div>
+      </div>
+      <div>
+        <div class="staff-section-title">⚙️ أعلى المراكز تشغيلاً</div>
+        <div class="rank-list" id="rankWorkList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel: Staff -->
+  <div class="stats-panel" id="panel-staff">
+    <div class="staff-section-title">👥 الكوادر البشرية حسب المركز والإدارة</div>
+    <div class="staff-table-wrap">
+      <table class="staff-table" id="staffTable">
+        <thead>
+          <tr>
+            <th style="text-align:right;padding-right:16px">🏥 المركز الصحي</th>
+            <th><div class="th-inner"><span class="th-num th-num-lab">🔬</span><span>موظفو المختبر</span></div></th>
+            <th><div class="th-inner"><span class="th-num th-num-tech">🧪</span><span>فنيو المختبر</span></div></th>
+            <th><div class="th-inner"><span class="th-num th-num-rad">🩻</span><span>تقنيو الأشعة</span></div></th>
+            <th><div class="th-inner"><span class="th-num th-num-ster">🏥</span><span>موظفو التعقيم</span></div></th>
+            <th><div class="th-inner"><span class="th-num th-num-total">👥</span><span>الإجمالي</span></div></th>
+          </tr>
+        </thead>
+        <tbody id="staffTbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== APP (REPORT) SCREEN ===== -->
 <div id="appScreen">
 <div class="wrap">
-
 <div class="header">
   <div class="header-top">
     <div class="logo-area">
@@ -364,16 +812,53 @@ tr:last-child td{border-bottom:none}
       <h1>تقرير الجولة الميدانية للخدمات الصحية المساندة</h1>
       <div class="subtitle">Field Tour Report — Supporting Health Services</div>
     </div>
-    <button class="logout-btn" id="btnLogout">🔓 خروج</button>
+    <div class="header-btns">
+      <button class="stats-link-btn" onclick="goToStats()">📊 الإحصائيات</button>
+      <button class="logout-btn" id="btnLogout">🔓 خروج</button>
+    </div>
   </div>
   <div class="meta-row">
-    <div class="meta-field"><label for="centerName">اسم المركز</label><input type="text" id="centerName" placeholder="أدخل اسم المركز"></div>
-    <div class="meta-field"><label for="visitDate">تاريخ الزيارة</label><input type="date" id="visitDate"></div>
-    <div class="meta-field"><label for="writer">كاتب التقرير</label><input type="text" id="writer" placeholder="الاسم"></div>
+    <div class="meta-field"><label>اسم المركز</label><input type="text" id="centerName" placeholder="أدخل اسم المركز"></div>
+    <div class="meta-field"><label>تاريخ الزيارة</label><input type="date" id="visitDate"></div>
+    <div class="meta-field"><label>كاتب التقرير</label><input type="text" id="writer" placeholder="الاسم"></div>
   </div>
 </div>
-
 <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+<!-- ===== EXECUTIVE SUMMARY BAR ===== -->
+<div id="execSummaryBar">
+  <div class="exec-header" onclick="toggleExecSummary()">
+    <div class="exec-title">
+      📊 الملخص التنفيذي
+      <span class="exec-title-badge">لمحة سريعة</span>
+    </div>
+    <button class="exec-toggle-btn" id="execToggleBtn">إخفاء ↑</button>
+  </div>
+  <div class="exec-progress-wrap"><div class="exec-progress-fill" id="execProgressFill" style="width:0%"></div></div>
+  <div class="exec-grid">
+    <div class="exec-stat es-fill">
+      <div class="exec-stat-val" id="ex-pct">0%</div>
+      <div class="exec-stat-lbl">نسبة الإنجاز</div>
+    </div>
+    <div class="exec-stat es-avail">
+      <div class="exec-stat-val" id="ex-yes">0</div>
+      <div class="exec-stat-lbl">✅ متوفر</div>
+    </div>
+    <div class="exec-stat es-navail">
+      <div class="exec-stat-val" id="ex-no">0</div>
+      <div class="exec-stat-lbl">❌ غير متوفر</div>
+    </div>
+    <div class="exec-stat es-work">
+      <div class="exec-stat-val" id="ex-work">0</div>
+      <div class="exec-stat-lbl">⚙️ تعمل</div>
+    </div>
+    <div class="exec-stat es-nowork">
+      <div class="exec-stat-val" id="ex-nowork">0</div>
+      <div class="exec-stat-lbl">🔴 لا تعمل</div>
+    </div>
+  </div>
+  <div class="exec-sections-row" id="execSectionsRow"></div>
+</div>
 
 <div class="stats-bar">
   <div class="stat-card"><div class="sv sv-total" id="st-total">0</div><div class="sl">إجمالي العناصر</div></div>
@@ -383,9 +868,7 @@ tr:last-child td{border-bottom:none}
   <div class="stat-card"><div class="sv sv-work" id="st-work">0</div><div class="sl">تعمل</div></div>
   <div class="stat-card"><div class="sv sv-nowork" id="st-nowork">0</div><div class="sl">لا تعمل</div></div>
 </div>
-
 <div class="sections" id="sections"></div>
-
 <div class="footer">
   <div class="sig-block"><label>كاتب التقرير</label><div class="sig-line"></div></div>
   <div class="btn-row">
@@ -397,16 +880,15 @@ tr:last-child td{border-bottom:none}
   </div>
   <div class="sig-block"><label>توقيع مدير المركز</label><div class="sig-line"></div></div>
 </div>
-
 </div>
 </div>
 
 <!-- Modal -->
-<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+<div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-head">
-      <h2 id="modalTitle">إرسال التقرير</h2>
-      <button class="modal-close" id="btnModalClose" aria-label="إغلاق">✕</button>
+      <h2>إرسال التقرير</h2>
+      <button class="modal-close" id="btnModalClose">✕</button>
     </div>
     <div id="modalForm">
       <div class="modal-body">
@@ -434,7 +916,7 @@ tr:last-child td{border-bottom:none}
         </button>
       </div>
     </div>
-    <div class="success-box" id="successBox" role="status">
+    <div class="success-box" id="successBox">
       <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       <div class="success-title">✅ تم إرسال التقرير بنجاح</div>
       <div class="success-sub" id="successMsg"></div>
@@ -444,433 +926,1192 @@ tr:last-child td{border-bottom:none}
   </div>
 </div>
 
-<!-- Toast -->
-<div class="toast" id="toast" role="alert"></div>
+<!-- CENTER DETAIL MODAL -->
+<div class="cd-overlay" id="cdOverlay" onclick="if(event.target===this)closeCenterDetail()">
+  <div class="cd-modal">
+    <div class="cd-head">
+      <div class="cd-head-left">
+        <div class="cd-icon">🏥</div>
+        <div>
+          <div class="cd-title" id="cd-title">—</div>
+          <div class="cd-subtitle" id="cd-subtitle">—</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button onclick="printCenterDetail()" style="background:rgba(79,142,247,0.15);border:1px solid rgba(79,142,247,0.3);color:var(--accent);padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'Tajawal',sans-serif;transition:all 0.2s;white-space:nowrap" onmouseover="this.style.background='rgba(79,142,247,0.25)'" onmouseout="this.style.background='rgba(79,142,247,0.15)'">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          طباعة PDF
+        </button>
+        <button class="cd-close" onclick="closeCenterDetail()">✕</button>
+      </div>
+    </div>
+    <div class="cd-body" id="cd-body"><!-- filled by JS --></div>
+  </div>
+</div>
+
+<!-- GLOBAL EXECUTIVE SUMMARY MODAL -->
+<div id="globalExecOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);z-index:3000;align-items:center;justify-content:center;padding:16px" onclick="if(event.target===this)closeGlobalExec()">
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:18px;width:100%;max-width:700px;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 40px 100px rgba(0,0,0,0.7);animation:fadeInUp 0.3s ease">
+    <!-- Header -->
+    <div style="padding:18px 22px 14px;background:linear-gradient(135deg,#1a0a40,#0f1117);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📋</div>
+        <div>
+          <div style="font-size:16px;font-weight:800;color:#fff">الملخص التنفيذي الشامل</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px" id="gexec-subtitle">جميع المراكز</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="printGlobalExec()" style="background:linear-gradient(135deg,#7c3aed,#4f8ef7);border:none;color:#fff;padding:7px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Tajawal',sans-serif;display:flex;align-items:center;gap:5px">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          طباعة PDF
+        </button>
+        <button onclick="closeGlobalExec()" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s">✕</button>
+      </div>
+    </div>
+    <!-- Body -->
+    <div id="gexec-body" style="overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:16px"></div>
+  </div>
+</div>
+
+<!-- Hidden print area for global exec -->
+<div id="gexecPrintArea" style="display:none"></div>
+
+<!-- Hidden print area for center detail -->
+<div id="cdPrintArea"></div>
+
+<!-- Floating PDF Print Button -->
+<button id="floatPrintBtn" onclick="printPDF()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+  طباعة / PDF
+</button>
+
+<div class="toast" id="toast"></div>
+
 
 <script>
 // ===== CONFIG =====
-const CREDENTIALS = { username: '123', password: '123' };
+const CREDENTIALS = { username:'123', password:'123' };
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz8QHzytTU1on03EcL8WGPMBJtUBwn5mT0MNiv0YNFx5AXtb43W8S_L0hyvuL0HPuZp/exec';
 
+// ===== DATA =====
+const STAFF_DATA = {"وعيره":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1},"الأوس":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد موظفين التعقيم":1},"الملك فهد":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد تقنيي الأشعة":0,"عدد موظفين التعقيم":1},"تلعة الهبوب":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد تقنيي الأشعة":0,"عدد موظفين التعقيم":1},"باب المجيدي":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد تقنيي الأشعة":1,"عدد موظفين التعقيم":2},"سيد الشهداء":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد تقنيي الأشعة":1,"عدد موظفين التعقيم":1},"السلام":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد موظفين التعقيم":1},"البدراني":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد تقنيي الأشعة":2,"عدد موظفين التعقيم":1},"النصر":{"عدد فنيين المختبر":2,"عدد تقنيي الأشعة":0,"عدد موظفين التعقيم":1},"الازهري":{"عدد موظفين المختبر":2,"عدد فنيين المختبر":2,"عدد تقنيي الأشعة":0,"عدد موظفين التعقيم":1},"العوالي":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد تقنيي الأشعة":2,"عدد موظفين التعقيم":2},"الدعيثة":{"عدد موظفين المختبر":3,"عدد فنيين المختبر":3,"عدد تقنيي الأشعة":3,"عدد موظفين التعقيم":2},"ابو مرخة":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد موظفين التعقيم":1},"طيبة":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد موظفين التعقيم":1},"العزيزية":{"عدد موظفين المختبر":1,"عدد تقنيي الأشعة":1},"الخالدية":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد موظفين التعقيم":2},"درة المدينة":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد موظفين التعقيم":1},"باقدو":{"عدد موظفين المختبر":1,"عدد تقنيي الأشعة":2},"الحزام":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد موظفين التعقيم":2},"الاصيفرين":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1},"بني سلمة":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد موظفين التعقيم":3},"الفيصلية":{"عدد موظفين المختبر":1,"عدد موظفين التعقيم":6},"الحرة الغربية":{"عدد موظفين المختبر":1,"عدد فنيين المختبر":1,"عدد تقنيي الأشعة":1},"قباء":{"عدد موظفين المختبر":2,"عدد فنيين المختبر":2},"الحرة الشرقية":{"عدد فنيين المختبر":1,"عدد موظفين التعقيم":3}};
+
+const STATS_DATA = {"وعيره":{"total":52,"available":43,"not_available":9,"working":41,"not_working":2,"available_pct":82.7,"working_pct":95.3},"الأوس":{"total":51,"available":37,"not_available":14,"working":39,"not_working":7,"available_pct":72.5,"working_pct":84.8},"الملك فهد":{"total":52,"available":33,"not_available":19,"working":33,"not_working":19,"available_pct":63.5,"working_pct":63.5},"تلعة الهبوب":{"total":52,"available":23,"not_available":29,"working":23,"not_working":29,"available_pct":44.2,"working_pct":44.2},"باب المجيدي":{"total":52,"available":45,"not_available":7,"working":45,"not_working":7,"available_pct":86.5,"working_pct":86.5},"سيد الشهداء":{"total":52,"available":44,"not_available":8,"working":43,"not_working":9,"available_pct":84.6,"working_pct":82.7},"السلام":{"total":52,"available":40,"not_available":12,"working":45,"not_working":7,"available_pct":76.9,"working_pct":86.5},"البدراني":{"total":52,"available":41,"not_available":11,"working":47,"not_working":0,"available_pct":78.8,"working_pct":100.0},"النصر":{"total":52,"available":35,"not_available":17,"working":34,"not_working":17,"available_pct":67.3,"working_pct":66.7},"الازهري":{"total":52,"available":42,"not_available":10,"working":38,"not_working":14,"available_pct":80.8,"working_pct":73.1},"العوالي":{"total":52,"available":29,"not_available":23,"working":44,"not_working":1,"available_pct":55.8,"working_pct":97.8},"الدعيثة":{"total":52,"available":41,"not_available":11,"working":44,"not_working":4,"available_pct":78.8,"working_pct":91.7},"ابو مرخة":{"total":52,"available":32,"not_available":20,"working":42,"not_working":10,"available_pct":61.5,"working_pct":80.8},"طيبة":{"total":52,"available":26,"not_available":26,"working":31,"not_working":21,"available_pct":50.0,"working_pct":59.6},"العزيزية":{"total":52,"available":38,"not_available":14,"working":46,"not_working":6,"available_pct":73.1,"working_pct":88.5},"الخالدية":{"total":52,"available":33,"not_available":19,"working":51,"not_working":1,"available_pct":63.5,"working_pct":98.1},"درة المدينة":{"total":52,"available":37,"not_available":15,"working":50,"not_working":2,"available_pct":71.2,"working_pct":96.2},"باقدو":{"total":52,"available":44,"not_available":8,"working":47,"not_working":5,"available_pct":84.6,"working_pct":90.4},"الحزام":{"total":52,"available":38,"not_available":14,"working":52,"not_working":0,"available_pct":73.1,"working_pct":100.0},"الاصيفرين":{"total":52,"available":24,"not_available":28,"working":50,"not_working":2,"available_pct":46.2,"working_pct":96.2},"بني سلمة":{"total":52,"available":39,"not_available":13,"working":45,"not_working":7,"available_pct":75.0,"working_pct":86.5},"الفيصلية":{"total":52,"available":35,"not_available":17,"working":49,"not_working":3,"available_pct":67.3,"working_pct":94.2},"الحرة الغربية":{"total":52,"available":42,"not_available":10,"working":52,"not_working":0,"available_pct":80.8,"working_pct":100.0},"قباء":{"total":52,"available":42,"not_available":10,"working":46,"not_working":6,"available_pct":80.8,"working_pct":88.5},"الحرة الشرقية":{"total":52,"available":40,"not_available":12,"working":23,"not_working":7,"available_pct":76.9,"working_pct":76.7}};
+
 const SECTIONS = [
-  {
-    id: 'lab_premarital', title: 'خدمات المختبر (فحص ما قبل الزواج)', icon: '🔬', color: '#4f8ef7',
-    items: ['يتوفر موعد على نظام صحتي','توفر مسار خاص لفحص ما قبل الزواج','تتوفر الخدمة بالمركز من الأحد إلى الخميس خلال ساعات العمل','يتم الاستقبال بدون موعد','يتم طلب إثبات الهوية بالاستقبال','يتم طلب الهوية في نقطة سحب الدم','تتوفر الأنابيب البنفسجية بكميات كافية','تتوفر الأنابيب الصفراء أو الحمراء بكميات كافية','تتوفر تجهيزات حفظ العينات (ثلاجة أو حافظة)','يتم الالتزام بوضع الباركود على العينات','هل تم الاطلاع على التعميم من مقدمي الخدمة','مدير المركز على اطلاع بوجود الخدمة','المدير الطبي على اطلاع بوجود الخدمة','الاستقبال على اطلاع بوجود الخدمة','موظف السحب على اطلاع بوجود الخدمة','توفر QR-Code في منطقة السحب + التثقيف + الاستقبال'],
-    countField: { label: 'عدد موظفين المختبر', id: 'cnt_lab_staff' }
-  },
-  {
-    id: 'lab_care', title: 'خدمات المختبر (مستهدفات نموذج الرعاية)', icon: '🧪', color: '#6ee7b7',
-    items: ['تتوفر الأنابيب الصفراء أو الحمراء بكميات كافية','تتوفر الأنابيب الرمادية بكميات كافية','تتوفر الأنابيب البنفسجية بكميات كافية','توفر فحص OGTT','يوجد عبوات لجمع عينة البول لفحص Albumin to Creatinine Ratio','توفر Sampler بالمختبر لأخذ عينة البراز لفحص سرطان القولون'],
-    countField: { label: 'عدد فنيين المختبر', id: 'cnt_lab_tech' }
-  },
-  {
-    id: 'radiology', title: 'خدمات الأشعة', icon: '🩻', color: '#a78bfa',
-    items: ['توفر جهاز أشعة X-Ray','توفر جهاز أشعة سونار','يوجد جهاز ماموجرام','توفر تقني أشعة X-Ray','توفر تقني أشعة للسونار','(مستهدف الرعاية) توفر تقني أشعة ماموجرام','هل جهاز الأشعة مرتبط في نظام Agfa الباكس'],
-    countField: { label: 'عدد تقنيي الأشعة', id: 'cnt_rad_tech' }
-  },
-  {
-    id: 'sterilization', title: 'خدمات التعقيم', icon: '🏥', color: '#f59e0b',
-    items: ['توفر غرفة للتعقيم','غسالة حرارية','التراسونيك','حوضين مغسلة','مسدس هواء Air gun','مسدس ماء Water gun','طاولات فرز','سلات للغسيل Basket','خزان ماء مركزي (مقطر أو RO)','جهاز بخار سنترال أتوكليف /2','كابينة تجفيف /1','Sealer/2','مكبر بإضاءة للفحص','طاولات فرز وتجميع','حضانة Incubation','أتوكليف محمول للمراكز ذات الضغط المنخفض'],
-    countField: { label: 'عدد موظفين التعقيم', id: 'cnt_ster_staff' }
-  },
-  {
-    id: 'physiotherapy', title: 'خدمات العلاج الطبيعي', icon: '💪', color: '#34d399',
-    items: ['تتوفر عيادة','يتوفر كادر'],
-    countField: null
-  },
-  {
-    id: 'health_edu', title: 'خدمات التثقيف الصحي', icon: '📋', color: '#f87171',
-    items: ['يوجد مدرب صحي','يوجد جدولة للمواعيد','يوجد يوزر في منصة رقيم للمدرب الصحي','(مستهدف الرعاية) عكس المعادلة','تتم تعبئة نموذج الاستبيان عن طريق الرابط'],
-    countField: null
-  }
+  {id:'lab_premarital',title:'خدمات المختبر (فحص ما قبل الزواج)',icon:'🔬',color:'#4f8ef7',items:['يتوفر موعد على نظام صحتي','توفر مسار خاص لفحص ما قبل الزواج','تتوفر الخدمة بالمركز من الأحد إلى الخميس خلال ساعات العمل','يتم الاستقبال بدون موعد','يتم طلب إثبات الهوية بالاستقبال','يتم طلب الهوية في نقطة سحب الدم','تتوفر الأنابيب البنفسجية بكميات كافية','تتوفر الأنابيب الصفراء أو الحمراء بكميات كافية','تتوفر تجهيزات حفظ العينات (ثلاجة أو حافظة)','يتم الالتزام بوضع الباركود على العينات','هل تم الاطلاع على التعميم من مقدمي الخدمة','مدير المركز على اطلاع بوجود الخدمة','المدير الطبي على اطلاع بوجود الخدمة','الاستقبال على اطلاع بوجود الخدمة','موظف السحب على اطلاع بوجود الخدمة','توفر QR-Code في منطقة السحب + التثقيف + الاستقبال'],countField:{label:'عدد موظفين المختبر',id:'cnt_lab_staff'}},
+  {id:'lab_care',title:'خدمات المختبر (مستهدفات نموذج الرعاية)',icon:'🧪',color:'#6ee7b7',items:['تتوفر الأنابيب الصفراء أو الحمراء بكميات كافية','تتوفر الأنابيب الرمادية بكميات كافية','تتوفر الأنابيب البنفسجية بكميات كافية','توفر فحص OGTT','يوجد عبوات لجمع عينة البول لفحص Albumin to Creatinine Ratio','توفر Sampler بالمختبر لأخذ عينة البراز لفحص سرطان القولون'],countField:{label:'عدد فنيين المختبر',id:'cnt_lab_tech'}},
+  {id:'radiology',title:'خدمات الأشعة',icon:'🩻',color:'#a78bfa',items:['توفر جهاز أشعة X-Ray','توفر جهاز أشعة سونار','يوجد جهاز ماموجرام','توفر تقني أشعة X-Ray','توفر تقني أشعة للسونار','(مستهدف الرعاية) توفر تقني أشعة ماموجرام','هل جهاز الأشعة مرتبط في نظام Agfa الباكس'],countField:{label:'عدد تقنيي الأشعة',id:'cnt_rad_tech'}},
+  {id:'sterilization',title:'خدمات التعقيم',icon:'🏥',color:'#f59e0b',items:['توفر غرفة للتعقيم','غسالة حرارية','التراسونيك','حوضين مغسلة','مسدس هواء Air gun','مسدس ماء Water gun','طاولات فرز','سلات للغسيل Basket','خزان ماء مركزي (مقطر أو RO)','جهاز بخار سنترال أتوكليف /2','كابينة تجفيف /1','Sealer/2','مكبر بإضاءة للفحص','طاولات فرز وتجميع','حضانة Incubation','أتوكليف محمول للمراكز ذات الضغط المنخفض'],countField:{label:'عدد موظفين التعقيم',id:'cnt_ster_staff'}},
+  {id:'physiotherapy',title:'خدمات العلاج الطبيعي',icon:'💪',color:'#34d399',items:['تتوفر عيادة','يتوفر كادر'],countField:null},
+  {id:'health_edu',title:'خدمات التثقيف الصحي',icon:'📋',color:'#f87171',items:['يوجد مدرب صحي','يوجد جدولة للمواعيد','يوجد يوزر في منصة رقيم للمدرب الصحي','(مستهدف الرعاية) عكس المعادلة','تتم تعبئة نموذج الاستبيان عن طريق الرابط'],countField:null}
 ];
 
 // ===== STATE =====
-const state = {};
+const appState = {};
 let totalItems = 0;
+let loginMode = 'report';
 
 // ===== HELPERS =====
-function showToast(msg, duration = 3000) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), duration);
+function showToast(msg,color,dur=3000){const el=document.getElementById('toast');el.textContent=msg;if(color)el.style.borderColor=color;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');el.style.borderColor=''},dur)}
+function getEl(id){return document.getElementById(id)}
+
+// ===== MODE TOGGLE =====
+function setMode(mode){
+  loginMode=mode;
+  getEl('tabReport').classList.toggle('active',mode==='report');
+  getEl('tabStats').classList.toggle('active',mode==='stats');
+  const btn=getEl('btnLogin');
+  if(mode==='report'){btn.className='btn-login';getEl('btnLoginLabel').textContent='📝 دخول على التقرير الميداني';}
+  else{btn.className='btn-login stats-mode';getEl('btnLoginLabel').textContent='📊 دخول على الإحصائيات';}
 }
 
-function getEl(id) { return document.getElementById(id); }
-
 // ===== AUTH =====
-function doLogin() {
-  const user = getEl('loginUser').value.trim();
-  const pass = getEl('loginPass').value;
-  const errEl = getEl('loginError');
-  const card = document.querySelector('.login-card');
-  const btn = getEl('btnLogin');
-
-  if (user === CREDENTIALS.username && pass === CREDENTIALS.password) {
-    btn.disabled = true;
-    btn.innerHTML = '<div class="spinner"></div> جارٍ الدخول...';
-    setTimeout(() => {
-      getEl('loginScreen').style.display = 'none';
-      getEl('appScreen').style.display = 'block';
+function doLogin(){
+  const user=getEl('loginUser').value.trim();
+  const pass=getEl('loginPass').value;
+  const errEl=getEl('loginError');
+  const card=document.querySelector('.login-card');
+  const btn=getEl('btnLogin');
+  if(user===CREDENTIALS.username && pass===CREDENTIALS.password){
+    btn.disabled=true;
+    btn.innerHTML='<div class="spinner"></div> جارٍ الدخول...';
+    setTimeout(()=>{
+      btn.disabled=false;
+      btn.innerHTML=`<span id="btnLoginLabel">${loginMode==='report'?'📝 دخول على التقرير الميداني':'📊 دخول على الإحصائيات'}</span><span>←</span>`;
       errEl.classList.remove('show');
-      btn.disabled = false;
-      btn.innerHTML = '<span>دخول</span><span>←</span>';
-    }, 400);
+      getEl('loginScreen').style.display='none';
+      if(loginMode==='stats'){getEl('statsScreen').style.display='block';buildStatsScreen();}
+      else{
+        getEl('appScreen').style.display='block';
+        if(!totalItems){
+          buildSections();
+          // Open exec summary immediately
+          const el=getEl('execSummaryBar');
+          if(el){el.classList.add('open');execOpen=true;}
+          const btn=getEl('execToggleBtn');
+          if(btn)btn.textContent='إخفاء ↑';
+        }
+      }
+    },400);
   } else {
     errEl.classList.add('show');
-    card.classList.remove('shake');
-    void card.offsetWidth;
-    card.classList.add('shake');
-    ['loginUser', 'loginPass'].forEach(id => {
-      const el = getEl(id);
-      el.classList.add('error');
-      setTimeout(() => el.classList.remove('error'), 2000);
-    });
-    getEl('loginPass').value = '';
-    getEl('loginPass').focus();
+    card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');
+    ['loginUser','loginPass'].forEach(id=>{const e=getEl(id);e.classList.add('error');setTimeout(()=>e.classList.remove('error'),2000)});
+    getEl('loginPass').value='';getEl('loginPass').focus();
   }
 }
 
-function doLogout() {
-  getEl('appScreen').style.display = 'none';
-  getEl('loginScreen').style.display = 'flex';
-  getEl('loginUser').value = '';
-  getEl('loginPass').value = '';
+function goBack(){
+  getEl('statsScreen').style.display='none';
+  getEl('appScreen').style.display='none';
+  getEl('loginScreen').style.display='flex';
+  getEl('loginUser').value='';getEl('loginPass').value='';
   getEl('loginError').classList.remove('show');
 }
 
-// ===== BUILD SECTIONS =====
-function buildSections() {
-  const cont = getEl('sections');
-  const frag = document.createDocumentFragment();
+function goToStats(){
+  getEl('appScreen').style.display='none';
+  getEl('statsScreen').style.display='block';
+  buildStatsScreen();
+}
 
-  SECTIONS.forEach(sec => {
-    totalItems += sec.items.length;
-    state[sec.id] = {};
+// ===== STATS SCREEN =====
+let statsBuilt=false;
+let liveData=null; // fetched rows from Google Sheets
 
-    let rows = '';
-    sec.items.forEach((item, i) => {
-      const nm = `${sec.id}_${i}`;
-      state[sec.id][i] = { avail: '', works: '' };
-      rows += `
-        <tr>
-          <td class="item-num">${i + 1}</td>
-          <td class="item-text">${escapeHtml(item)}</td>
-          <td>
-            <div class="radio-group">
-              <label class="rb yes"><input type="radio" name="${nm}_av" value="yes"> متوفر</label>
-              <label class="rb no"><input type="radio" name="${nm}_av" value="no"> غير متوفر</label>
+function buildStatsScreen(){
+  if(statsBuilt){
+    // Refresh data each time
+    fetchAndBuildStats();
+    return;
+  }
+  statsBuilt=true;
+  fetchAndBuildStats();
+}
+
+function showStatsLoading(msg='⏳ جاري تحميل البيانات...'){
+  ['centersGrid','rankAvailList','rankWorkList','staffTbody'].forEach(id=>{
+    const el=getEl(id);if(el)el.innerHTML=`<div style="padding:30px;text-align:center;color:rgba(255,255,255,0.4);font-size:13px">${msg}</div>`;
+  });
+}
+
+// ===== GOOGLE SHEETS CONFIG =====
+const SHEET_ID = '1wTGDfYD30XEs86ds2dk9imqqTS2HHVV2W3w1V4PaN2U';
+const SHEET_GID  = '0'; // first sheet tab
+
+async function fetchAndBuildStats(){
+  showStatsLoading('⏳ جاري جلب البيانات من Google Sheets...');
+  let rows=null;
+  let source='';
+  let lastErr='';
+
+  // ── Method 1: gviz JSON (works when "Anyone with link can view") ──
+  // Try both without sheet name and with gid
+  const gvizUrls=[
+    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET_GID}`,
+    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`,
+    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`,
+  ];
+  for(const url of gvizUrls){
+    if(rows)break;
+    try{
+      const ctrl=new AbortController();
+      const timer=setTimeout(()=>ctrl.abort(),7000);
+      const res=await fetch(url,{signal:ctrl.signal});
+      clearTimeout(timer);
+      if(!res.ok){lastErr=`HTTP ${res.status}`;continue;}
+      const text=await res.text();
+      if(text.includes('error')){lastErr='gviz error';continue;}
+      const match=text.match(/setResponse\(([\s\S]*?)\);?\s*$/);
+      if(match){
+        const gviz=JSON.parse(match[1]);
+        const parsed=parseGvizToRows(gviz);
+        if(parsed&&parsed.length>0){rows=parsed;source='Google Sheets';}
+      }
+    } catch(e){lastErr=e.message;}
+  }
+
+  // ── Method 2: CSV export ──
+  if(!rows){
+    try{
+      const ctrl=new AbortController();
+      const timer=setTimeout(()=>ctrl.abort(),7000);
+      const csvUrl=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
+      const res=await fetch(csvUrl,{signal:ctrl.signal});
+      clearTimeout(timer);
+      if(res.ok){
+        const text=await res.text();
+        const parsed=parseCSVToRows(text);
+        if(parsed&&parsed.length>0){rows=parsed;source='Google Sheets (CSV)';}
+      }
+    } catch(e){lastErr=e.message;}
+  }
+
+  // ── Method 3: Apps Script GET ──
+  if(!rows){
+    try{
+      const ctrl=new AbortController();
+      const timer=setTimeout(()=>ctrl.abort(),7000);
+      const res=await fetch(SHEETS_URL+'?action=get',{signal:ctrl.signal,mode:'cors'});
+      clearTimeout(timer);
+      const json=await res.json();
+      if(json&&json.rows&&json.rows.length>0){rows=json.rows;source='Apps Script';}
+    } catch(e){lastErr=e.message;}
+  }
+
+  if(rows&&rows.length>0){
+    liveData=rows;
+    const computed=computeStatsFromRows(rows);
+    Object.assign(STATS_DATA,computed.stats);
+    updateOverviewCards(computed);
+    const now=new Date();
+    const timeStr=`${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+    const sub=getEl('statsSubtitle');
+    if(sub) sub.textContent=`${Object.keys(STATS_DATA).length} مركز | آخر جلب: ${timeStr} — ${source}`;
+    buildCentersGrid(Object.keys(STATS_DATA));
+    buildStaffTable();
+    buildRankings();
+    let total=0;Object.values(STAFF_DATA).forEach(c=>Object.values(c).forEach(v=>total+=v));
+    getEl('ov-staff-total').textContent=total;
+    showToast(`✅ تم جلب ${rows.length} سجل — ${source}`);
+  } else {
+    // Fallback: static data + show diagnostic
+    buildCentersGrid(Object.keys(STATS_DATA));
+    buildStaffTable();
+    buildRankings();
+    let total=0;Object.values(STAFF_DATA).forEach(c=>Object.values(c).forEach(v=>total+=v));
+    getEl('ov-staff-total').textContent=total;
+    const sub=getEl('statsSubtitle');
+    if(sub) sub.textContent='بيانات محلية (تعذّر جلب الشيت)';
+    showToast(`⚠️ فشل الجلب: ${lastErr||'تحقق من إعدادات المشاركة'}`, '#f59e0b', 6000);
+  }
+}
+
+function parseCSVToRows(csv){
+  try{
+    const lines=csv.trim().split('\n');
+    if(lines.length<2)return null;
+    // Parse header — handle quoted fields
+    const parseRow=line=>{
+      const result=[];let cur='';let inQ=false;
+      for(let i=0;i<line.length;i++){
+        const ch=line[i];
+        if(ch==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else inQ=!inQ;}
+        else if(ch===','&&!inQ){result.push(cur.trim());cur='';}
+        else cur+=ch;
+      }
+      result.push(cur.trim());return result;
+    };
+    const headers=parseRow(lines[0]);
+    return lines.slice(1).map(line=>{
+      const vals=parseRow(line);
+      const obj={};
+      headers.forEach((h,i)=>{obj[h]=vals[i]||'';});
+      return obj;
+    }).filter(r=>Object.values(r).some(v=>v!==''));
+  }catch(e){return null;}
+}
+
+function parseGvizToRows(gviz){
+  try{
+    const cols=gviz.table.cols.map(c=>c.label||c.id||'');
+    if(!gviz.table.rows)return null;
+    return gviz.table.rows
+      .filter(row=>row&&row.c)
+      .map(row=>{
+        const obj={};
+        row.c.forEach((cell,i)=>{obj[cols[i]]=cell?(cell.v!==null&&cell.v!==undefined?String(cell.v):cell.f||''):'';});
+        return obj;
+      }).filter(r=>Object.values(r).some(v=>v!==''));
+  }catch(e){return null;}
+}
+
+function computeStatsFromRows(rows){
+  if(!rows||!rows.length)return{stats:{},centerCount:0,avgAvail:0,avgWork:0,lowCount:0,totalItems:0};
+  // Detect column keys (supports Arabic headers and English fallbacks)
+  const sample=rows[0];
+  const keys=Object.keys(sample);
+  const findKey=(...names)=>keys.find(k=>names.some(n=>k===n||k.includes(n)))||names[0];
+  const K_CENTER=findKey('اسم المركز','المركز','center','Center');
+  const K_ITEM=findKey('اسم العنصر','العنصر','item','Item');
+  const K_AVAIL=findKey('متوفر','Availability','avail');
+  const K_WORKS=findKey('التشغيل','Working','works');
+  const K_NOTE=findKey('ملاحظات','notes','Note');
+  const K_DATE=findKey('التاريخ','date','Date');
+
+  const centers={};
+  const notes={};      // center -> item -> note
+  const itemStatus={}; // center -> item -> {avail,works}
+  // Track latest entry per center+item (last write wins)
+  const latestByItem={};
+
+  rows.forEach(r=>{
+    const c=(r[K_CENTER]||'').toString().trim();
+    if(!c)return;
+    const item=(r[K_ITEM]||'').toString().trim();
+    const avail=(r[K_AVAIL]||'').toString().trim();
+    const works=(r[K_WORKS]||'').toString().trim();
+    const note=(r[K_NOTE]||'').toString().trim();
+    const date=(r[K_DATE]||'').toString().trim();
+    if(note==='عدد'||note==='count')return; // skip count rows
+    const key=c+'||'+item;
+    // Always overwrite with latest entry (assumes rows sorted by date)
+    latestByItem[key]={c,item,avail,works,note,date};
+  });
+
+  // Now aggregate from deduped entries
+  Object.values(latestByItem).forEach(({c,item,avail,works,note})=>{
+    if(!c)return;
+    if(!centers[c])centers[c]={total:0,available:0,not_available:0,working:0,not_working:0};
+    if(!notes[c])notes[c]={};
+    if(!itemStatus[c])itemStatus[c]={};
+    centers[c].total++;
+    if(avail==='متوفر'||avail==='yes'||avail==='1'){centers[c].available++;}
+    else if(avail==='غير متوفر'||avail==='no'||avail==='0'){centers[c].not_available++;}
+    if(works==='تعمل'||works==='yes'||works==='1'){centers[c].working++;}
+    else if(works==='لا تعمل'||works==='no'||works==='0'){centers[c].not_working++;}
+    if(note&&item)notes[c][item]=note;
+    if(item)itemStatus[c][item]={avail,works};
+  });
+
+  const stats={};
+  Object.entries(centers).forEach(([name,d])=>{
+    if(d.total===0)return;
+    const wBase=d.working+d.not_working;
+    stats[name]={
+      total:d.total,
+      available:d.available,
+      not_available:d.not_available,
+      working:d.working,
+      not_working:d.not_working,
+      available_pct:parseFloat((d.available/d.total*100).toFixed(1)),
+      working_pct:wBase>0?parseFloat((d.working/wBase*100).toFixed(1)):0
+    };
+  });
+
+  // Store for use in openCenterDetail
+  window._liveNotes=notes;
+  window._liveItemStatus=itemStatus;
+
+  const centerCount=Object.keys(stats).length;
+  const avgAvail=centerCount>0?parseFloat((Object.values(stats).reduce((a,s)=>a+s.available_pct,0)/centerCount).toFixed(1)):0;
+  const avgWork=centerCount>0?parseFloat((Object.values(stats).reduce((a,s)=>a+s.working_pct,0)/centerCount).toFixed(1)):0;
+  const lowCount=Object.values(stats).filter(s=>s.available_pct<50).length;
+  const totalItems=Object.values(stats).reduce((a,s)=>a+s.total,0);
+  return{stats,centerCount,avgAvail,avgWork,lowCount,totalItems};
+}
+
+function updateOverviewCards(c){
+  const cards=document.querySelectorAll('.stats-overview .ov-val');
+  if(cards[0])cards[0].textContent=c.centerCount||Object.keys(STATS_DATA).length;
+  if(cards[1])cards[1].textContent=(c.avgAvail||'—')+'%';
+  if(cards[2])cards[3].textContent=(c.avgWork||'—')+'%'; // c4 is working
+  if(cards[4])cards[4].textContent=c.lowCount||'—';
+  if(cards[5])cards[5].textContent=(c.totalItems||1375).toLocaleString('ar');
+}
+
+function switchPanel(name){
+  document.querySelectorAll('.stats-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
+  getEl('panel-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+let currentCenters=Object.keys(STATS_DATA);
+function filterCenters(q){
+  const lf=getEl('levelFilter').value;
+  buildCentersGrid(Object.keys(STATS_DATA).filter(c=>{
+    const s=STATS_DATA[c];
+    const matchQ=!q||c.includes(q);
+    const matchL=lf==='all'||(lf==='high'&&s.available_pct>=80)||(lf==='mid'&&s.available_pct>=50&&s.available_pct<80)||(lf==='low'&&s.available_pct<50);
+    return matchQ&&matchL;
+  }));
+}
+function filterByLevel(v){filterCenters(getEl('centerSearch').value)}
+
+function buildCentersGrid(centers){
+  const grid=getEl('centersGrid');
+  if(!centers.length){grid.innerHTML='<div style="color:rgba(255,255,255,0.3);padding:30px;text-align:center">لا توجد نتائج</div>';return;}
+  grid.innerHTML=centers.map(name=>{
+    const s=STATS_DATA[name];
+    const ap=s.available_pct,wp=s.working_pct;
+    const nap=parseFloat((100-ap).toFixed(1)),nwp=parseFloat((100-wp).toFixed(1));
+    const badge=ap>=80?'badge-hi 🟢 عالي':ap>=50?'badge-md 🟡 متوسط':'badge-lo 🔴 منخفض';
+    const [bc,...bt]=badge.split(' ');
+    const aColor=ap>=70?'var(--green)':ap>=50?'var(--yellow)':'var(--red)';
+    const wColor=wp>=70?'var(--accent2)':wp>=50?'var(--yellow)':'var(--red)';
+    return`<div class="center-card" onclick="openCenterDetail('${name.replace(/'/g,"\\'")}')">
+      <div class="cc-head">
+        <div class="cc-name">🏥 ${name}</div>
+        <span class="cc-badge ${bc}">${bt.join(' ')}</span>
+      </div>
+      <div class="cc-body">
+        <div class="cc-bars">
+          <div class="cc-bar-row">
+            <span class="cc-bar-lbl">التوافر</span>
+            <div class="cc-bar-track" style="border-radius:5px;overflow:hidden;">
+              <div style="width:${ap}%;background:var(--green);height:100%;"></div>
+              <div style="flex:1;background:rgba(239,68,68,0.25);height:100%;"></div>
             </div>
-          </td>
-          <td>
-            <div class="radio-group">
-              <label class="rb works"><input type="radio" name="${nm}_wk" value="yes"> تعمل</label>
-              <label class="rb noworks"><input type="radio" name="${nm}_wk" value="no"> لا تعمل</label>
+            <span class="cc-bar-pct" style="color:${aColor}">${ap}%<span class="cc-bar-pct-nav">${nap}%✗</span></span>
+          </div>
+          <div class="cc-bar-row">
+            <span class="cc-bar-lbl">التشغيل</span>
+            <div class="cc-bar-track" style="border-radius:5px;overflow:hidden;">
+              <div style="width:${wp}%;background:var(--accent2);height:100%;"></div>
+              <div style="flex:1;background:rgba(234,179,8,0.2);height:100%;"></div>
             </div>
-          </td>
-          <td><input class="notes-input" type="text" placeholder="ملاحظات..." aria-label="ملاحظات ${escapeHtml(item)}"></td>
-        </tr>`;
-    });
-
-    const countHtml = sec.countField
-      ? `<div class="count-row"><span class="count-label">${escapeHtml(sec.countField.label)}:</span><input class="count-input" type="number" min="0" id="${sec.countField.id}" placeholder="0" aria-label="${escapeHtml(sec.countField.label)}"></div>`
-      : '';
-
-    const div = document.createElement('div');
-    div.className = 'section';
-    div.innerHTML = `
-      <div class="sec-header" role="button" aria-expanded="true" aria-controls="body_${sec.id}" tabindex="0">
-        <div class="sec-title">
-          <div class="sec-icon" style="background:${sec.color}22;color:${sec.color}" aria-hidden="true">${sec.icon}</div>
-          <span>${escapeHtml(sec.title)}</span>
+            <span class="cc-bar-pct" style="color:${wColor}">${wp}%<span class="cc-bar-pct-nav">${nwp}%✗</span></span>
+          </div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <div class="sec-badge"><span class="filled" id="badge_fill_${sec.id}">0</span>/${sec.items.length}</div>
-          <div class="sec-toggle open" id="toggle_${sec.id}" aria-hidden="true">▼</div>
+        <div class="cc-nums">
+          <div class="cn-chip"><span class="cnv cn-avail">${s.available}</span> <span style="color:rgba(255,255,255,0.5)">متوفر</span></div>
+          <div class="cn-chip"><span class="cnv cn-navail">${s.not_available}</span> <span style="color:rgba(255,255,255,0.5)">غير متوفر</span></div>
+          <div class="cn-chip"><span class="cnv cn-work">${s.working}</span> <span style="color:rgba(255,255,255,0.5)">تعمل</span></div>
+          <div class="cn-chip"><span class="cnv cn-nwork">${s.not_working}</span> <span style="color:rgba(255,255,255,0.5)">لا تعمل</span></div>
         </div>
       </div>
-      <div class="sec-body open" id="body_${sec.id}">
-        <div class="bulk-bar">
-          <span style="font-size:11px;color:var(--text3)">تحديد الكل:</span>
-          <div class="bulk-group">
-            <button class="bulk-btn bulk-yes" data-sec="${sec.id}" data-field="avail" data-val="yes">✓ متوفر</button>
-            <button class="bulk-btn bulk-no"  data-sec="${sec.id}" data-field="avail" data-val="no">✗ غير متوفر</button>
-          </div>
-          <div class="bulk-sep"></div>
-          <div class="bulk-group">
-            <button class="bulk-btn bulk-work"   data-sec="${sec.id}" data-field="works" data-val="yes">⚙ تعمل</button>
-            <button class="bulk-btn bulk-nowork" data-sec="${sec.id}" data-field="works" data-val="no">✗ لا تعمل</button>
-          </div>
-          <button class="bulk-btn bulk-reset" data-sec="${sec.id}" data-reset="1">↺ إعادة</button>
+    </div>`;
+  }).join('');
+}
+
+// Per-section stats extracted from SECTIONS config + STATS_DATA totals (approximated per section)
+const SECTION_AVAIL_DATA = {
+  "lab_premarital":{"label":"المختبر - ما قبل الزواج","icon":"🔬","items":16},
+  "lab_care":{"label":"المختبر - الرعاية","icon":"🧪","items":6},
+  "radiology":{"label":"الأشعة","icon":"🩻","items":7},
+  "sterilization":{"label":"التعقيم","icon":"🏥","items":16},
+  "physiotherapy":{"label":"العلاج الطبيعي","icon":"💪","items":2},
+  "health_edu":{"label":"التثقيف الصحي","icon":"📋","items":5}
+};
+
+function openCenterDetail(name){
+  const s=STATS_DATA[name];
+  const d=STAFF_DATA[name]||{};
+  if(!s)return;
+  const ap=s.available_pct, nap=parseFloat((100-ap).toFixed(1));
+  const wp=s.working_pct, nwp=parseFloat((100-wp).toFixed(1));
+
+  const liveMap=window._liveItemStatus&&window._liveItemStatus[name];
+  const hasLiveData=liveMap&&Object.keys(liveMap).length>0;
+  const dataSourceBadge=hasLiveData
+    ?`<span style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:var(--green);padding:1px 7px;border-radius:6px;font-size:10px;font-weight:700;margin-right:6px">📡 بيانات حية</span>`
+    :`<span style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.25);color:var(--yellow);padding:1px 7px;border-radius:6px;font-size:10px;font-weight:700;margin-right:6px">📋 بيانات تقديرية</span>`;
+  getEl('cd-title').textContent='🏥 '+name;
+  getEl('cd-subtitle').innerHTML=`إجمالي العناصر: ${s.total} | متوفر: ${s.available} | التوافر: ${ap}% ${dataSourceBadge}`;
+
+  // Staff data
+  const lab=d['عدد موظفين المختبر']??null;
+  const tech=d['عدد فنيين المختبر']??null;
+  const rad=d['عدد تقنيي الأشعة']??null;
+  const ster=d['عدد موظفين التعقيم']??null;
+  const totalStaff=(lab||0)+(tech||0)+(rad||0)+(ster||0);
+  const hasStaff=lab!==null||tech!==null||rad!==null||ster!==null;
+
+  const staffGrid=hasStaff?`
+    <div class="cd-staff-grid">
+      ${staffCell(lab,'🔬','موظفو المختبر','rgba(79,142,247,0.2)')}
+      ${staffCell(tech,'🧪','فنيو المختبر','rgba(110,231,183,0.2)')}
+      ${staffCell(rad,'🩻','تقنيو الأشعة','rgba(167,139,250,0.2)')}
+      ${staffCell(ster,'🏥','موظفو التعقيم','rgba(245,158,11,0.2)')}
+      ${staffCell(totalStaff,'👥','الإجمالي','rgba(34,197,94,0.2)')}
+    </div>`
+  :`<div class="cd-no-staff">لا تتوفر بيانات كوادر لهذا المركز</div>`;
+
+  // Exec summary
+  const aColor=ap>=70?'var(--green)':ap>=50?'var(--yellow)':'var(--red)';
+  const wColor=wp>=70?'var(--accent2)':wp>=50?'var(--yellow)':'var(--red)';
+  const execHtml=`
+    <div class="cd-exec-summary">
+      <div class="cd-exec-top">
+        <div class="cd-exec-title-txt">📊 الملخص التنفيذي <span class="cd-exec-badge">${name}</span></div>
+      </div>
+      <div class="cd-exec-grid">
+        <div class="cd-exec-stat">
+          <div class="cd-exec-val" style="color:${aColor}">${ap}%</div>
+          <div class="cd-exec-lbl">📦 التوافر</div>
         </div>
-        <div class="tbl-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th style="width:36px">م</th>
-                <th class="col-item">العنصر</th>
-                <th style="width:160px">التوفر</th>
-                <th style="width:160px">حالة التشغيل</th>
-                <th style="width:130px">ملاحظات</th>
-              </tr>
-            </thead>
-            <tbody>${rows}</tbody>
-          </table>
+        <div class="cd-exec-stat">
+          <div class="cd-exec-val" style="color:var(--green)">${s.available}</div>
+          <div class="cd-exec-lbl">✅ متوفر</div>
         </div>
-        ${countHtml}
+        <div class="cd-exec-stat">
+          <div class="cd-exec-val" style="color:var(--red)">${s.not_available}</div>
+          <div class="cd-exec-lbl">❌ غير متوفر</div>
+        </div>
+        <div class="cd-exec-stat">
+          <div class="cd-exec-val" style="color:${wColor}">${wp}%</div>
+          <div class="cd-exec-lbl">⚙️ التشغيل</div>
+        </div>
+        <div class="cd-exec-stat">
+          <div class="cd-exec-val" style="color:var(--purple)">${totalStaff||'—'}</div>
+          <div class="cd-exec-lbl">👥 الكوادر</div>
+        </div>
+      </div>
+      <div class="cd-exec-bar-wrap"><div class="cd-exec-bar-fill" style="width:${ap}%"></div></div>
+    </div>`;
+
+  // Section breakdown with real item status distribution
+  const secDef=[
+    {id:'lab_premarital',label:'المختبر - ما قبل الزواج',icon:'🔬',color:'#4f8ef7'},
+    {id:'lab_care',label:'المختبر - نموذج الرعاية',icon:'🧪',color:'#6ee7b7'},
+    {id:'radiology',label:'خدمات الأشعة',icon:'🩻',color:'#a78bfa'},
+    {id:'sterilization',label:'خدمات التعقيم',icon:'🏥',color:'#f59e0b'},
+    {id:'physiotherapy',label:'العلاج الطبيعي',icon:'💪',color:'#34d399'},
+    {id:'health_edu',label:'التثقيف الصحي',icon:'📋',color:'#f87171'}
+  ];
+  const staffKeyMap={'lab_premarital':'عدد موظفين المختبر','lab_care':'عدد فنيين المختبر','radiology':'عدد تقنيي الأشعة','sterilization':'عدد موظفين التعقيم'};
+  const staffLblMap={'lab_premarital':'موظفو المختبر 🔬','lab_care':'فنيو المختبر 🧪','radiology':'تقنيو الأشعة 🩻','sterilization':'موظفو التعقيم 🏥'};
+
+  // Distribute available/working across items proportionally
+  // Real data from appState if available, otherwise distribute from STATS_DATA
+  function getItemStatus(secId, items){
+    // Priority 1: user's current form (appState)
+    const st=appState[secId];
+    const hasForm=st&&Object.values(st).some(v=>v.avail!==''||v.works!=='');
+    if(hasForm) return items.map((_,i)=>({avail:st[i]?.avail||'',works:st[i]?.works||''}));
+    // Priority 2: live data from Google Sheets (_liveItemStatus)
+    const liveMap=window._liveItemStatus&&window._liveItemStatus[name];
+    if(liveMap){
+      const mapped=items.map(item=>{
+        const d=liveMap[item]||{};
+        const avail=d.avail==='متوفر'?'yes':d.avail==='غير متوفر'?'no':d.avail||'';
+        const works=d.works==='تعمل'?'yes':d.works==='لا تعمل'?'no':d.works||'';
+        return{avail,works};
+      });
+      if(mapped.some(m=>m.avail!=''))return mapped;
+    }
+    // Priority 3: proportional estimate from STATS_DATA
+    const availCount=Math.round(ap/100*items.length);
+    const workCount=Math.round(wp/100*items.length);
+    return items.map((_,i)=>({avail:i<availCount?'yes':'no',works:i<workCount?'yes':'no'}));
+  }
+
+  // Store notes per section per item for PDF
+  window._cdNotes=window._cdNotes||{};
+  window._cdCurrentCenter=name;
+
+  const secsHtml=secDef.map((sec,si)=>{
+    const fullSec=SECTIONS.find(x=>x.id===sec.id);
+    const items=fullSec?fullSec.items:[];
+    const itemCount=items.length;
+    const statuses=getItemStatus(sec.id,items);
+    const availCount=statuses.filter(x=>x.avail==='yes').length;
+    const navailCount=statuses.filter(x=>x.avail==='no').length;
+    const pct=itemCount>0?Math.round(availCount/itemCount*100):0;
+    const col=pct>=70?'var(--green)':pct>=50?'var(--yellow)':'var(--red)';
+    const staffVal=staffKeyMap[sec.id]&&d[staffKeyMap[sec.id]]!=null?d[staffKeyMap[sec.id]]:null;
+    const staffRowHtml=staffVal!==null?`<div class="cd-sec-staff-row">👥 الكوادر: <span class="cd-sec-staff-badge">${staffLblMap[sec.id]} — <strong>${staffVal}</strong> موظف</span></div>`:'';
+
+    const itemsHtml=items.map((item,i)=>{
+      const avail=statuses[i].avail;
+      const works=statuses[i].works;
+      const availClass=avail==='yes'?'yes':avail==='no'?'no':'na';
+      const availLabel=avail==='yes'?'✓ متوفر':avail==='no'?'✗ غير متوفر':'—';
+      const worksClass=works==='yes'?'yes':works==='no'?'no':'na';
+      const worksLabel=works==='yes'?'⚙ تعمل':works==='no'?'✗ لا تعمل':'';
+      const noteId=`cdnote_${si}_${i}`;
+      // Pre-fill note from live data or saved notes
+      const liveNote=(window._liveNotes&&window._liveNotes[name]&&window._liveNotes[name][item])||'';
+      const savedNote=(window._cdNotes&&window._cdNotes[sec.id]&&window._cdNotes[sec.id][i])||liveNote;
+      return`<div class="cd-item-row">
+        <span class="cd-item-num">${i+1}</span>
+        <span class="cd-item-name">${item}</span>
+        <div class="cd-item-badges">
+          <span class="cd-item-avail ${availClass}">${availLabel}</span>
+          ${works?`<span class="cd-item-works ${worksClass}">${worksLabel}</span>`:''}
+        </div>
+        <input class="cd-item-note" type="text" id="${noteId}" placeholder="ملاحظة..." value="${savedNote.replace(/"/g,'&quot;')}" oninput="saveCdNote('${sec.id}',${i},this.value)">
       </div>`;
+    }).join('');
+
+    const isReal=appState[sec.id]&&Object.values(appState[sec.id]).some(v=>v.avail!=='');
+    const hint=isReal?'':`<div class="cd-items-hint">⚡ التوزيع تقديري — عبّئ التقرير للبيانات الفعلية</div>`;
+
+    return`<div class="cd-sec-row" id="cdsec_${si}">
+      <div class="cd-sec-header" onclick="toggleCdSec(${si})">
+        <div class="cd-sec-top">
+          <div class="cd-sec-name">
+            <span>${sec.icon}</span>
+            <span style="color:${sec.color}">${sec.label}</span>
+            <span style="font-size:10px;color:rgba(255,255,255,0.35)">(${itemCount} عنصر)</span>
+          </div>
+          <div class="cd-sec-chips">
+            <span class="cd-mini-chip mchip-avail">${availCount} متوفر</span>
+            <span class="cd-mini-chip mchip-navail">${navailCount} غير متوفر</span>
+            <span class="cd-sec-arrow">▼</span>
+          </div>
+        </div>
+        <div class="cd-sec-dual">
+          <div class="cd-sec-seg-a" style="width:${pct}%;background:${col}"></div>
+          <div class="cd-sec-seg-b" style="background:rgba(239,68,68,0.2)"></div>
+        </div>
+      </div>
+      <div class="cd-sec-items">
+        ${staffRowHtml}
+        ${itemsHtml}
+        ${hint}
+      </div>
+    </div>`;
+  }).join('');
+
+  getEl('cd-body').innerHTML=`
+    ${execHtml}
+    <!-- dual ratio bars -->
+    <div class="cd-ratios">
+      <div class="cd-ratio-card">
+        <div class="cd-ratio-title">📦 نسبة التوافر</div>
+        <div class="cd-ratio-track">
+          <div class="cd-ratio-seg-a" style="width:${ap}%;background:var(--green)">${ap>15?ap+'%':''}</div>
+          <div class="cd-ratio-seg-b" style="background:rgba(239,68,68,0.25)">${nap>15?nap+'%':''}</div>
+        </div>
+        <div class="cd-ratio-legend">
+          <div class="cd-leg-item"><span class="cd-leg-dot" style="background:var(--green)"></span>${s.available} متوفر (${ap}%)</div>
+          <div class="cd-leg-item" style="color:rgba(255,255,255,0.55)"><span class="cd-leg-dot" style="background:rgba(239,68,68,0.5)"></span>${s.not_available} غير متوفر (${nap}%)</div>
+        </div>
+        <div class="cd-pct-display" style="color:${aColor}">${ap}%</div>
+      </div>
+      <div class="cd-ratio-card">
+        <div class="cd-ratio-title">⚙️ نسبة التشغيل</div>
+        <div class="cd-ratio-track">
+          <div class="cd-ratio-seg-a" style="width:${wp}%;background:var(--accent2)">${wp>15?wp+'%':''}</div>
+          <div class="cd-ratio-seg-b" style="background:rgba(234,179,8,0.2)">${nwp>15?nwp+'%':''}</div>
+        </div>
+        <div class="cd-ratio-legend">
+          <div class="cd-leg-item"><span class="cd-leg-dot" style="background:var(--accent2)"></span>${s.working} تعمل (${wp}%)</div>
+          <div class="cd-leg-item" style="color:rgba(255,255,255,0.55)"><span class="cd-leg-dot" style="background:rgba(234,179,8,0.4)"></span>${s.not_working} لا تعمل (${nwp}%)</div>
+        </div>
+        <div class="cd-pct-display" style="color:${wColor}">${wp}%</div>
+      </div>
+    </div>
+    <!-- Staff -->
+    <div class="cd-staff-section">
+      <div class="cd-staff-title">👥 الكوادر البشرية${hasStaff?' — إجمالي: '+totalStaff+' موظف':''}</div>
+      ${staffGrid}
+    </div>
+    <!-- Sections -->
+    <div>
+      <div class="cd-secs-title">📊 توزيع التوافر حسب الإدارة <span style="font-size:10px;color:rgba(255,255,255,0.35);font-weight:400">(اضغط لعرض العناصر + ملاحظات)</span></div>
+      <div class="cd-secs-grid">${secsHtml}</div>
+    </div>
+  `;
+
+  getEl('cdOverlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+
+function staffCell(val,icon,label,bg){
+  if(val===null)return`<div class="cd-staff-cell" style="background:${bg}15"><div class="cd-staff-num" style="color:rgba(255,255,255,0.25);font-size:1.2rem">—</div><div class="cd-staff-cat">${label}</div></div>`;
+  return`<div class="cd-staff-cell" style="background:${bg}"><div class="cd-staff-num" style="color:#fff">${icon} ${val}</div><div class="cd-staff-cat">${label}</div></div>`;
+}
+
+function saveCdNote(secId,idx,val){
+  if(!window._cdNotes)window._cdNotes={};
+  if(!window._cdNotes[secId])window._cdNotes[secId]={};
+  window._cdNotes[secId][idx]=val;
+}
+
+function printCenterDetail(){
+  const name=window._cdCurrentCenter||'—';
+  const s=STATS_DATA[name]||{};
+  const d=STAFF_DATA[name]||{};
+  const ap=s.available_pct||0, wp=s.working_pct||0;
+  const notes=window._cdNotes||{};
+  const secDef=[
+    {id:'lab_premarital',label:'المختبر - ما قبل الزواج',icon:'🔬'},
+    {id:'lab_care',label:'المختبر - نموذج الرعاية',icon:'🧪'},
+    {id:'radiology',label:'خدمات الأشعة',icon:'🩻'},
+    {id:'sterilization',label:'خدمات التعقيم',icon:'🏥'},
+    {id:'physiotherapy',label:'العلاج الطبيعي',icon:'💪'},
+    {id:'health_edu',label:'التثقيف الصحي',icon:'📋'}
+  ];
+  function getItemStatus(secId,items){
+    const st=appState[secId];
+    const hasReal=st&&Object.values(st).some(v=>v.avail!==''||v.works!=='');
+    if(hasReal) return items.map((_,i)=>({avail:st[i]?.avail||'',works:st[i]?.works||'',note:(notes[secId]&&notes[secId][i])||''}));
+    const availCount=Math.round(ap/100*items.length);
+    const workCount=Math.round(wp/100*items.length);
+    return items.map((_,i)=>({avail:i<availCount?'yes':'no',works:i<workCount?'yes':'no',note:(notes[secId]&&notes[secId][i])||''}));
+  }
+  const secsHtml=secDef.map(sec=>{
+    const fullSec=SECTIONS.find(x=>x.id===sec.id);
+    const items=fullSec?fullSec.items:[];
+    const statuses=getItemStatus(sec.id,items);
+    const itemsRows=items.map((item,i)=>{
+      const av=statuses[i].avail,wk=statuses[i].works,nt=statuses[i].note;
+      const avLabel=av==='yes'?'✓ متوفر':av==='no'?'✗ غير متوفر':'—';
+      const avCls=av==='yes'?'cdp-avail-yes':av==='no'?'cdp-avail-no':'cdp-avail-na';
+      const wkLabel=wk==='yes'?'⚙ تعمل':wk==='no'?'✗ لا تعمل':'';
+      const wkCls=wk==='yes'?'cdp-works-yes':wk==='no'?'cdp-works-no':'';
+      return`<div class="cdp-item"><span class="cdp-item-num">${i+1}</span><span class="cdp-item-name">${item}</span><span class="cdp-badge ${avCls}">${avLabel}</span>${wkLabel?`<span class="cdp-badge ${wkCls}">${wkLabel}</span>`:''} ${nt?`<span class="cdp-note">— ${nt}</span>`:''}</div>`;
+    }).join('');
+    return`<div class="cdp-sec"><div class="cdp-sec-head">${sec.icon} ${sec.label} (${items.length} عنصر)</div>${itemsRows}</div>`;
+  }).join('');
+  const totalStaff=(d['عدد موظفين المختبر']||0)+(d['عدد فنيين المختبر']||0)+(d['عدد تقنيي الأشعة']||0)+(d['عدد موظفين التعقيم']||0);
+  const printDate=new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+  getEl('cdPrintArea').innerHTML=`
+    <div class="cdp-header">
+      <div class="cdp-title">🏥 ${name} — تقرير تفصيلي</div>
+      <div class="cdp-sub">إدارة الخدمات الصحية المساندة — تجمع المدينة المنورة الصحي | ${printDate}</div>
+    </div>
+    <div class="cdp-stats-row">
+      <div class="cdp-stat"><div class="cdp-stat-val">${ap}%</div><div class="cdp-stat-lbl">📦 التوافر</div></div>
+      <div class="cdp-stat"><div class="cdp-stat-val">${s.available||0}</div><div class="cdp-stat-lbl">✅ متوفر</div></div>
+      <div class="cdp-stat"><div class="cdp-stat-val">${s.not_available||0}</div><div class="cdp-stat-lbl">❌ غير متوفر</div></div>
+      <div class="cdp-stat"><div class="cdp-stat-val">${wp}%</div><div class="cdp-stat-lbl">⚙️ التشغيل</div></div>
+      <div class="cdp-stat"><div class="cdp-stat-val">${totalStaff||'—'}</div><div class="cdp-stat-lbl">👥 الكوادر</div></div>
+    </div>
+    ${secsHtml}
+    <div style="margin-top:20px;display:flex;justify-content:space-between;border-top:1px solid #ccc;padding-top:14px">
+      <div style="text-align:center"><div style="font-size:12px;margin-bottom:30px">كاتب التقرير</div><div style="border-top:1px dashed #ccc;width:120px;margin:0 auto"></div></div>
+      <div style="text-align:center"><div style="font-size:12px;margin-bottom:30px">توقيع مدير المركز</div><div style="border-top:1px dashed #ccc;width:120px;margin:0 auto"></div></div>
+    </div>`;
+  document.body.classList.add('printing-center');
+  window.print();
+  setTimeout(()=>document.body.classList.remove('printing-center'),500);
+}
+
+function toggleCdSec(idx){
+  const row=getEl('cdsec_'+idx);
+  if(!row)return;
+  row.classList.toggle('expanded');
+}
+
+function closeCenterDetail(){
+  getEl('cdOverlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+
+function buildStaffTable(){
+  const tbody=getEl('staffTbody');
+  const centers=Object.keys(STAFF_DATA);
+  let totLab=0,totTech=0,totRad=0,totSter=0;
+  const rows=centers.map(name=>{
+    const d=STAFF_DATA[name]||{};
+    const st=STATS_DATA[name]||null;
+    const lab=d['عدد موظفين المختبر']??'—';
+    const tech=d['عدد فنيين المختبر']??'—';
+    const rad=d['عدد تقنيي الأشعة']??'—';
+    const ster=d['عدد موظفين التعقيم']??'—';
+    const tot=(lab==='—'?0:lab)+(tech==='—'?0:tech)+(rad==='—'?0:rad)+(ster==='—'?0:ster);
+    if(lab!=='—')totLab+=lab;if(tech!=='—')totTech+=tech;if(rad!=='—')totRad+=rad;if(ster!=='—')totSter+=ster;
+    const fmt=(v,cls)=>v==='—'?`<td style="text-align:center"><span style="color:var(--text3);font-size:16px">—</span></td>`:`<td style="text-align:center"><span class="staff-num ${cls}">${v}</span></td>`;
+    // availability + working badges
+    const availBadge=st?`<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;background:${st.available_pct>=70?'rgba(34,197,94,0.15)':st.available_pct>=50?'rgba(234,179,8,0.15)':'rgba(239,68,68,0.15)'};color:${st.available_pct>=70?'var(--green)':st.available_pct>=50?'var(--yellow)':'var(--red)'};border:1px solid ${st.available_pct>=70?'rgba(34,197,94,0.25)':st.available_pct>=50?'rgba(234,179,8,0.25)':'rgba(239,68,68,0.25)'}">${st.available_pct}%</span>`:'';
+    const workBadge=st?`<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;background:rgba(110,231,183,0.12);color:var(--accent2);border:1px solid rgba(110,231,183,0.2)">⚙${st.working_pct}%</span>`:'';
+    return`<tr onclick="openCenterDetail('${name.replace(/'/g,"\\'")}')">
+      <td>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <span class="staff-center-name">🏥 ${name}</span>
+          <div style="display:flex;gap:4px;flex-wrap:wrap">${availBadge}${workBadge}</div>
+        </div>
+      </td>
+      ${fmt(lab,'sn-lab')}${fmt(tech,'sn-tech')}${fmt(rad,'sn-rad')}${fmt(ster,'sn-ster')}
+      <td style="text-align:center"><span class="staff-num sn-total">${tot}</span></td>
+    </tr>`;
+  });
+  const grandTotal=totLab+totTech+totRad+totSter;
+  rows.push(`<tr class="total-row">
+    <td style="text-align:right;padding-right:16px"><span style="color:var(--accent3);font-weight:800;font-size:13px">📊 الإجمالي الكلي</span></td>
+    <td style="text-align:center"><span class="staff-num sn-lab">${totLab}</span></td>
+    <td style="text-align:center"><span class="staff-num sn-tech">${totTech}</span></td>
+    <td style="text-align:center"><span class="staff-num sn-rad">${totRad}</span></td>
+    <td style="text-align:center"><span class="staff-num sn-ster">${totSter}</span></td>
+    <td style="text-align:center"><span class="staff-num sn-total">${grandTotal}</span></td>
+  </tr>`);
+  tbody.innerHTML=rows.join('');
+  // clickable rows
+  tbody.querySelectorAll('tr:not(.total-row)').forEach(tr=>{
+    tr.style.cursor='pointer';
+  });
+  getEl('ov-staff-total').textContent=grandTotal;
+}
+
+function buildRankings(){
+  const sorted=[...Object.entries(STATS_DATA)];
+  const topAvail=[...sorted].sort((a,b)=>b[1].available_pct-a[1].available_pct).slice(0,10);
+  const topWork=[...sorted].sort((a,b)=>b[1].working_pct-a[1].working_pct).slice(0,10);
+  getEl('rankAvailList').innerHTML=topAvail.map(([name,s],i)=>rankItem(name,s.available_pct,i,s.available,s.not_available,'متوفر','غير متوفر','fill-green')).join('');
+  getEl('rankWorkList').innerHTML=topWork.map(([name,s],i)=>rankItem(name,s.working_pct,i,s.working,s.not_working,'تعمل','لا تعمل','fill-blue')).join('');
+}
+
+function rankItem(name,pct,i,a,b,la,lb,fillCls){
+  const nc=i===0?'r1':i===1?'r2':i===2?'r3':'rn';
+  const col=fillCls==='fill-green'?(pct>=80?'var(--green)':pct>=60?'var(--yellow)':'var(--red)'):(pct>=80?'var(--accent2)':pct>=60?'var(--yellow)':'var(--red)');
+  return`<div class="rank-item">
+    <div class="rank-num ${nc}">${i+1}</div>
+    <div class="rank-info"><div class="rank-center">🏥 ${name}</div><div class="rank-sub">${a} ${la} · ${b} ${lb}</div></div>
+    <div class="rank-pct" style="color:${col}">${pct}%</div>
+    <div class="rank-bar-wrap"><div class="rank-bar-bg"><div class="rank-bar-fill ${fillCls}" style="width:${pct}%"></div></div><div class="rank-lbl">${pct}%</div></div>
+  </div>`;
+}
+
+// ===== FORM SECTIONS =====
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function buildSections(){
+  const cont=getEl('sections');
+  const frag=document.createDocumentFragment();
+  SECTIONS.forEach(sec=>{
+    totalItems+=sec.items.length;
+    appState[sec.id]={};
+    let rows='';
+    sec.items.forEach((item,i)=>{
+      const nm=`${sec.id}_${i}`;
+      appState[sec.id][i]={avail:'',works:''};
+      rows+=`<tr><td class="item-num">${i+1}</td><td class="item-text">${escHtml(item)}</td>
+        <td><div class="radio-group"><label class="rb yes"><input type="radio" name="${nm}_av" value="yes"> متوفر</label><label class="rb no"><input type="radio" name="${nm}_av" value="no"> غير متوفر</label></div></td>
+        <td><div class="radio-group"><label class="rb works"><input type="radio" name="${nm}_wk" value="yes"> تعمل</label><label class="rb noworks"><input type="radio" name="${nm}_wk" value="no"> لا تعمل</label></div></td>
+        <td><input class="notes-input" type="text" placeholder="ملاحظات..."></td></tr>`;
+    });
+    const countHtml=sec.countField?`<div class="count-row"><span class="count-label">${escHtml(sec.countField.label)}:</span><input class="count-input" type="number" min="0" id="${sec.countField.id}" placeholder="0"></div>`:'';
+    const div=document.createElement('div');
+    div.className='section';
+    div.innerHTML=`<div class="sec-header" role="button" aria-expanded="true" aria-controls="body_${sec.id}" tabindex="0">
+      <div class="sec-title"><div class="sec-icon" style="background:${sec.color}22;color:${sec.color}">${sec.icon}</div><span>${escHtml(sec.title)}</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><div class="sec-badge"><span class="filled" id="badge_fill_${sec.id}">0</span>/${sec.items.length}</div><div class="sec-toggle open" id="toggle_${sec.id}">▼</div></div>
+    </div>
+    <div class="sec-body open" id="body_${sec.id}">
+      <div class="bulk-bar">
+        <span style="font-size:11px;color:var(--text3)">تحديد الكل:</span>
+        <div class="bulk-group"><button class="bulk-btn bulk-yes" data-sec="${sec.id}" data-field="avail" data-val="yes">✓ متوفر</button><button class="bulk-btn bulk-no" data-sec="${sec.id}" data-field="avail" data-val="no">✗ غير متوفر</button></div>
+        <div class="bulk-sep"></div>
+        <div class="bulk-group"><button class="bulk-btn bulk-work" data-sec="${sec.id}" data-field="works" data-val="yes">⚙ تعمل</button><button class="bulk-btn bulk-nowork" data-sec="${sec.id}" data-field="works" data-val="no">✗ لا تعمل</button></div>
+        <button class="bulk-btn bulk-reset" data-sec="${sec.id}" data-reset="1">↺ إعادة</button>
+      </div>
+      <div class="tbl-wrap"><table><thead><tr><th style="width:36px">م</th><th class="col-item">العنصر</th><th style="width:160px">التوفر</th><th style="width:160px">حالة التشغيل</th><th style="width:130px">ملاحظات</th></tr></thead><tbody>${rows}</tbody></table></div>
+      ${countHtml}
+    </div>`;
     frag.appendChild(div);
   });
-
   cont.appendChild(frag);
-  getEl('st-total').textContent = totalItems;
-
-  // Event delegation for radio changes
-  cont.addEventListener('change', e => {
-    if (e.target.type !== 'radio') return;
-    const name = e.target.name;
-    const val = e.target.value;
-    // name format: secId_i_av or secId_i_wk
-    const parts = name.split('_');
-    const fieldSuffix = parts.pop(); // 'av' or 'wk'
-    const idx = parseInt(parts.pop());
-    const secId = parts.join('_');
-    const field = fieldSuffix === 'av' ? 'avail' : 'works';
-    if (state[secId] && state[secId][idx] !== undefined) {
-      state[secId][idx][field] = val;
-      updateStats();
-    }
+  getEl('st-total').textContent=totalItems;
+  // Show float print button
+  const fb=getEl('floatPrintBtn');if(fb)fb.classList.add('visible');
+  cont.addEventListener('change',e=>{
+    if(e.target.type!=='radio')return;
+    const parts=e.target.name.split('_');const sfx=parts.pop();const idx=parseInt(parts.pop());const sid=parts.join('_');
+    const field=sfx==='av'?'avail':'works';
+    if(appState[sid]&&appState[sid][idx]!==undefined){appState[sid][idx][field]=e.target.value;updateStats();}
   });
-
-  // Event delegation for bulk buttons
-  cont.addEventListener('click', e => {
-    const btn = e.target.closest('[data-sec]');
-    if (!btn) return;
-    const secId = btn.dataset.sec;
-    if (btn.dataset.reset) {
-      bulkReset(secId);
-    } else {
-      bulkSet(secId, btn.dataset.field, btn.dataset.val);
-    }
+  cont.addEventListener('click',e=>{
+    const btn=e.target.closest('[data-sec]');
+    if(btn){if(btn.dataset.reset)bulkReset(btn.dataset.sec);else bulkSet(btn.dataset.sec,btn.dataset.field,btn.dataset.val);return;}
+    const header=e.target.closest('.sec-header');
+    if(header&&!e.target.closest('[data-sec]')){const id=header.getAttribute('aria-controls')?.replace('body_','');if(id)toggleSec(id,header);}
   });
-
-  // Keyboard accessible sec headers
-  cont.addEventListener('keydown', e => {
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('sec-header')) {
-      e.preventDefault();
-      e.target.click();
-    }
-  });
-
-  // Toggle sections
-  cont.addEventListener('click', e => {
-    const header = e.target.closest('.sec-header');
-    if (!header || e.target.closest('[data-sec]')) return;
-    const secId = header.getAttribute('aria-controls')?.replace('body_', '');
-    if (secId) toggleSec(secId, header);
-  });
-
+  cont.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('sec-header')){e.preventDefault();e.target.click();}});
   updateStats();
 }
 
-function escapeHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function toggleSec(id, header) {
-  const body = getEl('body_' + id);
-  const toggle = getEl('toggle_' + id);
-  const isOpen = body.classList.toggle('open');
-  toggle.classList.toggle('open', isOpen);
-  header?.setAttribute('aria-expanded', isOpen);
-}
-
-function bulkSet(secId, field, val) {
-  const sec = SECTIONS.find(s => s.id === secId);
-  if (!sec) return;
-  sec.items.forEach((_, i) => {
-    state[secId][i][field] = val;
-    const nm = `${secId}_${i}`;
-    const radioName = field === 'avail' ? nm + '_av' : nm + '_wk';
-    document.querySelectorAll(`input[name="${radioName}"]`).forEach(r => {
-      r.checked = r.value === val;
+function toggleSec(id,header){const body=getEl('body_'+id);const toggle=getEl('toggle_'+id);const isOpen=body.classList.toggle('open');toggle.classList.toggle('open',isOpen);header?.setAttribute('aria-expanded',isOpen)}
+function bulkSet(sid,field,val){const sec=SECTIONS.find(s=>s.id===sid);if(!sec)return;sec.items.forEach((_,i)=>{appState[sid][i][field]=val;const nm=`${sid}_${i}`;const rn=field==='avail'?nm+'_av':nm+'_wk';document.querySelectorAll(`input[name="${rn}"]`).forEach(r=>r.checked=r.value===val)});updateStats()}
+function bulkReset(sid){const sec=SECTIONS.find(s=>s.id===sid);if(!sec)return;sec.items.forEach((_,i)=>{appState[sid][i]={avail:'',works:''};const nm=`${sid}_${i}`;document.querySelectorAll(`input[name="${nm}_av"],input[name="${nm}_wk"]`).forEach(r=>r.checked=false)});updateStats()}
+function updateStats(){
+  let filled=0,yes=0,no=0,work=0,nowork=0;
+  const secStats={};
+  SECTIONS.forEach(sec=>{
+    let sf=0,sy=0,sn=0;
+    sec.items.forEach((_,i)=>{
+      const s=appState[sec.id][i];
+      if(s.avail!==''){filled++;sf++;}
+      if(s.avail==='yes'){yes++;sy++;}
+      if(s.avail==='no'){no++;sn++;}
+      if(s.works==='yes')work++;
+      if(s.works==='no')nowork++;
     });
+    getEl('badge_fill_'+sec.id).textContent=sf;
+    secStats[sec.id]={filled:sf,yes:sy,no:sn,total:sec.items.length};
   });
-  updateStats();
-}
-
-function bulkReset(secId) {
-  const sec = SECTIONS.find(s => s.id === secId);
-  if (!sec) return;
-  sec.items.forEach((_, i) => {
-    state[secId][i] = { avail: '', works: '' };
-    const nm = `${secId}_${i}`;
-    document.querySelectorAll(`input[name="${nm}_av"], input[name="${nm}_wk"]`).forEach(r => r.checked = false);
-  });
-  updateStats();
-}
-
-function updateStats() {
-  let filled = 0, yes = 0, no = 0, work = 0, nowork = 0;
-  SECTIONS.forEach(sec => {
-    let sf = 0;
-    sec.items.forEach((_, i) => {
-      const s = state[sec.id][i];
-      if (s.avail !== '') { filled++; sf++; }
-      if (s.avail === 'yes') yes++;
-      if (s.avail === 'no') no++;
-      if (s.works === 'yes') work++;
-      if (s.works === 'no') nowork++;
-    });
-    getEl('badge_fill_' + sec.id).textContent = sf;
-  });
-
-  const pct = totalItems > 0 ? Math.round(filled / totalItems * 100) : 0;
-  getEl('st-fill').textContent = filled;
-  getEl('st-yes').textContent = yes;
-  getEl('st-no').textContent = no;
-  getEl('st-work').textContent = work;
-  getEl('st-nowork').textContent = nowork;
-  getEl('st-fill-pct').textContent = pct + '%';
-  getEl('progressBar').style.width = pct + '%';
+  const pct=totalItems>0?Math.round(filled/totalItems*100):0;
+  getEl('st-fill').textContent=filled;getEl('st-yes').textContent=yes;getEl('st-no').textContent=no;getEl('st-work').textContent=work;getEl('st-nowork').textContent=nowork;getEl('st-fill-pct').textContent=pct+'%';getEl('progressBar').style.width=pct+'%';
+  // Update exec summary
+  updateExecSummary(pct,yes,no,work,nowork,secStats);
 }
 
 // ===== MODAL =====
-function openModal() {
-  const center = getEl('centerName').value.trim() || '—';
-  const date   = getEl('visitDate').value || '—';
-  const writer = getEl('writer').value.trim() || '—';
-  const pct    = getEl('st-fill-pct').textContent;
-  const yes    = getEl('st-yes').textContent;
-  const no     = getEl('st-no').textContent;
-  const work   = getEl('st-work').textContent;
-  const nowork = getEl('st-nowork').textContent;
-
-  getEl('cm-center').textContent = center;
-  getEl('cm-date').textContent   = date;
-  getEl('cm-writer').textContent = writer;
-  getEl('cm-pct').textContent    = pct;
-  getEl('cm-yes').textContent    = yes;
-  getEl('cm-no').textContent     = no;
-  getEl('cm-work').textContent   = work;
-  getEl('cm-nowork').textContent = nowork;
-
-  getEl('modalForm').style.display = 'block';
-  getEl('successBox').classList.remove('show');
-  getEl('modalOverlay').classList.add('show');
-  getEl('btnConfirm').focus();
+function openModal(){
+  const center=getEl('centerName').value.trim()||'—';
+  const date=getEl('visitDate').value||'—';
+  const writer=getEl('writer').value.trim()||'—';
+  getEl('cm-center').textContent=center;getEl('cm-date').textContent=date;getEl('cm-writer').textContent=writer;getEl('cm-pct').textContent=getEl('st-fill-pct').textContent;
+  getEl('cm-yes').textContent=getEl('st-yes').textContent;getEl('cm-no').textContent=getEl('st-no').textContent;getEl('cm-work').textContent=getEl('st-work').textContent;getEl('cm-nowork').textContent=getEl('st-nowork').textContent;
+  getEl('modalForm').style.display='block';getEl('successBox').classList.remove('show');getEl('modalOverlay').classList.add('show');getEl('btnConfirm').focus();
 }
+function closeModal(){getEl('modalOverlay').classList.remove('show')}
 
-function closeModal() {
-  getEl('modalOverlay').classList.remove('show');
-}
-
-function confirmSend() {
-  const btn = getEl('btnConfirm');
-  const center = getEl('centerName').value.trim();
-  const date   = getEl('visitDate').value;
-  const writer = getEl('writer').value.trim();
-
-  // Build rows
-  const rows = [];
-  const noteInputs = document.querySelectorAll('.notes-input');
-  let noteIndex = 0;
-  SECTIONS.forEach(sec => {
-    sec.items.forEach((item, i) => {
-      const s = state[sec.id][i] || {};
-      const note = noteInputs[noteIndex]?.value || '';
-      noteIndex++;
-      rows.push({
-        'اسم المركز': center, 'التاريخ': date, 'الكاتب': writer,
-        'اسم العنصر': item,
-        'متوفر': s.avail === 'yes' ? 'متوفر' : s.avail === 'no' ? 'غير متوفر' : '',
-        'التشغيل': s.works === 'yes' ? 'تعمل' : s.works === 'no' ? 'لا تعمل' : '',
-        'ملاحظات': note
-      });
+function confirmSend(){
+  const btn=getEl('btnConfirm');
+  const center=getEl('centerName').value.trim();
+  const date=getEl('visitDate').value;
+  const writer=getEl('writer').value.trim();
+  const rows=[];
+  const noteInputs=document.querySelectorAll('.notes-input');
+  let ni=0;
+  SECTIONS.forEach(sec=>{
+    sec.items.forEach((item,i)=>{
+      const s=appState[sec.id][i]||{};
+      const note=noteInputs[ni]?.value||'';ni++;
+      rows.push({'اسم المركز':center,'التاريخ':date,'الكاتب':writer,'اسم العنصر':item,'متوفر':s.avail==='yes'?'متوفر':s.avail==='no'?'غير متوفر':'','التشغيل':s.works==='yes'?'تعمل':s.works==='no'?'لا تعمل':'','ملاحظات':note});
     });
-    if (sec.countField) {
-      const val = getEl(sec.countField.id)?.value || '';
-      if (val) rows.push({
-        'اسم المركز': center, 'التاريخ': date, 'الكاتب': writer,
-        'اسم العنصر': sec.countField.label,
-        'متوفر': val, 'التشغيل': '', 'ملاحظات': 'عدد'
-      });
+    if(sec.countField){const val=getEl(sec.countField.id)?.value||'';if(val)rows.push({'اسم المركز':center,'التاريخ':date,'الكاتب':writer,'اسم العنصر':sec.countField.label,'متوفر':val,'التشغيل':'','ملاحظات':'عدد'});}
+  });
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div> جارٍ الإرسال...';
+  fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({rows})})
+  .then(()=>{
+    const ref='RPT-'+Date.now().toString(36).toUpperCase();
+    getEl('successMsg').textContent=`تم إرسال تقرير "${center}" بنجاح`;
+    getEl('successRef').textContent='رقم المرجع: '+ref;
+    getEl('modalForm').style.display='none';getEl('successBox').classList.add('show');
+    btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> تأكيد الإرسال';
+    // Invalidate stats so next visit refreshes
+    statsBuilt=false;
+    // Update STATS_DATA live with current form data
+    const yes=parseInt(getEl('st-yes').textContent)||0;
+    const no=parseInt(getEl('st-no').textContent)||0;
+    const work=parseInt(getEl('st-work').textContent)||0;
+    const nowork=parseInt(getEl('st-nowork').textContent)||0;
+    const tot=yes+no;
+    if(tot>0){
+      STATS_DATA[center]={total:tot,available:yes,not_available:no,working:work,not_working:nowork,
+        available_pct:parseFloat((yes/tot*100).toFixed(1)),
+        working_pct:work+nowork>0?parseFloat((work/(work+nowork)*100).toFixed(1)):0};
+    }
+  })
+  .catch(err=>{btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> تأكيد الإرسال';showToast('❌ فشل الإرسال: '+err.message)});
+}
+
+// ===== EXECUTIVE SUMMARY =====
+let execOpen = false;
+function updateExecSummary(pct,yes,no,work,nowork,secStats){
+  const el=getEl('execSummaryBar');
+  if(!el)return;
+  // Show bar once data starts
+  if(!execOpen && (yes>0||no>0)){
+    execOpen=true;
+    el.classList.add('open');
+    const fb=getEl('floatPrintBtn');
+    if(fb)fb.classList.add('visible');
+  }
+  const pctEl=getEl('ex-pct');if(pctEl)pctEl.textContent=pct+'%';
+  const yEl=getEl('ex-yes');if(yEl)yEl.textContent=yes;
+  const nEl=getEl('ex-no');if(nEl)nEl.textContent=no;
+  const wEl=getEl('ex-work');if(wEl)wEl.textContent=work;
+  const nwEl=getEl('ex-nowork');if(nwEl)nwEl.textContent=nowork;
+  const pfEl=getEl('execProgressFill');if(pfEl)pfEl.style.width=pct+'%';
+  // Section chips
+  const row=getEl('execSectionsRow');
+  if(row&&secStats){
+    row.innerHTML=SECTIONS.map(sec=>{
+      const st=secStats[sec.id]||{filled:0,yes:0,no:0,total:sec.items.length};
+      const sp=st.total>0?Math.round(st.filled/st.total*100):0;
+      const col=sp>=70?'var(--green)':sp>=40?'var(--yellow)':'var(--red)';
+      return`<div class="exec-sec-chip">${sec.icon} ${sec.title.replace(/خدمات\s*/,'').replace(/\(.*\)/,'').trim()}<span class="exec-sec-fill" style="color:${col}">&nbsp;${st.filled}/${st.total}</span></div>`;
+    }).join('');
+  }
+}
+function toggleExecSummary(){
+  const el=getEl('execSummaryBar');
+  const btn=getEl('execToggleBtn');
+  if(!el)return;
+  const isOpen=el.classList.contains('open');
+  if(isOpen){el.classList.remove('open');if(btn)btn.textContent='إظهار ↓';}
+  else{el.classList.add('open');if(btn)btn.textContent='إخفاء ↑';}
+}
+
+// ===== REFRESH + GLOBAL EXEC =====
+function refreshStats(){
+  statsBuilt=false;
+  const btn=getEl('refreshBtn');
+  if(btn)btn.innerHTML='⏳';
+  fetchAndBuildStats().finally(()=>{if(btn)btn.innerHTML='🔄'});
+}
+
+function openGlobalExec(){
+  const overlay=getEl('globalExecOverlay');
+  overlay.style.display='flex';
+  document.body.style.overflow='hidden';
+  buildGlobalExecBody();
+}
+function closeGlobalExec(){
+  getEl('globalExecOverlay').style.display='none';
+  document.body.style.overflow='';
+}
+
+function buildGlobalExecBody(){
+  const allCenters=Object.entries(STATS_DATA);
+  const totalCenters=allCenters.length;
+  const avgAvail=parseFloat((allCenters.reduce((a,[,s])=>a+s.available_pct,0)/totalCenters).toFixed(1));
+  const avgWork=parseFloat((allCenters.reduce((a,[,s])=>a+s.working_pct,0)/totalCenters).toFixed(1));
+  const hiCenters=allCenters.filter(([,s])=>s.available_pct>=80);
+  const midCenters=allCenters.filter(([,s])=>s.available_pct>=50&&s.available_pct<80);
+  const loCenters=allCenters.filter(([,s])=>s.available_pct<50);
+  const sortedAvail=[...allCenters].sort((a,b)=>b[1].available_pct-a[1].available_pct);
+  const topCenter=sortedAvail[0];const botCenter=sortedAvail[sortedAvail.length-1];
+  const totalStaff=Object.values(STAFF_DATA).reduce((a,d)=>a+Object.values(d).reduce((b,v)=>b+v,0),0);
+  const lastUpdate=new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  getEl('gexec-subtitle').textContent=`${totalCenters} مركز صحي — آخر تحديث: ${lastUpdate}`;
+  const aCol=avgAvail>=70?'var(--green)':avgAvail>=50?'var(--yellow)':'var(--red)';
+  const wCol=avgWork>=70?'var(--accent2)':avgWork>=50?'var(--yellow)':'var(--red)';
+  const secRows=SECTIONS.map(sec=>{
+    const pct=Math.round(avgAvail);const col=pct>=70?'var(--green)':pct>=50?'var(--yellow)':'var(--red)';
+    return`<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+      <span style="font-size:15px;width:20px;text-align:center;flex-shrink:0">${sec.icon}</span>
+      <span style="flex:1;font-size:11px;color:rgba(255,255,255,0.8)">${sec.title.replace(/\(.*\)/,'').trim()}</span>
+      <span style="font-size:10px;color:rgba(255,255,255,0.3)">${sec.items.length} عنصر</span>
+      <div style="width:70px;height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${col};border-radius:3px"></div></div>
+      <span style="font-size:11px;font-weight:700;color:${col};min-width:32px;text-align:left">${pct}%</span>
+    </div>`;
+  }).join('');
+  const centerRows=sortedAvail.slice(0,5).map(([name,s],i)=>{
+    const nc=i===0?'#f59e0b':i===1?'#94a3b8':i===2?'#cd7c2a':'rgba(255,255,255,0.25)';
+    const ac=s.available_pct>=70?'var(--green)':s.available_pct>=50?'var(--yellow)':'var(--red)';
+    return`<div style="display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,0.03)">
+      <span style="width:22px;height:22px;border-radius:50%;background:${nc};color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</span>
+      <span style="flex:1;font-size:11px;font-weight:600;color:#fff">🏥 ${name}</span>
+      <span style="font-size:14px;font-weight:900;color:${ac}">${s.available_pct}%</span>
+    </div>`;
+  }).join('');
+  getEl('gexec-body').innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:8px">
+      ${[
+        {val:totalCenters,lbl:'🏥 المراكز',col:'var(--accent)'},
+        {val:avgAvail+'%',lbl:'📦 التوافر',col:aCol},
+        {val:avgWork+'%',lbl:'⚙️ التشغيل',col:wCol},
+        {val:hiCenters.length,lbl:'🟢 عالي',col:'var(--green)'},
+        {val:midCenters.length,lbl:'🟡 متوسط',col:'var(--yellow)'},
+        {val:loCenters.length,lbl:'🔴 منخفض',col:'var(--red)'},
+        {val:totalStaff,lbl:'👥 الكوادر',col:'var(--purple)'},
+      ].map(k=>`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 6px;text-align:center">
+        <div style="font-size:1.5rem;font-weight:900;color:${k.col};line-height:1;margin-bottom:3px;font-variant-numeric:tabular-nums">${k.val}</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.5)">${k.lbl}</div>
+      </div>`).join('')}
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+        <span style="font-size:12px;font-weight:700;color:#fff">📊 متوسط التوافر الكلي</span>
+        <span style="font-size:18px;font-weight:900;color:${aCol}">${avgAvail}%</span>
+      </div>
+      <div style="background:rgba(255,255,255,0.08);border-radius:7px;height:10px;overflow:hidden">
+        <div style="height:100%;width:${avgAvail}%;background:linear-gradient(90deg,var(--green),var(--accent2));border-radius:7px"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:10px;color:rgba(255,255,255,0.4)">
+        <span>🏆 الأعلى: ${topCenter[0]} (${topCenter[1].available_pct}%)</span>
+        <span>⚠️ الأدنى: ${botCenter[0]} (${botCenter[1].available_pct}%)</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px">
+        <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:8px">📂 توزيع الإدارات</div>${secRows}
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px">
+        <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:8px">🏆 أفضل 5 مراكز توافراً</div>
+        <div style="display:flex;flex-direction:column;gap:5px">${centerRows}</div>
+      </div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:12px 14px">
+      <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:8px">🗺️ توزيع المراكز — اضغط للتفاصيل</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap">
+        ${[...hiCenters,...midCenters,...loCenters].map(([name,s])=>{
+          const bg=s.available_pct>=80?'rgba(34,197,94,0.15)':s.available_pct>=50?'rgba(234,179,8,0.12)':'rgba(239,68,68,0.15)';
+          const col=s.available_pct>=80?'var(--green)':s.available_pct>=50?'var(--yellow)':'var(--red)';
+          const brd=s.available_pct>=80?'rgba(34,197,94,0.3)':s.available_pct>=50?'rgba(234,179,8,0.3)':'rgba(239,68,68,0.3)';
+          return`<span onclick="closeGlobalExec();setTimeout(()=>openCenterDetail('${name.replace(/'/g,"\\'")}'),100);" style="cursor:pointer;background:${bg};border:1px solid ${brd};border-radius:7px;padding:3px 9px;font-size:11px;color:${col};font-weight:600;white-space:nowrap">🏥 ${name} ${s.available_pct}%</span>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+function printGlobalExec(){
+  const allCenters=Object.entries(STATS_DATA);
+  const totalCenters=allCenters.length;
+  const avgAvail=parseFloat((allCenters.reduce((a,[,s])=>a+s.available_pct,0)/totalCenters).toFixed(1));
+  const avgWork=parseFloat((allCenters.reduce((a,[,s])=>a+s.working_pct,0)/totalCenters).toFixed(1));
+  const hiC=allCenters.filter(([,s])=>s.available_pct>=80).length;
+  const loC=allCenters.filter(([,s])=>s.available_pct<50).length;
+  const totalStaff=Object.values(STAFF_DATA).reduce((a,d)=>a+Object.values(d).reduce((b,v)=>b+v,0),0);
+  const printDate=new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+  const sortedAvail=[...allCenters].sort((a,b)=>b[1].available_pct-a[1].available_pct);
+  const tableRows=sortedAvail.map(([name,s],i)=>{
+    const lvl=s.available_pct>=80?'عالي ✓':s.available_pct>=50?'متوسط':'منخفض ⚠';
+    return`<tr style="background:${i%2===0?'#f9f9f9':'#fff'}">
+      <td style="padding:5px 8px;border:1px solid #ddd;text-align:center">${i+1}</td>
+      <td style="padding:5px 8px;border:1px solid #ddd;font-weight:600">🏥 ${name}</td>
+      <td style="padding:5px 8px;border:1px solid #ddd;text-align:center;font-weight:800;color:${s.available_pct>=80?'#166534':s.available_pct>=50?'#854d0e':'#991b1b'}">${s.available_pct}%</td>
+      <td style="padding:5px 8px;border:1px solid #ddd;text-align:center">${s.available}/${s.total}</td>
+      <td style="padding:5px 8px;border:1px solid #ddd;text-align:center;color:${s.working_pct>=70?'#065f46':'#854d0e'}">${s.working_pct}%</td>
+      <td style="padding:5px 8px;border:1px solid #ddd;text-align:center">${lvl}</td>
+    </tr>`;
+  }).join('');
+  getEl('gexecPrintArea').innerHTML=`
+    <div style="font-family:'Tajawal',Arial,sans-serif;direction:rtl;padding:14px;color:#000">
+      <div style="border-bottom:2px solid #000;padding-bottom:8px;margin-bottom:12px;display:flex;justify-content:space-between">
+        <div><h2 style="margin:0;font-size:17px">📋 الملخص التنفيذي الشامل</h2>
+        <p style="margin:3px 0 0;color:#555;font-size:11px">إدارة الخدمات الصحية المساندة — تجمع المدينة المنورة الصحي | ${printDate}</p></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+        ${[{v:totalCenters,l:'عدد المراكز'},{v:avgAvail+'%',l:'متوسط التوافر'},{v:avgWork+'%',l:'متوسط التشغيل'},{v:hiC,l:'مراكز عالية التوافر'},{v:loC,l:'مراكز منخفضة'},{v:totalStaff,l:'إجمالي الكوادر'}].map(k=>`<div style="background:#f5f5f5;border:1px solid #ccc;border-radius:5px;padding:6px 12px;text-align:center"><div style="font-size:1.2rem;font-weight:800">${k.v}</div><div style="font-size:10px;color:#666">${k.l}</div></div>`).join('')}
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:11px">
+        <thead><tr style="background:#f0f0f0">
+          <th style="padding:7px 8px;border:1px solid #ccc;text-align:center">#</th>
+          <th style="padding:7px 8px;border:1px solid #ccc;text-align:right">المركز الصحي</th>
+          <th style="padding:7px 8px;border:1px solid #ccc;text-align:center">نسبة التوافر</th>
+          <th style="padding:7px 8px;border:1px solid #ccc;text-align:center">متوفر/الإجمالي</th>
+          <th style="padding:7px 8px;border:1px solid #ccc;text-align:center">نسبة التشغيل</th>
+          <th style="padding:7px 8px;border:1px solid #ccc;text-align:center">المستوى</th>
+        </tr></thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+      <div style="margin-top:18px;display:flex;justify-content:space-between;border-top:1px solid #ccc;padding-top:12px">
+        <div style="text-align:center"><div style="font-size:11px;margin-bottom:26px">مدير الخدمات الصحية المساندة</div><div style="border-top:1px dashed #ccc;width:130px;margin:0 auto"></div></div>
+        <div style="text-align:center"><div style="font-size:11px;margin-bottom:26px">مدير الجودة والسلامة</div><div style="border-top:1px dashed #ccc;width:130px;margin:0 auto"></div></div>
+      </div>
+    </div>`;
+  document.body.classList.add('printing-gexec');
+  window.print();
+  setTimeout(()=>document.body.classList.remove('printing-gexec'),500);
+}
+
+// ===== PRINT PDF =====
+function printPDF(){
+  // Open all sections before printing
+  SECTIONS.forEach(sec=>{
+    const body=getEl('body_'+sec.id);
+    const toggle=getEl('toggle_'+sec.id);
+    const header=document.querySelector(`[aria-controls="body_${sec.id}"]`);
+    if(body&&!body.classList.contains('open')){
+      body.classList.add('open');
+      if(toggle)toggle.classList.add('open');
+      if(header)header.setAttribute('aria-expanded','true');
     }
   });
-
-  btn.disabled = true;
-  btn.innerHTML = '<div class="spinner"></div> جارٍ الإرسال...';
-
-  const payload = JSON.stringify({ rows: rows });
-
-  fetch(SHEETS_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: payload
-  })
-  .then(() => {
-    const ref = 'RPT-' + Date.now().toString(36).toUpperCase();
-    getEl('successMsg').textContent = 'تم إرسال تقرير "' + center + '" بنجاح إلى Google Sheets';
-    getEl('successRef').textContent = 'رقم المرجع: ' + ref;
-    getEl('modalForm').style.display = 'none';
-    getEl('successBox').classList.add('show');
-    btn.disabled = false;
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> تأكيد الإرسال';
-  })
-  .catch(err => {
-    btn.disabled = false;
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> تأكيد الإرسال';
-    showToast('❌ فشل الإرسال: ' + err.message);
-  });
+  setTimeout(()=>window.print(),150);
 }
-
-// sendToExcel merged into confirmSend
 
 // ===== INIT =====
-function init() {
-  // Login
-  getEl('btnLogin').addEventListener('click', doLogin);
-  getEl('loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-  getEl('loginUser').addEventListener('keydown', e => { if (e.key === 'Enter') getEl('loginPass').focus(); });
-
-  // Logout
-  getEl('btnLogout').addEventListener('click', doLogout);
-
-  // Modal
-  getEl('btnSend').addEventListener('click', () => {
-    const center = getEl('centerName').value.trim();
-    const date   = getEl('visitDate').value;
-    const writer = getEl('writer').value.trim();
-    if (!center || !date || !writer) {
-      showToast('⚠️ الرجاء تعبئة: اسم المركز، التاريخ، واسم الكاتب');
-      return;
-    }
-    openModal();
-  });
-  getEl('btnModalClose').addEventListener('click', closeModal);
-  getEl('btnCancel').addEventListener('click', closeModal);
-  getEl('btnConfirm').addEventListener('click', confirmSend);
-  getEl('btnSuccessClose').addEventListener('click', closeModal);
-
-  // Close modal on overlay click
-  getEl('modalOverlay').addEventListener('click', e => {
-    if (e.target === getEl('modalOverlay')) closeModal();
-  });
-
-  // Close modal on Escape
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && getEl('modalOverlay').classList.contains('show')) closeModal();
-  });
-
-  // Default date
-  getEl('visitDate').valueAsDate = new Date();
-
-  buildSections();
-}
-
-init();
+getEl('btnLogin').addEventListener('click',doLogin);
+getEl('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+getEl('loginUser').addEventListener('keydown',e=>{if(e.key==='Enter')getEl('loginPass').focus()});
+getEl('btnLogout').addEventListener('click',goBack);
+getEl('btnSend').addEventListener('click',()=>{
+  const c=getEl('centerName').value.trim(),d=getEl('visitDate').value,w=getEl('writer').value.trim();
+  if(!c||!d||!w){showToast('⚠️ الرجاء تعبئة: اسم المركز، التاريخ، واسم الكاتب');return;}openModal();
+});
+getEl('btnModalClose').addEventListener('click',closeModal);
+getEl('btnCancel').addEventListener('click',closeModal);
+getEl('btnConfirm').addEventListener('click',confirmSend);
+getEl('btnSuccessClose').addEventListener('click',closeModal);
+getEl('modalOverlay').addEventListener('click',e=>{if(e.target===getEl('modalOverlay'))closeModal()});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    if(getEl('cdOverlay').classList.contains('show')){closeCenterDetail();return;}
+    if(getEl('modalOverlay').classList.contains('show'))closeModal();
+  }
+});
+getEl('visitDate').valueAsDate=new Date();
 </script>
 </body>
 </html>
