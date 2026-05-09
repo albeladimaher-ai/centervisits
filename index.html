@@ -630,48 +630,77 @@ tr:last-child td{border-bottom:none}
   #floatPrintBtn{bottom:16px;left:16px;padding:10px 16px;font-size:12px}
 }
 
-/* ===== PRINT / PDF ===== */
+/* ===== PRINT / PDF — ملون وصفحة واحدة ===== */
 @media print{
-  @page{size:A4;margin:15mm 12mm}
+  @page{size:A4 portrait;margin:7mm 9mm}
+  -webkit-print-color-adjust:exact!important;
+  print-color-adjust:exact!important;
+
+  /* إخفاء عناصر الواجهة */
   #loginScreen,#statsScreen,.logout-btn,.stats-link-btn,.btn-row,
   .bulk-bar,.stats-bar,.progress-wrap,.btn-print,.btn-send,
-  .modal-overlay,.toast,#floatPrintBtn,.exec-toggle-btn,
-  .header-btns{display:none!important}
-  body{background:#fff!important;color:#000!important;font-family:'Tajawal',Arial,sans-serif!important}
-  :root{
-    --bg:#fff!important;--bg2:#f8f9fa!important;--bg3:#f1f3f5!important;
-    --bg4:#e9ecef!important;--border:#dee2e6!important;
-    --text:#000!important;--text2:#444!important;--text3:#666!important;
-  }
+  .modal-overlay,.toast,.exec-toggle-btn,.header-btns,
+  #execSummaryBar,#floatPrintBtn{display:none!important}
+
+  body{font-family:'Tajawal',Arial,sans-serif!important;font-size:10px!important}
   #appScreen{display:block!important}
-  .wrap{background:#fff!important;color:#000!important;min-height:auto}
-  .header{background:#fff!important;border-bottom:2px solid #000!important;padding:12px!important}
-  .header-top{flex-wrap:nowrap}
-  .org-name,.org-name strong,.subtitle{color:#000!important}
-  h1{color:#000!important;font-size:16px!important}
-  .section{break-inside:avoid;border:1px solid #ccc!important;margin-bottom:10px}
-  .sec-header{background:#f1f3f5!important}
-  .sec-body{display:block!important}
-  .sec-body.open{display:block!important}
-  table{border:1px solid #ccc!important}
-  th,td{border:1px solid #ddd!important;color:#000!important}
-  .rb{border:1px solid #999!important}
-  .rb:has(input:checked){background:#e0f5e9!important;color:#000!important}
-  /* Print executive summary */
-  #execSummaryBar{
-    display:block!important;max-height:none!important;opacity:1!important;
-    padding:12px!important;background:#f8f9fa!important;
-    border:1px solid #ccc!important;border-radius:8px!important;
-    margin-bottom:10px!important;
+  .wrap{min-height:auto;padding:0!important}
+
+  /* هيدر ملوّن */
+  .header{
+    background:linear-gradient(135deg,#1e2a4a 0%,#0f1117 100%)!important;
+    -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
+    color:#fff!important;padding:8px 12px 6px!important;
   }
-  .exec-stat-val{color:#000!important;font-size:1.5rem!important}
-  .exec-stat{border:1px solid #ccc!important;background:#fff!important}
-  .exec-sec-chip{border:1px solid #ccc!important;background:#f8f9fa!important;color:#000!important}
-  .meta-field input{border:1px solid #ccc!important;color:#000!important;background:#fff!important}
-  .notes-input,.count-input{border:1px solid #ccc!important;color:#000!important;background:#fff!important}
-  .progress-wrap{display:block!important;background:#eee!important;height:6px!important}
-  .count-label{color:#000!important}
-  .count-row{background:#f5f5f5!important;border-top:1px solid #ddd!important}
+  .logo-circle{background:linear-gradient(135deg,#4f8ef7,#6ee7b7)!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .org-name,.org-name strong,.subtitle,h1{color:#fff!important}
+  h1{font-size:12px!important}
+  .subtitle{font-size:9px!important}
+  .meta-row{gap:6px!important;padding-top:6px!important;margin-top:6px!important;border-top:1px solid rgba(255,255,255,0.2)!important}
+  .meta-field label{color:rgba(255,255,255,0.65)!important;font-size:8px!important}
+  .meta-field input{background:rgba(255,255,255,0.08)!important;border:1px solid rgba(255,255,255,0.2)!important;color:#fff!important;font-size:10px!important;padding:4px 7px!important}
+
+  /* الأقسام */
+  .sections{padding:5px 8px!important;gap:5px!important}
+  .section{break-inside:avoid;border:1px solid #c8d0e8!important;margin-bottom:4px!important;border-radius:6px!important;overflow:hidden!important}
+  .sec-header{
+    background:linear-gradient(90deg,#eef2ff,#f0f7ff)!important;
+    -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
+    padding:5px 8px!important;
+  }
+  .sec-title{font-size:10px!important;font-weight:700!important;color:#1e2a4a!important}
+  .sec-toggle{display:none!important}
+  .sec-badge{background:#dde4ff!important;border:1px solid#b0bdff!important;color:#3344aa!important;font-size:8px!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .sec-body,.sec-body.open{display:block!important}
+
+  /* الجداول */
+  table{border-collapse:collapse!important;font-size:8.5px!important;width:100%!important}
+  .tbl-wrap{overflow:visible!important}
+  thead tr{background:#1e2a4a!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  th{color:#fff!important;padding:3px 5px!important;font-size:8px!important;border:1px solid #334!important;font-weight:600!important}
+  td{padding:2.5px 4px!important;border:1px solid #dde!important;color:#111!important;vertical-align:middle!important}
+  tr:nth-child(even) td{background:#f5f7ff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .item-num{color:#888!important;font-size:8px!important}
+  .item-text{font-size:9px!important;color:#111!important}
+
+  /* راديو — ملوّن */
+  .rb{padding:1px 4px!important;font-size:8px!important;border-radius:3px!important;border:1px solid #ccc!important}
+  .rb:has(input:checked).yes{background:#dcfce7!important;border-color:#22c55e!important;color:#166534!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .rb:has(input:checked).no{background:#fee2e2!important;border-color:#ef4444!important;color:#991b1b!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .rb:has(input:checked).works{background:#d1fae5!important;border-color:#6ee7b7!important;color:#065f46!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .rb:has(input:checked).noworks{background:#fef3c7!important;border-color:#eab308!important;color:#854d0e!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+
+  /* حقول */
+  .notes-input,.count-input{border:1px solid #ccc!important;color:#333!important;background:#fff!important;font-size:8px!important;padding:1px 4px!important}
+  .count-row{background:#f0f4ff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;border-top:1px solid #dde!important;padding:4px 8px!important}
+  .count-label{color:#1e2a4a!important;font-weight:600!important}
+
+  /* الفوتر */
+  .footer{padding:6px 8px 0!important;flex-wrap:nowrap!important}
+  .sig-block{display:block!important;border:1px solid #ccc!important;padding:8px 14px!important}
+  .sig-block label{color:#555!important;font-size:9px!important}
+  .sig-line{border-top:1px dashed #aaa!important}
+  .btn-row{display:none!important}
 }
 
 </style>
@@ -747,10 +776,14 @@ tr:last-child td{border-bottom:none}
   </div>
 
   <!-- Tabs -->
-  <div class="stats-tabs">
+  <div class="stats-tabs" style="align-items:center">
     <button class="stab active" onclick="switchPanel('all')">🏥 جميع المراكز</button>
     <button class="stab" onclick="switchPanel('ranking')">🏆 التصنيف</button>
     <button class="stab" onclick="switchPanel('staff')">👥 الكوادر البشرية</button>
+    <button onclick="openGlobalExec()" title="الملخص التنفيذي" style="margin-right:auto;background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#fff;padding:7px 16px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 3px 10px rgba(245,158,11,0.35);font-family:'Tajawal',sans-serif;transition:transform 0.2s,box-shadow 0.2s" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 5px 16px rgba(245,158,11,0.5)'" onmouseout="this.style.transform='';this.style.boxShadow='0 3px 10px rgba(245,158,11,0.35)'">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      الملخص التنفيذي
+    </button>
   </div>
 
   <!-- Panel: All Centers -->
@@ -983,11 +1016,6 @@ tr:last-child td{border-bottom:none}
 <!-- Hidden print area for center detail -->
 <div id="cdPrintArea"></div>
 
-<!-- Floating PDF Print Button -->
-<button id="floatPrintBtn" onclick="printPDF()">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-  طباعة / PDF
-</button>
 
 <div class="toast" id="toast"></div>
 
@@ -1866,7 +1894,7 @@ function buildSections(){
   cont.appendChild(frag);
   getEl('st-total').textContent=totalItems;
   // Show float print button
-  const fb=getEl('floatPrintBtn');if(fb)fb.classList.add('visible');
+  
   cont.addEventListener('change',e=>{
     if(e.target.type!=='radio')return;
     const parts=e.target.name.split('_');const sfx=parts.pop();const idx=parseInt(parts.pop());const sid=parts.join('_');
@@ -1969,8 +1997,6 @@ function updateExecSummary(pct,yes,no,work,nowork,secStats){
   if(!execOpen && (yes>0||no>0)){
     execOpen=true;
     el.classList.add('open');
-    const fb=getEl('floatPrintBtn');
-    if(fb)fb.classList.add('visible');
   }
   const pctEl=getEl('ex-pct');if(pctEl)pctEl.textContent=pct+'%';
   const yEl=getEl('ex-yes');if(yEl)yEl.textContent=yes;
