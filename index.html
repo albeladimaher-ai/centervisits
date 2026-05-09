@@ -767,12 +767,11 @@ tr:last-child td{border-bottom:none}
 
   <!-- Overview cards -->
   <div class="stats-overview">
-    <div class="ov-card c1"><div class="ov-val">25</div><div class="ov-lbl">🏥 عدد المراكز</div></div>
-    <div class="ov-card c2"><div class="ov-val">73.3%</div><div class="ov-lbl">📦 متوسط التوافر</div></div>
-    <div class="ov-card c4"><div class="ov-val">85.2%</div><div class="ov-lbl">⚙️ متوسط التشغيل</div></div>
-    <div class="ov-card c5"><div class="ov-val" id="ov-staff-total">—</div><div class="ov-lbl">👥 إجمالي الموظفين</div></div>
-    <div class="ov-card c3"><div class="ov-val">4</div><div class="ov-lbl">🔴 مراكز بتوافر منخفض</div></div>
-    <div class="ov-card c6"><div class="ov-val">1,375</div><div class="ov-lbl">📋 إجمالي العناصر</div></div>
+    <div class="ov-card c1"><div class="ov-val" id="ov-center-count">25</div><div class="ov-lbl">🏥 عدد المراكز</div></div>
+    <div class="ov-card c2"><div class="ov-val" id="ov-avg-avail">73.3%</div><div class="ov-lbl">📦 متوسط التوافر</div></div>
+    <div class="ov-card c4"><div class="ov-val" id="ov-avg-work">85.2%</div><div class="ov-lbl">⚙️ متوسط التشغيل</div></div>
+    <div class="ov-card c3"><div class="ov-val" id="ov-low-count">4</div><div class="ov-lbl">🔴 مراكز بتوافر منخفض</div></div>
+    <div class="ov-card c6"><div class="ov-val" id="ov-total-items">—</div><div class="ov-lbl">📋 إجمالي العناصر</div></div>
   </div>
 
   <!-- Tabs -->
@@ -1275,7 +1274,7 @@ async function fetchAndBuildStats(){
   buildStaffTable();
   buildRankings();
   let total=0; Object.values(STAFF_DATA).forEach(c=>Object.values(c).forEach(v=>total+=v));
-  getEl('ov-staff-total').textContent=total;
+  
   const sub=getEl('statsSubtitle');
   if(sub) sub.innerHTML=`${Object.keys(STATS_DATA).length} مركز | <span style="color:var(--accent2)">📡 يحاول تحديث البيانات...</span>`;
 
@@ -1392,12 +1391,12 @@ function computeStatsFromRows(rows){
 }
 
 function updateOverviewCards(c){
-  const cards=document.querySelectorAll('.stats-overview .ov-val');
-  if(cards[0])cards[0].textContent=c.centerCount||Object.keys(STATS_DATA).length;
-  if(cards[1])cards[1].textContent=(c.avgAvail||'—')+'%';
-  if(cards[2])cards[3].textContent=(c.avgWork||'—')+'%'; // c4 is working
-  if(cards[4])cards[4].textContent=c.lowCount||'—';
-  if(cards[5])cards[5].textContent=(c.totalItems||1375).toLocaleString('ar');
+  const set=(id,v)=>{const el=getEl(id);if(el)el.textContent=v;};
+  set('ov-center-count', c.centerCount||Object.keys(STATS_DATA).length);
+  set('ov-avg-avail',    (c.avgAvail||'—')+'%');
+  set('ov-avg-work',     (c.avgWork||'—')+'%');
+  set('ov-low-count',    c.lowCount??'—');
+  set('ov-total-items',  c.totalItems? c.totalItems.toLocaleString('ar') : '—');
 }
 
 function switchPanel(name){
@@ -1831,7 +1830,7 @@ function buildStaffTable(){
   tbody.querySelectorAll('tr:not(.total-row)').forEach(tr=>{
     tr.style.cursor='pointer';
   });
-  getEl('ov-staff-total').textContent=grandTotal;
+  
 }
 
 function buildRankings(){
